@@ -1,0 +1,139 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  font-size: 10px;
+  background-image: url("../assets/images/Hero\ Section\ Background\ \(6\).png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  overflow-x: hidden;
+  .background-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 80rem;
+    margin: auto;
+    height: 100%;
+    // width: 100vw;
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 75rem;
+      margin: 1rem auto 0 auto;
+      .word-logo {
+        color: white;
+        font-family: var(--styled-font);
+        font-size: 1.8rem;
+        text-shadow: 0 4px 7px var(--secondary-color);
+      }
+      button {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        border: none;
+        width: 6rem;
+        background-color: rgba($color: #fff, $alpha: 0.5);
+        border-radius: 20px;
+        padding: 7px 12px;
+        color: white;
+        font-weight: 800;
+        font-size: 1rem;
+      }
+    }
+    .hero-section {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 10rem;
+      .site-description {
+        display: flex;
+        flex-direction: column;
+        width: 40rem;
+        // margin-left: 20rem;
+        h1 {
+          color: var(--primary-color);
+          font-size: 5rem;
+          font-weight: 750;
+        }
+        p {
+          width: 30rem;
+          margin-top: 1.6rem;
+          color: rgba($color: var(--primary-color), $alpha: 0.7);
+          font-size: 1.1rem;
+          line-height: 1.6rem;
+        }
+        button {
+          width: 8rem;
+          margin-top: 1rem;
+          border: none;
+          border-radius: 20px;
+          font-size: 1rem;
+          padding: 5px 10px;
+          font-weight: 500;
+        }
+      }
+
+      .site-images {
+        display: grid;
+        margin-right: 25rem;
+        position: relative;
+        .image {
+          width: 50rem;
+          position: absolute;
+          top: 10px;
+          left: 100px;
+          height: 25rem;
+          box-shadow: 5px 5px 50px 2px rgba($color: #000, $alpha: 0.25);
+          border-radius: 20px;
+        }
+        .image2 {
+          position: absolute;
+          bottom: 200px;
+          left: -100px;
+          width: 15rem;
+          height: -10;
+          box-shadow: 5px 5px 50px 2px rgba($color: #000, $alpha: 0.25);
+          border-radius: 20px;
+          z-index: 1;
+        }
+        .image3 {
+          position: absolute;
+          bottom: 10px;
+          left: -50px;
+          width: 15rem;
+          height: -10;
+          box-shadow: 5px 5px 50px 2px rgba($color: #000, $alpha: 0.25);
+          border-radius: 20px;
+          z-index: 1;
+        }
+        .image4 {
+          position: absolute;
+          bottom: 400px;
+          left: -50px;
+          width: 15rem;
+          height: -10;
+          box-shadow: 5px 5px 50px 2px rgba($color: #000, $alpha: 0.25);
+          border-radius: 20px;
+          z-index: 1;
+        }
+      }
+    }
+    section {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin-top: 25rem;
+      .product-description {
+        width: 25rem;
+        h1 {
+          font-size: 4rem;
+        }
+        p {
+          width: 30rem;
+          font-size: 1.1rem;
+          line-height: 1.6rem;
+          margin-top: 1.6rem;
+        }
+      }
+    }
+  }
+}
