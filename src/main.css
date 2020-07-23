@@ -1,0 +1,17 @@
+:root {
+  --primary-color: #140f2d;
+  --secondary-color: #54defd;
+  --accent-color: #00bd9d;
+  --accent-color-darker: #004c3f;
+  --accent-color-lighter: #ccf2eb;
+  --primary-font: "Inter";
+  --secondary-font: "Poppins";
+  --styled-font: "Lobster";
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: var(--primary-font);
+  color: var(--primary-color);
+}
