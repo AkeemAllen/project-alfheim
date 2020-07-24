@@ -37,11 +37,11 @@ const SignUp = () => {
             </div>
             <h5>or</h5>
             <div className="input">
-              <MdAccountCircle size="30" className="input-icon" />
+              {/* <MdAccountCircle size="30" className="input-icon" />
               <input
                 className="form-input"
                 placeholder="Unique UserName"
-              ></input>
+              ></input> */}
             </div>
             <div className="input">
               <MdAccountCircle size="30" className="input-icon" />

@@ -10,24 +10,43 @@ import quick from "../assets/images/quick.png";
 import easy from "../assets/images/easy.png";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
+import { useSpring, animated, config } from "react-spring";
 
 const Landing = () => {
+  const animateDescription = useSpring({
+    opacity: 1,
+    from: { opacity: 0 },
+    delay: 500,
+    config: config.gentle,
+  });
+
+  const animateSiteImages = useSpring({
+    transform: "translate(0px, 0px)",
+    delay: 1000,
+    from: { transform: "translate(1000px, 20px)" },
+    config: config.gentle,
+  });
+
+  const animateButton = useSpring({
+    transform: "scale(1.1)",
+  });
+
   return (
     <div className="container">
       <div className="background-container">
         <nav className="nav">
           <h1 className="word-logo">Alfheim</h1>
-          <button>
+          <animated.button>
             <Link
               to="/signin"
               style={{ textDecoration: "none", color: "white" }}
             >
               Sign In
             </Link>
-          </button>
+          </animated.button>
         </nav>
         <div className="hero-section">
-          <div className="site-description">
+          <animated.div style={animateDescription} className="site-description">
             <h1>Seaching For Rooms Without The Hassel</h1>
             <p>
               Having gone through the struggle of searching for a room to rent
@@ -35,20 +54,24 @@ const Landing = () => {
               decided to do something about it.
             </p>
             <p>Thus, PROJECT ALFHEIM was born</p>
-            <button>View Gallary</button>
-          </div>
-          <div className="site-images">
+            <button>
+              <Link to="/gallary" className="link" style={{ color: "#140f2d" }}>
+                View Gallary
+              </Link>
+            </button>
+          </animated.div>
+          <animated.div style={animateSiteImages} className="site-images">
             <img src={room} alt="room" className="image" />
             <img src={room2} alt="room" className="image2" />
             <img src={room3} alt="room" className="image3" />
             <img src={room4} alt="room" className="image4" />
-          </div>
+          </animated.div>
         </div>
-        <section>
+        <div className="section">
           <Card title="Quick" img={quick} />
           <Card title="Easy" img={easy} />
           <Card title="Convenient" img={convenient} />
-        </section>
+        </div>
       </div>
       <footer>
         <Footer />
