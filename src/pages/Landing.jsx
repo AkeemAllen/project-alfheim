@@ -1,11 +1,15 @@
 import React from "react";
 import "../stylesheets/Landing.scss";
-// import { IconContext } from "react-icons";
-// import { FiArrowRight } from "react-icons/fi";
+import Card from "../components/Card";
 import room from "../assets/stock photos/room1.jpg";
 import room2 from "../assets/stock photos/room2.jpg";
 import room3 from "../assets/stock photos/room3.jpg";
 import room4 from "../assets/stock photos/room4.jpg";
+import convenient from "../assets/images/convenient.png";
+import quick from "../assets/images/quick.png";
+import easy from "../assets/images/easy.png";
+import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
 
 const Landing = () => {
   return (
@@ -14,12 +18,12 @@ const Landing = () => {
         <nav className="nav">
           <h1 className="word-logo">Alfheim</h1>
           <button>
-            Sign In
-            {/* <IconContext.Provider value={{ color: "white", padding: 0 }}>
-              <div>
-                <FiArrowRight color="white" />
-              </div>
-            </IconContext.Provider> */}
+            <Link
+              to="/registration"
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              Sign In
+            </Link>
           </button>
         </nav>
         <div className="hero-section">
@@ -41,17 +45,14 @@ const Landing = () => {
           </div>
         </div>
         <section>
-          <div className="graphic"></div>
-          <div className="product-description">
-            <h1>Convenient</h1>
-            <p>
-              Having gone through the struggle of searching for a room to rent
-              as a college student in Jamaica, I understand the struggle. So...I
-              decided to do something about it.
-            </p>
-          </div>
+          <Card title="Quick" img={quick} />
+          <Card title="Easy" img={easy} />
+          <Card title="Convenient" img={convenient} />
         </section>
       </div>
+      <footer>
+        <Footer />
+      </footer>
     </div>
   );
 };
