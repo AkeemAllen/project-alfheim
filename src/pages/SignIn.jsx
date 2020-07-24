@@ -1,13 +1,14 @@
 import React from "react";
-import "../stylesheets/SignUp.scss";
+import "../stylesheets/SignIn.scss";
 import { MdAccountCircle, MdLock } from "react-icons/md";
-import { FaGoogle, FaFacebook } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { FaGoogle, FaFacebook } from "react-icons/fa";
+// import Footer from "../components/Footer";
 
-const SignUp = () => {
+const SignIn = () => {
   return (
     <div>
-      <div className="signup-container">
+      <div className="signin-container">
         <div className="nav">
           <Link to="/" className="link">
             <button className="btn">Home</button>
@@ -21,7 +22,7 @@ const SignUp = () => {
             <h3>Alfheim</h3>
           </div>
           <h3 className="message">
-            <strong>Register</strong> to create an account
+            <strong>Sign In</strong> to view you account
           </h3>
           <div className="form-content">
             <h5>using</h5>
@@ -40,51 +41,23 @@ const SignUp = () => {
               <MdAccountCircle size="30" className="input-icon" />
               <input
                 className="form-input"
-                placeholder="Unique UserName"
-              ></input>
-            </div>
-            <div className="input">
-              <MdAccountCircle size="30" className="input-icon" />
-              <input
-                className="form-input"
-                type="text"
-                placeholder="Email"
-              ></input>
-            </div>
-            <div className="input">
-              <MdAccountCircle size="30" className="input-icon" />
-              <input
-                className="form-input"
-                type="text"
-                placeholder="Confirm Email"
+                placeholder="Username/Email"
               ></input>
             </div>
             <div className="input">
               <MdLock size="30" className="input-icon" />
-              <input
-                className="form-input"
-                type="password"
-                placeholder="Password"
-              ></input>
+              <input className="form-input" placeholder="Password"></input>
             </div>
-            <div className="input">
-              <MdLock size="30" className="input-icon" />
-              <input
-                className="form-input"
-                type="password"
-                placeholder="Confirm Password"
-              ></input>
-            </div>
-            <button className="sign-up-btn">Sign Up</button>
+            <button className="sign-in-btn">Sign In</button>
           </div>
         </div>
       </div>
       <div className="question">
         <h3>
-          Already Have An Account?{" "}
+          Don't Have An Account?{" "}
           <strong>
-            <Link className="link" to="/signin">
-              Sign In
+            <Link className="link" to="/registration">
+              Sign Up
             </Link>
           </strong>
         </h3>
@@ -94,4 +67,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;

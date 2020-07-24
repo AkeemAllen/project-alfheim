@@ -19,7 +19,7 @@ const Landing = () => {
           <h1 className="word-logo">Alfheim</h1>
           <button>
             <Link
-              to="/registration"
+              to="/signin"
               style={{ textDecoration: "none", color: "white" }}
             >
               Sign In
