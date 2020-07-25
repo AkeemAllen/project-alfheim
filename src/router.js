@@ -1,6 +1,7 @@
 import LandingPage from "./pages/Landing";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import Gallary from "./pages/Gallary";
 export default [
   {
     path: "/",
@@ -14,5 +15,9 @@ export default [
   {
     path: "/registration",
     component: SignUp,
+  },
+  {
+    path: "/gallary",
+    component: Gallary,
   },
 ];
