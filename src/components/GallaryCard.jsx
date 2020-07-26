@@ -61,7 +61,50 @@ const GallaryCard = () => {
         <div className="gallary-card-back"></div>
       </animated.div> */}
       <Modal show={open} modalClosed={modalHandler}>
-        <div style={{ color: "black" }}>Test</div>
+        <img src={room} alt="room" className="modal-media" />
+        <div className="modal-content">
+          <div className="details">
+            <h3>Room Details</h3>
+            <div className="details-list">
+              <p>
+                {" "}
+                <h4>Amenities:</h4>Water, Electricity, Wifi
+              </p>
+            </div>
+            <div className="details-list">
+              <p>
+                {" "}
+                <h4>Cost Includes:</h4>Water, Electricity, Wifi
+              </p>
+            </div>
+            <div className="details-list">
+              <p>
+                <h4>Rules/Things To note:</h4>Water, Electricity, Wifi
+              </p>
+            </div>
+          </div>
+          <div className="details">
+            <h3>Owner Details</h3>
+            <div className="details-list">
+              <p>
+                {" "}
+                <h4>Name:</h4>Akeem Allen
+              </p>
+            </div>
+            <div className="details-list">
+              <p>
+                {" "}
+                <h4>Email:</h4>allenakeem8@gmail.com
+              </p>
+            </div>
+            <div className="details-list">
+              <p>
+                {" "}
+                <h4>Contact:</h4>123-456-7898
+              </p>
+            </div>
+          </div>
+        </div>
       </Modal>
     </div>
   );
