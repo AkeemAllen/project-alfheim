@@ -3,17 +3,25 @@ import "../stylesheets/component-stylesheets/GallaryCard.scss";
 import room from "../assets/stock photos/room2.jpg";
 import { MdLocationSearching } from "react-icons/md";
 import { useSpring, animated } from "react-spring";
+import Modal from "./Modal";
 
 const trans = (x, y) => `translate(${x}px, ${y}px)`;
 
 const GallaryCard = () => {
-  const [flipped, setFlipped] = useState(true);
+  // const [flipped, setFlipped] = useState(true);
 
-  const { transform, opacity } = useSpring({
-    opacity: flipped ? 1 : 0,
-    transform: `perspective(600px) rotateY(${flipped ? -180 : 0}deg)`,
-    config: { mass: 5, tension: 500, friction: 80 },
-  });
+  // const { transform, opacity } = useSpring({
+  //   opacity: flipped ? 1 : 0,
+  //   transform: `perspective(600px) rotateY(${flipped ? -180 : 0}deg)`,
+  //   config: { mass: 5, tension: 500, friction: 80 },
+  // });
+
+  const [open, setOpen] = useState(false);
+
+  const modalHandler = (event) => {
+    event.preventDefault();
+    setOpen(!open);
+  };
 
   const [hover, setHover] = useSpring(() => ({
     xy: [0, 0],
@@ -24,10 +32,10 @@ const GallaryCard = () => {
       <animated.div
         onMouseMove={() => setHover({ xy: [0, -15] })}
         onMouseLeave={() => setHover({ xy: [0, 0] })}
-        onClick={() => setFlipped((state) => !state)}
+        onClick={modalHandler}
         style={{
           transform: hover.xy.interpolate(trans),
-          opacity,
+          // opacity,
         }}
         className="gallary-card"
       >
@@ -47,17 +55,16 @@ const GallaryCard = () => {
           <h3>$15000/mth</h3>
         </div>
       </animated.div>
-      <animated.div
+      {/* <animated.div
         style={{ opacity: opacity.interpolate((o) => 1 - o), transform }}
       >
         <div className="gallary-card-back"></div>
-      </animated.div>
+      </animated.div> */}
+      <Modal show={open} modalClosed={modalHandler}>
+        <div style={{ color: "black" }}>Test</div>
+      </Modal>
     </div>
   );
 };
-
-// const BackOfCard = () => {
-//   return
-// }
 
 export default GallaryCard;
