@@ -48,7 +48,12 @@ const SignIn = () => {
               <MdLock size="30" className="input-icon" />
               <input className="form-input" placeholder="Password"></input>
             </div>
-            <button className="sign-in-btn">Sign In</button>
+            <Link
+              to="/account"
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              <button className="sign-in-btn">Sign In</button>
+            </Link>
           </div>
         </div>
       </div>
