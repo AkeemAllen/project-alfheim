@@ -1,6 +1,6 @@
 import React from "react";
 import "../stylesheets/component-stylesheets/Card.scss";
-import { useSpring, animated } from "react-spring";
+import { animated } from "react-spring";
 
 const Card = (props) => {
   return (

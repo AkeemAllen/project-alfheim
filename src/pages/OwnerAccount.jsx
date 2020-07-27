@@ -8,7 +8,7 @@ import {
   MdLocationSearching,
   MdMonetizationOn,
   MdHome,
-  MdExitToApp,
+  // MdExitToApp,
 } from "react-icons/md";
 import { FaTransgender } from "react-icons/fa";
 import room from "../assets/stock photos/room1.jpg";

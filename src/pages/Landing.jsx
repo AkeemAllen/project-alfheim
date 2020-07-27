@@ -27,9 +27,9 @@ const Landing = () => {
     config: config.gentle,
   });
 
-  const animateButton = useSpring({
-    transform: "scale(1.1)",
-  });
+  // const animateButton = useSpring({
+  //   transform: "scale(1.1)",
+  // });
 
   return (
     <div className="container">
