@@ -4,7 +4,24 @@ import { FaFilter, FaSearch } from "react-icons/fa";
 import Card from "../components/GallaryCard";
 import { Link } from "react-router-dom";
 
+import { useQuery } from "@apollo/react-hooks";
+import gql from "graphql-tag";
+
+const GET_ROOMS = gql`
+  query allRooms {
+    allRooms {
+      price
+    }
+  }
+`;
+
 const Gallary = () => {
+  const { data, loading, error } = useQuery(GET_ROOMS);
+
+  if (loading) return <div>loading</div>;
+  if (error) return <p>ERROR</p>;
+  if (!data) return <p>Not found</p>;
+
   return (
     <div className="gallary-container">
       <div className="gallary-sidebar">
@@ -32,10 +49,9 @@ const Gallary = () => {
           </div>
         </div>
         <div className="showcase">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          {data.allRooms.map((room) => {
+            return <Card />;
+          })}
         </div>
       </div>
     </div>

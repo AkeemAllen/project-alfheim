@@ -1,8 +1,7 @@
 import LandingPage from "./pages/Landing";
-import SignIn from "./pages/SignIn";
-import SignUp from "./pages/SignUp";
 import Gallary from "./pages/Gallary";
 import OwnerAccount from "./pages/OwnerAccount";
+import AuthPage from "./pages/AuthPage";
 
 export default [
   {
@@ -11,12 +10,8 @@ export default [
     component: LandingPage,
   },
   {
-    path: "/signin",
-    component: SignIn,
-  },
-  {
-    path: "/registration",
-    component: SignUp,
+    path: "/auth",
+    component: AuthPage,
   },
   {
     path: "/gallary",

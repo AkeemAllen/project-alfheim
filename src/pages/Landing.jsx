@@ -27,20 +27,13 @@ const Landing = () => {
     config: config.gentle,
   });
 
-  // const animateButton = useSpring({
-  //   transform: "scale(1.1)",
-  // });
-
   return (
     <div className="container">
       <div className="background-container">
         <nav className="nav">
           <h1 className="word-logo">Alfheim</h1>
           <animated.button>
-            <Link
-              to="/signin"
-              style={{ textDecoration: "none", color: "white" }}
-            >
+            <Link to="/auth" style={{ textDecoration: "none", color: "white" }}>
               Sign In
             </Link>
           </animated.button>
