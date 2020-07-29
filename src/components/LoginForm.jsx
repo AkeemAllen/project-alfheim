@@ -1,12 +1,60 @@
-import React from "react";
+import React, { useState } from "react";
 import "../stylesheets/component-stylesheets/Login.scss";
 import { MdAccountCircle, MdLock } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { FaGoogle, FaFacebook } from "react-icons/fa";
+import useForm from "./useForm";
+import gql from "graphql-tag";
+import { useQuery, useLazyQuery } from "@apollo/react-hooks";
+
+const loginQuery = gql`
+  query login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      token
+    }
+  }
+`;
 
 const Login = () => {
+  const stateSchema = {
+    email: { value: "", error: "" },
+    password: { value: "", error: "" },
+  };
+
+  const validationStateSchema = {
+    email: {
+      required: true,
+      validator: {
+        //eslint-disable-next-line
+        regEx: /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/,
+        error: "Invalid Email Format",
+      },
+    },
+    password: {
+      required: true,
+      validator: {
+        regEx: /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$/,
+        error: "Must be longer than 6 characters, include at least (1) number",
+      },
+    },
+  };
+
+  const onSubmitForm = (state) => {
+    const email = state.email.value;
+    const password = state.password.value;
+    login({ variables: { email, password } });
+  };
+
+  const { state, handleOnChange, handleOnSubmit, disable } = useForm(
+    stateSchema,
+    validationStateSchema,
+    onSubmitForm
+  );
+
+  const [login, { loading, data }] = useLazyQuery(loginQuery);
+
   return (
-    <div className="login-form">
+    <form className="login-form" onSubmit={handleOnSubmit}>
       <div className="form-logo">
         <h3>Alfheim</h3>
       </div>
@@ -28,17 +76,42 @@ const Login = () => {
         <h5>or</h5>
         <div className="input">
           <MdAccountCircle size="30" className="input-icon" />
-          <input className="form-input" placeholder="Username/Email"></input>
+          <input
+            className={state.email.error ? "form-error" : "form-input"}
+            placeholder="Email"
+            name="email"
+            value={state.email.value}
+            onChange={handleOnChange}
+          ></input>
         </div>
+        {state.email.error && (
+          <p style={{ color: "red" }}>{state.email.error}</p>
+        )}
         <div className="input">
           <MdLock size="30" className="input-icon" />
-          <input className="form-input" placeholder="Password"></input>
+          <input
+            className={state.password.error ? "form-error" : "form-input"}
+            placeholder="Password"
+            type="password"
+            name="password"
+            value={state.password.value}
+            onChange={handleOnChange}
+          ></input>
         </div>
-        <Link to="/account" style={{ textDecoration: "none", color: "white" }}>
-          <button className="sign-in-btn">Sign In</button>
-        </Link>
+        {state.password.error && (
+          <p style={{ color: "red" }}>{state.password.error}</p>
+        )}
+        {/* <Link to="/account" style={{ textDecoration: "none", color: "white" }}> */}
+        <button
+          className={disable ? "disabled-btn" : "sign-in-btn"}
+          type="submit"
+          disabled={disable}
+        >
+          Sign In
+        </button>
+        {/* </Link> */}
       </div>
-    </div>
+    </form>
   );
 };
 
