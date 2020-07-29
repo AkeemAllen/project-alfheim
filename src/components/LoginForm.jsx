@@ -6,6 +6,8 @@ import { FaGoogle, FaFacebook } from "react-icons/fa";
 import useForm from "./useForm";
 import gql from "graphql-tag";
 import { useQuery, useLazyQuery } from "@apollo/react-hooks";
+import jwt from "jsonwebtoken";
+import Loading from "./Loading";
 
 const loginQuery = gql`
   query login($email: String!, $password: String!) {
@@ -39,6 +41,10 @@ const Login = () => {
     },
   };
 
+  const validateToken = (token) => {
+    const decodedToken = jwt.verify(token, process.env.REACT_APP_SECRET);
+  };
+
   const onSubmitForm = (state) => {
     const email = state.email.value;
     const password = state.password.value;
@@ -52,6 +58,7 @@ const Login = () => {
   );
 
   const [login, { loading, data }] = useLazyQuery(loginQuery);
+  const [tempLoading, setLoading] = useState(true);
 
   return (
     <form className="login-form" onSubmit={handleOnSubmit}>
@@ -107,7 +114,7 @@ const Login = () => {
           type="submit"
           disabled={disable}
         >
-          Sign In
+          {tempLoading ? <Loading /> : "Sign In"}
         </button>
         {/* </Link> */}
       </div>
