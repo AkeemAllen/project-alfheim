@@ -5,17 +5,46 @@
   height: 100vh;
   .account-sidebar {
     display: flex;
-    // justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: var(--accent-color);
-    min-width: 10rem;
+    background-color: #f1f2fa;
+    min-width: 15rem;
     height: 100%;
     h3 {
       margin-top: 1rem;
       font-size: 1.6rem;
       font-family: var(--styled-font);
-      color: white;
+      // color: var(--primary-color);
+      color: #1b2a68;
+    }
+    .nav {
+      display: flex;
+      flex-direction: column;
+      margin-top: 30%;
+      width: 100%;
+      .nav-item-btn {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        margin-bottom: 1rem;
+        border: none;
+        width: 100%;
+        height: 3rem;
+        background-color: #f1f2fa;
+        font-size: 1rem;
+        transition: background-color;
+        transition-duration: 100ms;
+        // font-family: var(--secondary-font);
+        color: black;
+        &:hover {
+          cursor: pointer;
+          background-color: rgba(27, 42, 104, 0.25);
+        }
+        .icon {
+          margin-left: 0.5rem;
+          margin-right: 0.5rem;
+        }
+      }
     }
     .logout {
       display: flex;
@@ -33,16 +62,8 @@
   .account {
     display: flex;
     flex-direction: column;
-    // margin-top: 3rem;
-    margin-left: 2rem;
-    // .topbar {
-    //   width: 100%;
-    //   margin: 0;
-    //   display: flex;
-    //   justify-content: flex-end;
-    //   align-items: center;
-    //   // background-color: var(--accent-color);
-    // }
+    // margin-left: 2rem;
+    width: 100%;
     .section {
       margin-top: 5rem;
     }
