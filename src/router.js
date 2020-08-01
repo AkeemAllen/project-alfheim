@@ -20,5 +20,6 @@ export default [
   {
     path: "/account",
     component: OwnerAccount,
+    // requiresAuth: true,
   },
 ];

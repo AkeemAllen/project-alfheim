@@ -1,21 +1,17 @@
 import React, { useState } from "react";
 import "../stylesheets/OwnerAccount.scss";
-import {
-  MdFilterList,
-  MdLibraryAdd,
-  MdInsertPhoto,
-  MdMergeType,
-  MdLocationSearching,
-  MdMonetizationOn,
-  MdHome,
-  // MdExitToApp,
-} from "react-icons/md";
-import { FaTransgender } from "react-icons/fa";
+import { MdFilterList, MdLibraryAdd } from "react-icons/md";
 import room from "../assets/stock photos/room1.jpg";
 import room2 from "../assets/stock photos/room3.jpg";
 import { Link } from "react-router-dom";
+import { logOut } from "../redux/actions/authActions";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+import AddRoomModal from "../components/forms/AddRoomModal";
+import EditRoomModal from "../components/forms/EditRoomModal";
 
-const Account = () => {
+const Account = (props) => {
   const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
 
@@ -35,7 +31,7 @@ const Account = () => {
         <Link to="/" style={{ textDecoration: "none" }}>
           <h3>Alfheim</h3>
         </Link>
-        <div className="logout">
+        <div className="logout" onClick={() => props.logOut()}>
           {/* <MdExitToApp size="20" color="white" /> */}
           <h3>Logout</h3>
         </div>
@@ -100,107 +96,12 @@ const Account = () => {
   );
 };
 
-const Backdrop = (props) =>
-  props.show ? <div className="backdrop" onClick={props.clicked}></div> : null;
-
-export default Account;
-
-const AddRoomModal = (props) => {
-  return (
-    <div style={{ display: "flex", justifyContent: "center", margin: "auto" }}>
-      <Backdrop show={props.show} clicked={props.modalClosed} />
-      <div
-        className="account-modal"
-        style={{
-          transform: props.show ? "translateY(0)" : "translateY(-100vh)",
-          opacity: props.show ? 1 : 0,
-        }}
-      >
-        <div className="placeholder-img">
-          <MdInsertPhoto size="50" />
-        </div>
-        <button id="upload">Upload Photo(s)</button>
-        <div className="input-container">
-          <MdMergeType size="18" className="input-icon" />{" "}
-          <input className="input" placeholder="Occupancy Type" />
-        </div>
-        <div className="input-container">
-          <FaTransgender size="18" className="input-icon" />{" "}
-          <input className="input" placeholder="Gender" />
-        </div>
-        <div className="input-container">
-          <MdLocationSearching size="18" className="input-icon" />{" "}
-          <input className="input" placeholder="Location" />
-        </div>
-        <div className="input-container">
-          <MdHome size="18" className="input-icon" />{" "}
-          <input className="input" placeholder="Amenities" />
-        </div>
-        <div className="input-container">
-          <MdMonetizationOn size="18" className="input-icon" />{" "}
-          <input className="input" placeholder="Cost" />
-        </div>
-        <div className="input-container">
-          <textarea
-            name=""
-            id=""
-            cols="30"
-            rows="10"
-            placeholder="Write a full description or other things to note about occupancy..."
-          ></textarea>
-        </div>
-        <button id="post-room">Post Room</button>
-      </div>
-    </div>
-  );
+Account.propTypes = {
+  logOut: PropTypes.func.isRequired,
 };
 
-const EditRoomModal = (props) => {
-  return (
-    <div style={{ display: "flex", justifyContent: "center", margin: "auto" }}>
-      <Backdrop show={props.show} clicked={props.modalClosed} />
-      <div
-        className="account-modal"
-        style={{
-          transform: props.show ? "translateY(0)" : "translateY(-100vh)",
-          opacity: props.show ? 1 : 0,
-        }}
-      >
-        <div className="placeholder-img">
-          <MdInsertPhoto size="50" />
-        </div>
-        <button id="upload">Replace Photo(s)</button>
-        <div className="input-container">
-          <MdMergeType size="18" className="input-icon" />{" "}
-          <input className="input" placeholder="Occupancy Type" />
-        </div>
-        <div className="input-container">
-          <FaTransgender size="18" className="input-icon" />{" "}
-          <input className="input" placeholder="Gender" />
-        </div>
-        <div className="input-container">
-          <MdLocationSearching size="18" className="input-icon" />{" "}
-          <input className="input" placeholder="Location" />
-        </div>
-        <div className="input-container">
-          <MdHome size="18" className="input-icon" />{" "}
-          <input className="input" placeholder="Amenities" />
-        </div>
-        <div className="input-container">
-          <MdMonetizationOn size="18" className="input-icon" />{" "}
-          <input className="input" placeholder="Cost" />
-        </div>
-        <div className="input-container">
-          <textarea
-            name=""
-            id=""
-            cols="30"
-            rows="10"
-            placeholder="Write a full description or other things to note about occupancy..."
-          ></textarea>
-        </div>
-        <button id="post-room">Post Room Update</button>
-      </div>
-    </div>
-  );
-};
+const mapDispatchToProps = (dispatch) => ({
+  logOut: bindActionCreators(logOut, dispatch),
+});
+
+export default connect(null, mapDispatchToProps)(Account);

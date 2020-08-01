@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Login from "../components/LoginForm";
-import Registration from "../components/RegistrationForm";
+import Login from "../components/forms/LoginForm";
+import Registration from "../components/forms/RegistrationForm";
 import "../stylesheets/AuthPage.scss";
 import { Link } from "react-router-dom";
 
