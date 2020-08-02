@@ -60,64 +60,54 @@ const AddRoomModal = (props) => {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", margin: "auto" }}>
-      <Backdrop show={props.show} clicked={props.modalClosed} />
-      <form
-        onSubmit={onSubmit}
-        className="account-modal"
-        style={{
-          transform: props.show ? "translateY(0)" : "translateY(-100vh)",
-          opacity: props.show ? 1 : 0,
-        }}
-      >
-        <div className="placeholder-img">
-          <MdInsertPhoto size="50" />
-        </div>
-        <button id="upload">Upload Photo(s)</button>
-        <div className="input-container">
-          <MdMergeType size="18" className="input-icon" />{" "}
-          <input
-            className="input"
-            placeholder="Occupancy Type"
-            onChange={(e) => setOccupancy(e.target.value)}
-          />
-        </div>
-        <div className="input-container">
-          <FaTransgender size="18" className="input-icon" />{" "}
-          <input
-            className="input"
-            placeholder="Gender"
-            onChange={(e) => setGender(e.target.value)}
-          />
-        </div>
-        <div className="input-container">
-          <MdLocationSearching size="18" className="input-icon" />{" "}
-          <input className="input" placeholder="Location" />
-        </div>
-        <div className="input-container">
-          <MdHome size="18" className="input-icon" />{" "}
-          <input className="input" placeholder="Amenities" />
-        </div>
-        <div className="input-container">
-          <MdMonetizationOn size="18" className="input-icon" />{" "}
-          <input
-            className="input"
-            placeholder="Cost"
-            onChange={(e) => setPrice(e.target.value)}
-          />
-        </div>
-        <div className="input-container">
-          <textarea
-            name=""
-            id=""
-            cols="30"
-            rows="10"
-            placeholder="Write a full description or other things to note about occupancy..."
-          ></textarea>
-        </div>
-        <button id="post-room">Post Room</button>
-      </form>
-    </div>
+    <form onSubmit={onSubmit}>
+      <div className="placeholder-img">
+        <MdInsertPhoto size="50" />
+      </div>
+      <button id="upload">Upload Photo(s)</button>
+      <div className="input-container">
+        <MdMergeType size="18" className="input-icon" />{" "}
+        <input
+          className="input"
+          placeholder="Occupancy Type"
+          onChange={(e) => setOccupancy(e.target.value)}
+        />
+      </div>
+      <div className="input-container">
+        <FaTransgender size="18" className="input-icon" />{" "}
+        <input
+          className="input"
+          placeholder="Gender"
+          onChange={(e) => setGender(e.target.value)}
+        />
+      </div>
+      <div className="input-container">
+        <MdLocationSearching size="18" className="input-icon" />{" "}
+        <input className="input" placeholder="Location" />
+      </div>
+      <div className="input-container">
+        <MdHome size="18" className="input-icon" />{" "}
+        <input className="input" placeholder="Amenities" />
+      </div>
+      <div className="input-container">
+        <MdMonetizationOn size="18" className="input-icon" />{" "}
+        <input
+          className="input"
+          placeholder="Cost"
+          onChange={(e) => setPrice(e.target.value)}
+        />
+      </div>
+      <div className="input-container">
+        <textarea
+          name=""
+          id=""
+          cols="30"
+          rows="10"
+          placeholder="Write a full description or other things to note about occupancy..."
+        ></textarea>
+      </div>
+      <button id="post-room">Post Room</button>
+    </form>
   );
 };
 

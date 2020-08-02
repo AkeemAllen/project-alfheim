@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import AddRoomModal from "../../components/forms/AddRoomModal";
 import EditRoomModal from "../../components/forms/EditRoomModal";
-import { MdFilterList } from "react-icons/md";
-import { FiFilter } from "react-icons/fi";
+// import { MdFilterList } from "react-icons/md";
+// import { FiFilter } from "react-icons/fi";
 import room from "../../assets/stock photos/room1.jpg";
-import room2 from "../../assets/stock photos/room3.jpg";
+import room2 from "../../assets/stock photos/room2.jpg";
+import room3 from "../../assets/stock photos/room3.jpg";
+import room4 from "../../assets/stock photos/room4.jpg";
 import { createUseStyles } from "react-jss";
+import FormHolder from "../../components/FormHolder";
 
 const RoomManagement = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [openEdit, setOpenEdit] = useState(false);
 
   const modalHandler = (event) => {
@@ -22,14 +25,19 @@ const RoomManagement = () => {
   };
   const classes = useStyles();
   return (
-    <div className={classes.container}>
-      <h1 className={classes.header}>Room Management</h1>
-      <hr className={classes.divider} />
-      <div className={classes.toolbar}>
-        <button className={classes.btn} onClick={modalHandler}>
-          Add Room
-        </button>
-        {/* <div className={classes.filter}>
+    <div>
+      <FormHolder show={open} modalClosed={modalHandler}>
+        <AddRoomModal />
+      </FormHolder>
+
+      <div className={classes.container}>
+        <h1 className={classes.header}>Room Management</h1>
+        <hr className={classes.divider} />
+        <div className={classes.toolbar}>
+          <button className={classes.btn} onClick={modalHandler}>
+            Add Room
+          </button>
+          {/* <div className={classes.filter}>
           <div
             style={{
               display: "flex",
@@ -44,21 +52,21 @@ const RoomManagement = () => {
             <h4>All</h4>
           </div>
         </div> */}
+        </div>
+        <div className={classes.rooms}>
+          <img
+            src={room}
+            alt="room"
+            className={classes.image}
+            onClick={modalHandlerEdit}
+          />
+          <img src={room2} alt="room2" className={classes.image} />
+          <img src={room3} alt="room2" className={classes.image} />
+          <img src={room4} alt="room2" className={classes.image} />
+        </div>
+        {/* <AddRoomModal show={open} modalClosed={modalHandler} /> */}
+        {/* <EditRoomModal show={openEdit} modalClosed={modalHandlerEdit} /> */}
       </div>
-      <div className={classes.rooms}>
-        <img
-          src={room}
-          alt="room"
-          className={classes.image}
-          onClick={modalHandlerEdit}
-        />
-        <img src={room2} alt="room2" className={classes.image} />
-        <img src={room2} alt="room2" className={classes.image} />
-        <img src={room2} alt="room2" className={classes.image} />
-        <img src={room2} alt="room2" className={classes.image} />
-      </div>
-      <AddRoomModal show={open} modalClosed={modalHandler} />
-      <EditRoomModal show={openEdit} modalClosed={modalHandlerEdit} />
     </div>
   );
 };
@@ -69,6 +77,7 @@ const useStyles = createUseStyles({
   container: {
     display: "flex",
     flexDirection: "column",
+    height: "100vh",
   },
   header: {
     marginTop: "2rem",

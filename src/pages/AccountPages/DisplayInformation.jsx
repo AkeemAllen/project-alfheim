@@ -1,5 +1,5 @@
 import React from "react";
-import { MdLibraryAdd, MdEdit } from "react-icons/md";
+import { MdEdit } from "react-icons/md";
 import { createUseStyles } from "react-jss";
 
 const DisplayInformation = () => {
@@ -33,25 +33,6 @@ const DisplayInformation = () => {
             </div>
           </div>
         </div>
-        {/* <div className="info">
-          <h3>Display Name</h3>
-          <p>Akeem Allen</p>
-        </div>
-        <div className="info">
-          <h3>Email</h3>
-          <p>allenakeem8@gmail.com</p>
-        </div>
-        <div className="info">
-          <header style={{ display: "flex", flexDirection: "row" }}>
-            <h3>Contact Number</h3>
-            <button className="add-number">
-              <MdLibraryAdd />
-              add contact
-            </button>
-          </header>
-          <p>504-123-4567</p>
-          <p>504-123-4567</p>
-        </div> */}
       </div>
     </div>
   );
