@@ -10,6 +10,7 @@ import {
 import { FaTransgender } from "react-icons/fa";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
+import { createUseStyles } from "react-jss";
 
 const addRoomMutation = gql`
   mutation createRoom($price: Int!, $occupancy: String!, $gender: String!) {
@@ -55,60 +56,138 @@ const AddRoomModal = (props) => {
   const [gender, setGender] = useState();
   const [occupancy, setOccupancy] = useState();
 
-  const onSubmit = () => {
+  const onSubmit = (event) => {
+    event.preventDefault();
     addRoom({ variables: { price, occupancy, gender } });
   };
 
+  const classes = useStyles();
+
   return (
-    <form onSubmit={onSubmit}>
-      <div className="placeholder-img">
-        <MdInsertPhoto size="50" />
+    <form onSubmit={onSubmit} className={classes.container}>
+      <div className={classes.image}></div>
+      <button className={classes.uploadPhotoBtn}>Upload Photo</button>
+      <div className={classes.inputContainer}>
+        <h4 className={classes.label}>Occupancy Type</h4>
+        <input type="text" className={classes.input} />
       </div>
-      <button id="upload">Upload Photo(s)</button>
-      <div className="input-container">
-        <MdMergeType size="18" className="input-icon" />{" "}
-        <input
-          className="input"
-          placeholder="Occupancy Type"
-          onChange={(e) => setOccupancy(e.target.value)}
-        />
+      <div className={classes.inputContainer}>
+        <h4 className={classes.label}>Gender</h4>
+        <input type="text" className={classes.input} />
       </div>
-      <div className="input-container">
-        <FaTransgender size="18" className="input-icon" />{" "}
-        <input
-          className="input"
-          placeholder="Gender"
-          onChange={(e) => setGender(e.target.value)}
-        />
+      <div className={classes.inputContainer}>
+        <h4 className={classes.label}>Amenities</h4>
+        <input type="text" className={classes.input} />
       </div>
-      <div className="input-container">
-        <MdLocationSearching size="18" className="input-icon" />{" "}
-        <input className="input" placeholder="Location" />
+      <div className={classes.inputContainer}>
+        <h4 className={classes.label}>Rules</h4>
+        <input type="text" className={classes.input} />
       </div>
-      <div className="input-container">
-        <MdHome size="18" className="input-icon" />{" "}
-        <input className="input" placeholder="Amenities" />
+      <div className={classes.inputContainer}>
+        <h4 className={classes.label}>Price</h4>
+        <input type="number" className={classes.input} />
       </div>
-      <div className="input-container">
-        <MdMonetizationOn size="18" className="input-icon" />{" "}
-        <input
-          className="input"
-          placeholder="Cost"
-          onChange={(e) => setPrice(e.target.value)}
-        />
+      <div className={classes.inputContainer}>
+        <h4 className={classes.label}>Anything Else?</h4>
+        <textarea type="text" className={classes.textarea} />
       </div>
-      <div className="input-container">
-        <textarea
-          name=""
-          id=""
-          cols="30"
-          rows="10"
-          placeholder="Write a full description or other things to note about occupancy..."
-        ></textarea>
+      <div className={classes.actionContainer}>
+        <button className={classes.button} type="submit">
+          Post Room
+        </button>
+        <button className={classes.cancelBtn} type="button">
+          Cancel
+        </button>
       </div>
-      <button id="post-room">Post Room</button>
     </form>
   );
 };
 
 export default AddRoomModal;
+
+const useStyles = createUseStyles({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    marginTop: "2rem",
+    width: "40rem",
+  },
+  image: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "10rem",
+    borderRadius: "10px",
+    backgroundColor: "#e8e7ea",
+    marginBottom: "1rem",
+  },
+  inputContainer: {
+    display: "flex",
+    flexDirection: "column",
+    marginBottom: "1rem",
+  },
+  label: {
+    fontWeight: 400,
+    opacity: 0.5,
+    marginBottom: "0.5rem",
+  },
+  input: {
+    border: "none",
+    borderRadius: "5px",
+    height: "2rem",
+    boxShadow: "0px 0px 3px 1px rgba(0,0,0,0.1)",
+  },
+  textarea: {
+    border: "none",
+    borderRadius: "5px",
+    height: "5rem",
+    boxShadow: "0px 0px 3px 1px rgba(0,0,0,0.1)",
+  },
+  actionContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: "3rem",
+  },
+  button: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    border: "none",
+    width: "7rem",
+    backgroundColor: "var(--primary-color)",
+    borderRadius: "5px",
+    padding: "5px 7px",
+    color: "white",
+    fontWeight: "500",
+    fontSize: "1rem",
+  },
+  uploadPhotoBtn: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    border: "none",
+    width: "10rem",
+    backgroundColor: "var(--primary-color)",
+    borderRadius: "5px",
+    padding: "5px 7px",
+    color: "white",
+    fontWeight: "500",
+    fontSize: "1rem",
+    marginBottom: "1rem",
+  },
+  cancelBtn: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    border: "none",
+    width: "7rem",
+    backgroundColor: "white",
+    borderRadius: "5px",
+    padding: "5px 7px",
+    color: "black",
+    fontWeight: "500",
+    fontSize: "1rem",
+  },
+});

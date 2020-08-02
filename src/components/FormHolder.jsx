@@ -30,8 +30,10 @@ export default FormHolder;
 const useStyles = createUseStyles({
   container: {
     display: "flex",
+    justifyContent: "center",
+    // alignItems: "center",
     width: "80vw",
-    height: "200vh",
+    height: "100vh",
     position: "fixed",
     top: 0,
     right: 0,

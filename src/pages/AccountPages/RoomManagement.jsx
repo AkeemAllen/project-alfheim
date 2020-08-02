@@ -9,9 +9,10 @@ import room3 from "../../assets/stock photos/room3.jpg";
 import room4 from "../../assets/stock photos/room4.jpg";
 import { createUseStyles } from "react-jss";
 import FormHolder from "../../components/FormHolder";
+import Room from "../../components/Room";
 
 const RoomManagement = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
 
   const modalHandler = (event) => {
@@ -54,15 +55,8 @@ const RoomManagement = () => {
         </div> */}
         </div>
         <div className={classes.rooms}>
-          <img
-            src={room}
-            alt="room"
-            className={classes.image}
-            onClick={modalHandlerEdit}
-          />
-          <img src={room2} alt="room2" className={classes.image} />
-          <img src={room3} alt="room2" className={classes.image} />
-          <img src={room4} alt="room2" className={classes.image} />
+          <Room />
+          <Room />
         </div>
         {/* <AddRoomModal show={open} modalClosed={modalHandler} /> */}
         {/* <EditRoomModal show={openEdit} modalClosed={modalHandlerEdit} /> */}
@@ -78,6 +72,7 @@ const useStyles = createUseStyles({
     display: "flex",
     flexDirection: "column",
     height: "100vh",
+    width: "100%",
   },
   header: {
     marginTop: "2rem",
@@ -116,8 +111,10 @@ const useStyles = createUseStyles({
   },
   rooms: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr 1fr",
-    width: "5rem",
+    gridTemplateColumns: "1fr",
+    rowGap: "3rem",
+    justifyContent: "center",
+    width: "100%",
     marginLeft: "2rem",
     marginTop: "1rem",
   },

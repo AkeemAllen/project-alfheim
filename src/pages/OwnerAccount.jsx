@@ -7,10 +7,10 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import RoomManagement from "./AccountPages/RoomManagement";
 import { FiFileText, FiHome } from "react-icons/fi";
-import DisplayInformation from "./AccountPages/DisplayInformation";
+import AccountSettings from "./AccountPages/AccountSettings";
 
 const Account = (props) => {
-  const [current, setCurrent] = useState("roomManagement");
+  const [current, setCurrent] = useState("accountSettings");
 
   return (
     <div className="account-container">
@@ -39,7 +39,7 @@ const Account = (props) => {
       </div>
       <div className="account">
         {current === "roomManagement" ? <RoomManagement /> : null}
-        {current === "accountSettings" ? <DisplayInformation /> : null}
+        {current === "accountSettings" ? <AccountSettings /> : null}
       </div>
     </div>
   );
