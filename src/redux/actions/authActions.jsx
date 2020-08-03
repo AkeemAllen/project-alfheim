@@ -4,6 +4,7 @@ import {
   REGISTER_USER,
   REGISTER_USER_FAILURE,
   LOG_OUT,
+  UPDATE_USER_INFO,
 } from "./types";
 import jwt from "jsonwebtoken";
 
@@ -22,6 +23,13 @@ export const authorizeUser = (token) => (dispatch) => {
       payload: err,
     });
   }
+};
+
+export const updateUser = (userdata) => (dispatch) => {
+  dispatch({
+    type: UPDATE_USER_INFO,
+    payload: userdata,
+  });
 };
 
 export const createNewUser = () => (dispatch) => {};

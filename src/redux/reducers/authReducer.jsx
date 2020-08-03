@@ -4,6 +4,7 @@ import {
   REGISTER_USER,
   REGISTER_USER_FAILURE,
   LOG_OUT,
+  UPDATE_USER_INFO,
 } from "../actions/types";
 
 const initialState = {
@@ -12,6 +13,11 @@ const initialState = {
   registrationError: null,
   newUser: null,
   userId: null,
+  username: "allenakeem8",
+  firstname: "Akeem",
+  lastname: "Allen",
+  email: "test@gmail.com",
+  contact: "123-456-7890",
 };
 
 export default function (state = initialState, action) {
@@ -25,12 +31,23 @@ export default function (state = initialState, action) {
         ...state,
         auth: isVerified,
         userId: action.payload.userId,
+        email: action.payload.email,
+        username: action.payload.username,
+        firstname: action.payload.firstname,
+        lastname: action.payload.lastname,
+        contact: action.payload.contact,
       };
     }
     case AUTH_USER_FAILURE: {
       return {
         ...state,
         loginError: action.payload,
+      };
+    }
+    case UPDATE_USER_INFO: {
+      return {
+        ...state,
+        ...action.payload,
       };
     }
     case REGISTER_USER: {

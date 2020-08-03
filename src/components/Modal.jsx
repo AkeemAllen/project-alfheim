@@ -1,12 +1,21 @@
 import React from "react";
 import "../stylesheets/component-stylesheets/Modal.scss";
+import { createUseStyles } from "react-jss";
 
 const Modal = (props) => {
+  const useStyles = createUseStyles({ ...props.modalStyles });
+  const classes = useStyles();
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        width: "75vw",
+      }}
+    >
       <Backdrop show={props.show} clicked={props.modalClosed} />
       <div
-        className="modal"
+        className={classes.container}
         style={{
           transform: props.show ? "translateY(0)" : "translateY(-100vh)",
           opacity: props.show ? 1 : 0,

@@ -91,7 +91,7 @@ const Login = (props) => {
 
   return (
     <div>
-      <SnackBar message="Verify Your Email" triggered={true} />
+      <SnackBar message="Verify Your Email" triggered={triggered} />
       <form className="login-form" onSubmit={handleOnSubmit}>
         <div className="form-logo">
           <h3>Alfheim</h3>
