@@ -1,56 +1,40 @@
 import React, { useState } from "react";
-import Backdrop from "../Backdrop";
-import {
-  MdInsertPhoto,
-  MdMergeType,
-  MdLocationSearching,
-  MdMonetizationOn,
-  MdHome,
-} from "react-icons/md";
-import { FaTransgender } from "react-icons/fa";
 import { useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { createUseStyles } from "react-jss";
 
 const addRoomMutation = gql`
-  mutation createRoom($price: Int!, $occupancy: String!, $gender: String!) {
+  mutation createRoom(
+    $price: Int!
+    $occupancy: String!
+    $gender: String!
+    $street: String!
+    $town_city: String!
+    $parish: String!
+  ) {
     createRoom(
-      input: { price: $price, occupancy: $occupancy, gender: $gender }
+      input: {
+        price: $price
+        occupancy: $occupancy
+        gender: $gender
+        street: $street
+        town_city: $town_city
+        parish: $parish
+      }
     ) {
       price
       occupancy
       gender
-      id
-    }
-  }
-`;
-
-const addLocationMutation = gql`
-  mutation addLocation(
-    $street: String!
-    $parish: String!
-    $town_city: String!
-    $room: ID!
-  ) {
-    addLocation(
-      input: {
-        street: $street
-        parish: $parish
-        town_city: $town_city
-        room: $room
-      }
-    ) {
       street
-      parish
       town_city
-      id
+      parish
     }
   }
 `;
 
 const AddRoomModal = (props) => {
-  const [addRoom, addRoomresult] = useMutation(addRoomMutation);
-  const [addLocation, addLocationResult] = useMutation(addLocationMutation);
+  //eslint-disable-next-line
+  const [addRoom, { loading, data, error }] = useMutation(addRoomMutation);
 
   const [price, setPrice] = useState();
   const [gender, setGender] = useState();
@@ -58,7 +42,20 @@ const AddRoomModal = (props) => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    addRoom({ variables: { price, occupancy, gender } });
+    try {
+      addRoom({
+        variables: {
+          price: parseInt(price, 10),
+          occupancy,
+          gender,
+          street: "600 South Pine Hill Rd",
+          parish: "Georgia",
+          town_city: "Griffin",
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const classes = useStyles();
@@ -69,11 +66,21 @@ const AddRoomModal = (props) => {
       <button className={classes.uploadPhotoBtn}>Upload Photo</button>
       <div className={classes.inputContainer}>
         <h4 className={classes.label}>Occupancy Type</h4>
-        <input type="text" className={classes.input} />
+        <input
+          type="text"
+          className={classes.input}
+          value={occupancy}
+          onChange={(e) => setOccupancy(e.target.value)}
+        />
       </div>
       <div className={classes.inputContainer}>
         <h4 className={classes.label}>Gender</h4>
-        <input type="text" className={classes.input} />
+        <input
+          type="text"
+          className={classes.input}
+          value={gender}
+          onChange={(e) => setGender(e.target.value)}
+        />
       </div>
       <div className={classes.inputContainer}>
         <h4 className={classes.label}>Amenities</h4>
@@ -85,7 +92,12 @@ const AddRoomModal = (props) => {
       </div>
       <div className={classes.inputContainer}>
         <h4 className={classes.label}>Price</h4>
-        <input type="number" className={classes.input} />
+        <input
+          type="number"
+          className={classes.input}
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+        />
       </div>
       <div className={classes.inputContainer}>
         <h4 className={classes.label}>Anything Else?</h4>

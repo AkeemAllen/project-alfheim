@@ -16,6 +16,7 @@ const registerMutation = gql`
         lastname: ""
         email: $email
         password: $password
+        contact: ""
       }
     ) {
       email

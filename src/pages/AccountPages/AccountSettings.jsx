@@ -4,6 +4,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import gql from "graphql-tag";
 import { useMutation } from "react-apollo";
+import { updateUser } from "../../redux/actions/authActions";
+import { bindActionCreators } from "redux";
 
 const userMutation = gql`
   mutation updateUser(
@@ -32,6 +34,7 @@ const userMutation = gql`
 `;
 
 const AccountSettings = (props) => {
+  //eslint-disable-next-line
   const [update, { data, error }] = useMutation(userMutation);
   const classes = useStyles();
   const { username, firstname, lastname, email, contact } = props;
@@ -60,7 +63,7 @@ const AccountSettings = (props) => {
           email: emailState,
           contact: contactState,
         },
-      }).then((result) => console.log(result.data.userData));
+      }).then((result) => props.updateUser(result.data.updateUser));
     } else {
     }
   };
@@ -175,6 +178,7 @@ const AccountSettings = (props) => {
 };
 
 AccountSettings.propTypes = {
+  updateUser: PropTypes.func.isRequired,
   username: PropTypes.string,
   firstname: PropTypes.string,
   lastname: PropTypes.string,
@@ -190,7 +194,11 @@ const mapStateToProps = (state) => ({
   contact: state.auth.contact,
 });
 
-export default connect(mapStateToProps, [])(AccountSettings);
+const mapDispatchToProps = (dispatch) => ({
+  updateUser: bindActionCreators(updateUser, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountSettings);
 
 const useStyles = createUseStyles({
   container: {
