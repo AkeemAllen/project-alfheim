@@ -6,7 +6,7 @@ import { FaGoogle, FaFacebook } from "react-icons/fa";
 import useForm from "./useForm";
 import gql from "graphql-tag";
 import Loading from "../Loading";
-import { useSpring, animated, config } from "react-spring";
+import { useSpring, animated } from "react-spring";
 import { authorizeUser } from "../../redux/actions/authActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
@@ -23,23 +23,28 @@ const loginQuery = gql`
 `;
 
 const Login = (props) => {
+  //eslint-disable-next-line
   const [triggered, setTriggered] = useState(false);
-  const [login, { loading, data, error }] = useLazyQuery(loginQuery);
+  const [login, { loading, data }] = useLazyQuery(loginQuery);
 
   const isMounted = useRef(false);
 
-  useEffect(() => {
-    if (isMounted.current) {
-      try {
-        props.authorizeUser(data.login.token);
-        console.log("running");
-      } catch (err) {
-        console.log(err);
+  useEffect(
+    () => {
+      if (isMounted.current) {
+        try {
+          props.authorizeUser(data.login.token);
+          console.log("running");
+        } catch (err) {
+          console.log(err);
+        }
+      } else {
+        isMounted.current = true;
       }
-    } else {
-      isMounted.current = true;
-    }
-  }, [data]);
+    },
+    //eslint-disable-next-line
+    [data]
+  );
 
   const stateSchema = {
     email: { value: "", error: "" },
@@ -76,6 +81,7 @@ const Login = (props) => {
     onSubmitForm
   );
 
+  //eslint-disable-next-line
   const { transform, color, backgroundColor } = useSpring({
     config: { mass: 1, tension: 1000, friction: 5 },
     transform: `translateX(4px)`,
@@ -83,6 +89,7 @@ const Login = (props) => {
     backgroundColor: `#ff0055`,
   });
 
+  //eslint-disable-next-line
   const { auth, user, loginError } = props;
 
   if (auth) {
