@@ -1,29 +1,26 @@
 import React, { useState } from "react";
 import AddRoomModal from "../../components/forms/AddRoomModal";
-import EditRoomModal from "../../components/forms/EditRoomModal";
+// import EditRoomModal from "../../components/forms/EditRoomModal";
 // import { MdFilterList } from "react-icons/md";
 // import { FiFilter } from "react-icons/fi";
-import room from "../../assets/stock photos/room1.jpg";
-import room2 from "../../assets/stock photos/room2.jpg";
-import room3 from "../../assets/stock photos/room3.jpg";
-import room4 from "../../assets/stock photos/room4.jpg";
 import { createUseStyles } from "react-jss";
 import FormHolder from "../../components/FormHolder";
 import Room from "../../components/Room";
 
 const RoomManagement = () => {
   const [open, setOpen] = useState(false);
-  const [openEdit, setOpenEdit] = useState(false);
+  // const [openEdit, setOpenEdit] = useState(false);
 
   const modalHandler = (event) => {
     event.preventDefault();
     setOpen(!open);
   };
 
-  const modalHandlerEdit = (event) => {
-    event.preventDefault();
-    setOpenEdit(!openEdit);
-  };
+  // const modalHandlerEdit = (event) => {
+  //   event.preventDefault();
+  //   setOpenEdit(!openEdit);
+  // };
+
   const classes = useStyles();
   return (
     <div>
