@@ -25,7 +25,9 @@ const loginQuery = gql`
 const Login = (props) => {
   //eslint-disable-next-line
   const [triggered, setTriggered] = useState(false);
-  const [login, { loading, data }] = useLazyQuery(loginQuery);
+  const [login, { loading, data }] = useLazyQuery(loginQuery, {
+    errorPolicy: "all",
+  });
 
   const isMounted = useRef(false);
 
@@ -98,7 +100,9 @@ const Login = (props) => {
 
   return (
     <div>
-      <SnackBar message="Verify Your Email" triggered={triggered} />
+      {props.triggered ? (
+        <SnackBar message="Verify Your Email" triggered={props.triggered} />
+      ) : null}
       <form className="login-form" onSubmit={handleOnSubmit}>
         <div className="form-logo">
           <h3>Alfheim</h3>
@@ -165,11 +169,13 @@ Login.propTypes = {
   authorizeUser: PropTypes.func.isRequired,
   auth: PropTypes.bool.isRequired,
   loginError: PropTypes.string,
+  triggered: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth.auth,
   loginError: state.auth.loginError,
+  triggered: state.snackBar.triggered,
 });
 
 const mapDispatchToProps = (dispatch) => ({

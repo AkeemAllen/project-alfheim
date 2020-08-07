@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 import { Spring } from "react-spring/renderprops";
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { unMountSnackBar } from "../redux/actions/snackBarActions";
 
 const SnackBar = (props) => {
-  const { triggered } = props;
+  const { triggered, message, success, endAnimation } = props;
   const [reset, setReset] = useState(false);
   const [reverse, setReverse] = useState(false);
   const [delay, setDelay] = useState(0);
+
   return (
     <Spring
       from={{ opacity: 0, transform: `translateX(${triggered ? 150 : 0}px)` }}
@@ -15,19 +20,49 @@ const SnackBar = (props) => {
         setReset(true);
         setReverse(true);
         setDelay(3000);
+        setTimeout(() => {
+          endAnimation();
+        }, 4000);
       }}
       reset={reset}
       reverse={reverse}
       delay={delay}
     >
       {({ transform, opacity }) => (
-        <div style={{ transform, opacity, ...styles.snackbar }}>
-          <p style={styles.message}>{props.message}</p>
+        <div
+          style={{
+            transform,
+            opacity,
+            backgroundColor: success
+              ? "var(--accent-color)"
+              : "var(--error-color)",
+            ...styles.snackbar,
+          }}
+        >
+          <p style={styles.message}>{message}</p>
         </div>
       )}
     </Spring>
   );
 };
+
+SnackBar.propTypes = {
+  triggered: PropTypes.bool,
+  message: PropTypes.string,
+  success: PropTypes.bool,
+};
+
+const mapStateToProps = (state) => ({
+  triggered: state.snackBar.triggered,
+  message: state.snackBar.message,
+  success: state.snackBar.success,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  unMountSnackBar: bindActionCreators(unMountSnackBar, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SnackBar);
 
 const styles = {
   snackbar: {
@@ -37,17 +72,16 @@ const styles = {
     top: 30,
     right: 50,
     overflow: "hidden",
-    width: "200px",
-    backgroundColor: "white",
+    width: "300px",
     height: "50px",
     borderRadius: "5px",
-    // boxShadow: `15px 15px 10px 5px rgba(0,0,0,0.25)`,
+    boxShadow: `1px 1px 2px 2px rgba(0,0,0,0.1)`,
   },
   message: {
     marginLeft: "10px",
-    fontFamily: "Poppins",
-    color: "#004c3f",
+    // fontFamily: "Poppins",
+    color: "white",
+    fontWeight: 700,
+    fontSize: "1.1rem",
   },
 };
-
-export default SnackBar;

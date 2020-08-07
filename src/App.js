@@ -19,6 +19,7 @@ const App = () => {
               />
             ) : (
               <PrivateRoute
+                key={index}
                 path="/account"
                 component={(props) => <route.component {...props} />}
               />

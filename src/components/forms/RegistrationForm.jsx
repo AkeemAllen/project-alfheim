@@ -6,6 +6,7 @@ import useForm from "./useForm";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
 import SnackBar from "../SnackBar";
+import Loading from "../Loading";
 
 const registerMutation = gql`
   mutation register($email: String!, $password: String!) {
@@ -25,6 +26,13 @@ const registerMutation = gql`
 `;
 const Registration = () => {
   const [triggered, setTriggered] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const handleAnimationEnd = () => {
+    setTriggered(false);
+  };
+
   const stateSchema = {
     email: { value: "", error: "" },
     password: { value: "", error: "" },
@@ -59,18 +67,28 @@ const Registration = () => {
   function onSubmitForm(state) {
     const email = state.email.value;
     const password = state.password.value;
-    try {
-      register({ variables: { email, password } });
+    register({ variables: { email, password } }).then((result) => {
+      console.log(result);
+      setMessage("Verify Your Email");
       setTriggered(true);
-    } catch (error) {
-      console.log(error);
-    }
+      setSuccess(true);
+    });
+    // try {
+    //   } catch (err) {
+    //     console.log(err);
+    //     console.log(error);
+    //     setMessage(err);
+    //     setTriggered(true);
+    //     setSuccess(false);
+    // }
   }
 
   //eslint-disable-next-line
-  const [register, { data, error }] = useMutation(registerMutation);
+  const [register, { loading, data, error }] = useMutation(registerMutation, {
+    errorPolicy: "all",
+  });
   if (error) {
-    console.log("error ", error);
+    console.log(error);
   }
 
   const { state, handleOnChange, handleOnSubmit, disable } = useForm(
@@ -80,7 +98,14 @@ const Registration = () => {
   );
   return (
     <div>
-      <SnackBar message="Verify your email" triggered={triggered} />
+      {triggered ? (
+        <SnackBar
+          message={message}
+          triggered={triggered}
+          success={success}
+          endAnimation={handleAnimationEnd}
+        />
+      ) : null}
       <form className="registration-form" onSubmit={handleOnSubmit}>
         <div className="form-logo">
           <h3>Alfheim</h3>
@@ -147,7 +172,7 @@ const Registration = () => {
             type="submit"
             disabled={disable}
           >
-            Sign Up
+            {loading ? <Loading /> : "Sign Up"}
           </button>
         </div>
       </form>
