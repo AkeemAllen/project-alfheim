@@ -1,6 +1,8 @@
 :root {
   --prev-primary-color: #140f2d;
-  --primary-color: #1b2a68;
+  --main-color: #263d9c;
+  --darker-main-color: #1b2a68;
+  /* --primary-color: #1b2a68; */
   --secondary-color: #54defd;
   --accent-color: #00bd9d;
   --accent-color-darker: #004c3f;

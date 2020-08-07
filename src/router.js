@@ -2,6 +2,7 @@ import LandingPage from "./pages/Landing";
 import Gallary from "./pages/Gallary";
 import OwnerAccount from "./pages/OwnerAccount";
 import AuthPage from "./pages/AuthPage";
+import Test from "./pages/TestPage";
 
 export default [
   {
@@ -20,6 +21,11 @@ export default [
   {
     path: "/account",
     component: OwnerAccount,
+    // requiresAuth: true,
+  },
+  {
+    path: "/components",
+    component: Test,
     // requiresAuth: true,
   },
 ];
