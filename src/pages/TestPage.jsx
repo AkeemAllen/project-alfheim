@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BoxedInput } from "../components/Inputs";
+import { LineInput } from "../components/Inputs";
 
 const Test = () => {
   const [username, setUsername] = useState("");
@@ -8,7 +8,7 @@ const Test = () => {
   };
   return (
     <div style={styles.container}>
-      <BoxedInput
+      <LineInput
         type="text"
         label="Username"
         name="Username"
@@ -29,7 +29,7 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
-    backgroundColor: "rgba(38, 61, 156, 0.95)",
-    // backgroundColor: "white",
+    // backgroundColor: "rgba(38, 61, 156, 0.95)",
+    backgroundColor: "white",
   },
 };
