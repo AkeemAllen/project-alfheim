@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSpring, animated, config } from "react-spring";
 
-export const Button = ({ text }) => {
+export const NormalButton = ({ text, onClick }) => {
   const [hover, setHover] = useState(false);
 
   const { backgroundColor } = useSpring({
@@ -14,6 +14,7 @@ export const Button = ({ text }) => {
       style={{ backgroundColor, ...styles.normalButton }}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      onClick={onClick}
     >
       {text}
     </animated.button>
