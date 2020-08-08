@@ -1,33 +1,22 @@
 import React, { useState } from "react";
-import SnackBar from "../components/SnackBars";
-import Button from "../components/Buttons";
+import { BoxedInput } from "../components/Inputs";
 
 const Test = () => {
-  const [mounted, setMount] = useState(false);
-  const [status, setStatus] = useState("");
-
-  const handleClick = (status) => {
-    setMount(!mounted);
-    setStatus(status);
+  const [username, setUsername] = useState("");
+  const handleChange = (event) => {
+    setUsername(event.target.value);
   };
   return (
     <div style={styles.container}>
-      <Button
-        text="Toggle SnackBar"
-        variant=""
-        onClick={() => handleClick("success")}
+      <BoxedInput
+        type="text"
+        label="Username"
+        name="Username"
+        value={username}
+        onChange={handleChange}
+        invalidInput={false}
+        errorMessage="Invalid Credentials"
       />
-      <Button
-        text="Toggle SnackBar Error"
-        variant=""
-        onClick={() => handleClick("error")}
-      />
-      <Button
-        text="Toggle SnackBar Warning"
-        variant=""
-        onClick={() => handleClick("warning")}
-      />
-      <SnackBar text="Verify Your Email" status={status} mounted={mounted} />
     </div>
   );
 };
@@ -41,5 +30,6 @@ const styles = {
     alignItems: "center",
     height: "100vh",
     backgroundColor: "rgba(38, 61, 156, 0.95)",
+    // backgroundColor: "white",
   },
 };

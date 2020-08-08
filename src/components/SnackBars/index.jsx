@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import success from "../../assets/icons/Tick Icon.png";
 import error from "../../assets/icons/Error Icon.png";
 import document from "../../assets/icons/Document Icon.png";
@@ -6,8 +6,6 @@ import warning from "../../assets/icons/Warning Icon.png";
 import { useSpring, animated, config } from "react-spring";
 
 const SnackBar = ({ text, status, mounted }) => {
-  //   const [mounted, setMount] = useState(false);
-
   const { transform, opacity } = useSpring({
     from: { opacity: 0, transform: "translateX(0px)" },
     to: {
