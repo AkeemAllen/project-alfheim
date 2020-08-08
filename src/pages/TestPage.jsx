@@ -1,22 +1,10 @@
 import React, { useState } from "react";
-import { LineInput } from "../components/Inputs";
+import { Checkbox } from "../components/Inputs";
 
 const Test = () => {
-  const [username, setUsername] = useState("");
-  const handleChange = (event) => {
-    setUsername(event.target.value);
-  };
   return (
     <div style={styles.container}>
-      <LineInput
-        type="text"
-        label="Username"
-        name="Username"
-        value={username}
-        onChange={handleChange}
-        invalidInput={false}
-        errorMessage="Invalid Credentials"
-      />
+      <Checkbox />
     </div>
   );
 };
