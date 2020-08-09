@@ -1,47 +1,13 @@
 import React from "react";
-import { createUseStyles } from "react-jss";
+import "../../stylesheets/Checkbox.scss";
 
-const Checkbox = () => {
-  const classes = useStyles();
+const Checkbox = ({ onClick }) => {
   return (
-    <div className={classes.container}>
-      <input type="checkbox" className={classes.checkbox} />
-      <label for="check" className={classes.checkmark}></label>
+    <div className="checkbox-container">
+      <input type="checkbox" id="check" hidden onClick={onClick} />
+      <label for="check" className="checkmark"></label>
     </div>
   );
 };
 
 export default Checkbox;
-
-const useStyles = createUseStyles({
-  container: {
-    position: "absoulte",
-    top: "50%",
-    left: "50%",
-    transform: `translate(-50%, -50%)`,
-  },
-  checkbox: {
-    "&:checked ~ .checkmark": {
-      backgroundColor: "#263D9C",
-    },
-  },
-  checkmark: {
-    display: "block",
-    width: "80px",
-    height: "80px",
-    backgroundColor: "#eee",
-    borderRadius: "10px",
-    position: "relative",
-    "&::after": {
-      content: '""',
-      position: "absolute",
-      width: "25px",
-      height: "45px",
-      borderRight: "5px solid #fff",
-      borderBottom: "5px solid #fff",
-      top: "40%",
-      left: "50%",
-      transform: `translate(-50%, -50%) rotateZ(40deg)`,
-    },
-  },
-});
