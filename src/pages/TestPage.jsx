@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Checkbox } from "../components/Inputs";
+import React from "react";
+import RoomCard from "../components/RoomCard";
 
 const Test = () => {
   return (
     <div style={styles.container}>
-      <Checkbox />
+      <RoomCard />
     </div>
   );
 };
@@ -17,7 +17,8 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
-    // backgroundColor: "rgba(38, 61, 156, 0.95)",
-    backgroundColor: "white",
+    width: "100vw",
+    backgroundColor: "rgba(38, 61, 156, 0.95)",
+    // backgroundColor: "white",
   },
 };

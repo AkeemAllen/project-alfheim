@@ -1,11 +1,19 @@
 import React, { useState } from "react";
 import { useSpring, animated, config } from "react-spring";
 
-export const NormalButton = ({ text, onClick, disabled }) => {
+export const NormalButton = ({
+  text,
+  onClick,
+  disabled,
+  color,
+  darkerColor,
+}) => {
   const [hover, setHover] = useState(false);
 
   const { backgroundColor } = useSpring({
-    backgroundColor: `#${hover ? "1b2a68" : "263d9c"}`,
+    backgroundColor: `#${
+      hover ? (darkerColor ? darkerColor : "1b2a68") : color ? color : "263d9c"
+    }`,
     config: config.gentle,
   });
 
