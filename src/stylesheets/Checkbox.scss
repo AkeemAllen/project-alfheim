@@ -1,8 +1,5 @@
 .checkbox-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin-right: 0.5rem;
   #check {
     &:checked ~ .checkmark {
       background-color: #263d9c;

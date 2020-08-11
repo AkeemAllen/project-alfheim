@@ -7,9 +7,12 @@ const Dropdown = ({ title, items = [], multiSelect = false }) => {
   const [open, setOpen] = useState(false);
   const [selection, setSelection] = useState([]);
 
+  const [localTitle, setTitle] = useState(title);
+
   const handleOnClick = (item) => {
     if (!selection.some((current) => current.id === item.id)) {
       if (!multiSelect) {
+        setTitle(item.value);
         setSelection([item]);
       } else if (multiSelect) {
         setSelection([...selection, item]);
@@ -48,7 +51,7 @@ const Dropdown = ({ title, items = [], multiSelect = false }) => {
         onClick={() => toggle(!open)}
       >
         <div className="dd-header__title">
-          <p className="dd-header__title--bold">{title}</p>
+          <p className="dd-header__title--bold">{localTitle}</p>
         </div>
         <div className="dd-header__action">
           <p>

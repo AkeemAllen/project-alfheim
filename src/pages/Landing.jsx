@@ -1,76 +1,176 @@
 import React from "react";
-import "../stylesheets/Landing.scss";
-import Card from "../components/Card";
-import room from "../assets/stock photos/room1.jpg";
-import room2 from "../assets/stock photos/room2.jpg";
-import room3 from "../assets/stock photos/room3.jpg";
-import room4 from "../assets/stock photos/room4.jpg";
-import convenient from "../assets/images/convenient.png";
-import quick from "../assets/images/quick.png";
-import easy from "../assets/images/easy.png";
-import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
-import { useSpring, animated, config } from "react-spring";
+import { useSpring, animated } from "react-spring";
+import { createUseStyles } from "react-jss";
+import { NormalButton, TextButton } from "../components/Buttons";
+import room from "../assets/stock photos/room1.jpg";
+import logo from "../assets/Logo.png";
+
+const calc = (x, y) => [
+  -(y - window.innerHeight / 2) / 20,
+  (x - window.innerWidth / 2) / 20,
+  1.1,
+];
+const trans = (x, y, s) =>
+  `perspective(2000px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`;
 
 const Landing = () => {
-  const animateDescription = useSpring({
-    opacity: 1,
-    from: { opacity: 0 },
-    delay: 500,
-    config: config.gentle,
-  });
+  const [props, set] = useSpring(() => ({
+    xys: [0, 0, 1],
+    config: { mass: 5, tension: 350, friction: 40 },
+  }));
 
-  const animateSiteImages = useSpring({
-    transform: "translate(0px, 0px)",
-    delay: 1000,
-    from: { transform: "translate(1000px, 20px)" },
-    config: config.gentle,
-  });
-
+  const classes = useStyles();
   return (
-    <div className="container">
-      <div className="background-container">
-        <nav className="nav">
-          <h1 className="word-logo">Alfheim</h1>
-          <animated.button>
-            <Link to="/auth" style={{ textDecoration: "none", color: "white" }}>
-              Sign In
+    <div className={classes.container}>
+      <div className={classes.background}>
+        <div className={classes.nav}>
+          <h1 style={{ fontFamily: "Lobster", color: "white" }}>Alfheim</h1>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              justifyContent: "flex-end",
+              columnGap: "1rem",
+            }}
+          >
+            <Link to="/login" className={classes.link}>
+              <NormalButton text="Sign In" />
             </Link>
-          </animated.button>
-        </nav>
-        <div className="hero-section">
-          <animated.div style={animateDescription} className="site-description">
-            <h1>Seaching For Rooms Without The Hassel</h1>
-            <p>
-              Having gone through the struggle of searching for a room to rent
-              as a college student in Jamaica, I understand the struggle. So...I
-              decided to do something about it.
-            </p>
-            <p>Thus, PROJECT ALFHEIM was born</p>
-            <button>
-              <Link to="/gallary" className="link" style={{ color: "#140f2d" }}>
-                View Gallary
-              </Link>
-            </button>
-          </animated.div>
-          <animated.div style={animateSiteImages} className="site-images">
-            <img src={room} alt="room" className="image" />
-            <img src={room2} alt="room" className="image2" />
-            <img src={room3} alt="room" className="image3" />
-            <img src={room4} alt="room" className="image4" />
-          </animated.div>
+            <Link to="/register" className={classes.link}>
+              <TextButton text="Sign Up" />
+            </Link>
+          </div>
         </div>
-        <div className="section">
-          <Card title="Quick" img={quick} />
-          <Card title="Easy" img={easy} />
-          <Card title="Convenient" img={convenient} />
+        <div className={classes.heroSection}>
+          <animated.h1 className={classes.header}>
+            Searching For Rooms Without The Hassel
+          </animated.h1>
+          <Link to="/gallary" className={classes.link}>
+            <NormalButton
+              text="View Gallary"
+              color="51CB20"
+              darkerColor="3E941C"
+            />
+          </Link>
         </div>
       </div>
-      <footer>
-        <Footer />
-      </footer>
+      <div style={{ backgroundColor: "#E2EBF7" }}>
+        <animated.img
+          onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
+          onMouseLeave={() => set({ xys: [0, 0, 1] })}
+          style={{ transform: props.xys.interpolate(trans) }}
+          src={room}
+          alt="room"
+          className={classes.image}
+        />
+        <div
+          style={{
+            textAlign: "center",
+            // color: "var(--main-color)",
+            marginTop: "5rem",
+          }}
+        >
+          <h3 style={{ fontSize: "3rem" }}>About This Website</h3>
+          <p className={classes.p}>
+            Having gone through the struggle of searching for a room to rent as
+            a college student in Jamaica, I understand the struggle. So...I
+            decided to try building a solution.
+          </p>
+          <p className={classes.p}>
+            On this platform{" "}
+            <strong style={{ color: "#3E941C" }}>Landlords</strong> are able to
+            create accounts and show off their rooms to prospective buyers and{" "}
+            <strong style={{ color: "#3E941C" }}>Students/Rentors</strong> are
+            able to go through a large selection of rooms without having to
+            leave their homes
+          </p>
+        </div>
+      </div>
+      <div
+        style={{
+          backgroundColor: "#E2EBF7",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "center",
+          paddingTop: "10rem",
+          paddingBottom: "1rem",
+          alignItems: "center",
+        }}
+      >
+        <img src={logo} alt="" width="50" style={{ marginRight: "5rem" }} />
+        <p>
+          Developed by Akeem Allen <strong>allenakeem8@gmail.com</strong>
+        </p>
+      </div>
     </div>
   );
 };
 
 export default Landing;
+
+const useStyles = createUseStyles({
+  container: {
+    height: "100vh",
+    // "&::before": {
+    //   content: "''",
+    //   display: "block",
+    //   position: "absolute",
+    //   borderRadius: "100% 50%",
+    //   backgroundColor: "white ",
+    //   width: "10rem",
+    //   height: "5rem",
+    //   bottom: 0,
+    //   left: 0,
+    // },
+  },
+  background: {
+    backgroundColor: "var(--main-color)",
+    // maxHeight: "28rem",
+  },
+  nav: {
+    // marginTop: "1rem",
+    paddingTop: "1rem",
+    display: "grid",
+    gridTemplateColumns: "1fr 0.5fr",
+    width: "70rem",
+    margin: "auto",
+  },
+  heroSection: {
+    display: "grid",
+    justifyContent: "center",
+    marginTop: "8rem",
+    paddingBottom: "8rem",
+  },
+  header: {
+    fontSize: "4rem",
+    width: "43rem",
+    textAlign: "center",
+    fontWeight: 900,
+    color: "white",
+    marginBottom: "2rem",
+  },
+  image: {
+    display: "flex",
+    justifyContent: "center",
+    width: "600px",
+    height: "300px",
+    borderRadius: "10px",
+    margin: "auto",
+    position: "relative",
+    top: -80,
+    boxShadow: "0px 0px 25px rgba(0,0,0,0.25)",
+  },
+  p: {
+    margin: "auto",
+    fontSize: "1.2rem",
+    marginTop: "1rem",
+    maxWidth: "40rem",
+    lineHeight: "2rem",
+  },
+  link: {
+    display: "flex",
+    justifyContent: "center",
+    textDecoration: "none",
+  },
+});

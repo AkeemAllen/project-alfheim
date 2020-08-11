@@ -3,6 +3,8 @@ import Gallary from "./pages/Gallary";
 import OwnerAccount from "./pages/OwnerAccount";
 import AuthPage from "./pages/AuthPage";
 import Test from "./pages/TestPage";
+import Login from "./pages/Login";
+import Registration from "./pages/Registration";
 
 export default [
   {
@@ -17,6 +19,14 @@ export default [
   {
     path: "/gallary",
     component: Gallary,
+  },
+  {
+    path: "/login",
+    component: Login,
+  },
+  {
+    path: "/register",
+    component: Registration,
   },
   {
     path: "/account",

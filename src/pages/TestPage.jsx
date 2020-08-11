@@ -1,10 +1,14 @@
 import React from "react";
-import RoomCard from "../components/RoomCard";
+import { BoxedInput, LineInput, Checkbox } from "../components/Inputs";
 
 const Test = () => {
   return (
-    <div style={styles.container}>
-      <RoomCard />
+    <div style={{ backgroundColor: "#eee" }}>
+      <div style={styles.container}>
+        <BoxedInput label="Username" />
+        <LineInput label="Username" />
+        <Checkbox label="Username" />
+      </div>
     </div>
   );
 };
@@ -13,12 +17,14 @@ export default Test;
 
 const styles = {
   container: {
-    display: "flex",
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr 1fr",
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
-    width: "100vw",
-    backgroundColor: "rgba(38, 61, 156, 0.95)",
-    // backgroundColor: "white",
+    width: "80vw",
+    margin: "auto",
+    // backgroundColor: "rgba(38, 61, 156, 0.95)",
+    // backgroundColor: "#eee",
   },
 };

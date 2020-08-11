@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import "../../stylesheets/component-stylesheets/Register.scss";
 import { MdLock, MdEmail } from "react-icons/md";
 import { FaGoogle, FaFacebook } from "react-icons/fa";
 import useForm from "./useForm";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/react-hooks";
-import SnackBar from "../SnackBar";
 import Loading from "../Loading";
 
 const registerMutation = gql`
@@ -25,14 +24,6 @@ const registerMutation = gql`
   }
 `;
 const Registration = () => {
-  const [triggered, setTriggered] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [message, setMessage] = useState("");
-
-  const handleAnimationEnd = () => {
-    setTriggered(false);
-  };
-
   const stateSchema = {
     email: { value: "", error: "" },
     password: { value: "", error: "" },
@@ -69,18 +60,7 @@ const Registration = () => {
     const password = state.password.value;
     register({ variables: { email, password } }).then((result) => {
       console.log(result);
-      setMessage("Verify Your Email");
-      setTriggered(true);
-      setSuccess(true);
     });
-    // try {
-    //   } catch (err) {
-    //     console.log(err);
-    //     console.log(error);
-    //     setMessage(err);
-    //     setTriggered(true);
-    //     setSuccess(false);
-    // }
   }
 
   //eslint-disable-next-line
@@ -98,14 +78,6 @@ const Registration = () => {
   );
   return (
     <div>
-      {triggered ? (
-        <SnackBar
-          message={message}
-          triggered={triggered}
-          success={success}
-          endAnimation={handleAnimationEnd}
-        />
-      ) : null}
       <form className="registration-form" onSubmit={handleOnSubmit}>
         <div className="form-logo">
           <h3>Alfheim</h3>

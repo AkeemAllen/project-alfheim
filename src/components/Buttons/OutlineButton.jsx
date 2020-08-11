@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useSpring, animated, config } from "react-spring";
+import { createUseStyles } from "react-jss";
 
 export const OutlineButton = ({ text, disabled, onClick }) => {
   const [hover, setHover] = useState(false);
+  const classes = useStyles();
 
   const { backgroundColor } = useSpring({
     backgroundColor: `#${hover ? "rgba(38, 61, 156, 0.43)" : "fff"}`,
@@ -11,6 +13,7 @@ export const OutlineButton = ({ text, disabled, onClick }) => {
 
   return (
     <animated.button
+      className={classes.removeOutline}
       style={
         disabled
           ? { ...styles.disabled }
@@ -44,3 +47,11 @@ const styles = {
     fontSize: "1.2rem",
   },
 };
+
+const useStyles = createUseStyles({
+  removeOutline: {
+    "&:focus": {
+      outline: "none",
+    },
+  },
+});

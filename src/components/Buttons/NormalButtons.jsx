@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSpring, animated, config } from "react-spring";
+import { createUseStyles } from "react-jss";
 
 export const NormalButton = ({
   text,
@@ -9,6 +10,7 @@ export const NormalButton = ({
   darkerColor,
 }) => {
   const [hover, setHover] = useState(false);
+  const classes = useStyles();
 
   const { backgroundColor } = useSpring({
     backgroundColor: `#${
@@ -19,6 +21,7 @@ export const NormalButton = ({
 
   return (
     <animated.button
+      className={classes.removeOutline}
       style={
         disabled
           ? { ...styles.disabled }
@@ -52,3 +55,11 @@ const styles = {
     fontSize: "1.2rem",
   },
 };
+
+const useStyles = createUseStyles({
+  removeOutline: {
+    "&:focus": {
+      outline: "none",
+    },
+  },
+});

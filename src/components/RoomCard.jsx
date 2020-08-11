@@ -2,7 +2,7 @@ import React from "react";
 import room from "../assets/stock photos/room1.jpg";
 import Button from "../components/Buttons";
 
-const RoomCard = () => {
+const RoomCard = ({ onClick }) => {
   return (
     <div style={styles.container}>
       <img
@@ -36,6 +36,7 @@ const RoomCard = () => {
         style={{ display: "flex", justifyContent: "center" }}
         color="51CB20"
         darkerColor="3B9418"
+        onClick={onClick}
       />
     </div>
   );
@@ -52,11 +53,14 @@ const styles = {
     borderRadius: "10px",
     maxWidth: "500px",
     alignItems: "center",
+    position: "relative",
+    boxShadow: "0px 0px 10px 5px rgba(0,0,0,0.25)",
   },
   roomDetails: {
     display: "grid",
     gridTemplateRows: "1fr 1fr",
     gridTemplateColumns: "1fr 1fr",
+    columnGap: "1rem",
     justifyContent: "space-between",
   },
   detail: {

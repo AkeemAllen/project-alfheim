@@ -12,7 +12,6 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { useLazyQuery } from "react-apollo";
-import SnackBar from "../SnackBar";
 
 const loginQuery = gql`
   query login($email: String!, $password: String!) {
@@ -100,9 +99,6 @@ const Login = (props) => {
 
   return (
     <div>
-      {props.triggered ? (
-        <SnackBar message="Verify Your Email" triggered={props.triggered} />
-      ) : null}
       <form className="login-form" onSubmit={handleOnSubmit}>
         <div className="form-logo">
           <h3>Alfheim</h3>
