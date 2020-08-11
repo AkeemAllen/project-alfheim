@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { createUseStyles } from "react-jss";
 import { BoxedInput } from "../components/Inputs";
-import logo from "../assets/Logo.png";
 import { NormalButton } from "../components/Buttons";
 import { Link } from "react-router-dom";
 import gql from "graphql-tag";

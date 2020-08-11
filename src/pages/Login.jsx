@@ -1,9 +1,9 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import SnackBar from "../components/SnackBars";
 import { createUseStyles } from "react-jss";
 import { BoxedInput } from "../components/Inputs";
 import { NormalButton } from "../components/Buttons";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import useForm from "../components/forms/useForm";
 import gql from "graphql-tag";
 import { useLazyQuery } from "react-apollo";
@@ -27,6 +27,10 @@ const Login = (props) => {
     errorPolicy: "all",
   });
 
+  // const [snackBarMounted, setMounted] = useState(false);
+  // const [success, setSuccess] = useState();
+  // const [message, setMessage] = useState();
+
   const isMounted = useRef(false);
 
   useEffect(
@@ -34,7 +38,6 @@ const Login = (props) => {
       if (isMounted.current) {
         try {
           props.authorizeUser(data.login.token);
-          console.log("running");
         } catch (err) {
           console.log(err);
         }
@@ -81,9 +84,15 @@ const Login = (props) => {
     onSubmitForm
   );
 
+  const { auth, mounted, status, message } = props;
+
+  if (auth) {
+    return <Redirect to="/account" />;
+  }
+
   return (
     <div className={classes.container}>
-      {/* <SnackBar mounted={snackBarMounted} status={success} text={message} /> */}
+      <SnackBar mounted={mounted} status={status} text={message} />
       <div
         style={{ backgroundColor: "var(--main-color)", height: "100vh" }}
       ></div>
@@ -128,13 +137,17 @@ Login.propTypes = {
   authorizeUser: PropTypes.func.isRequired,
   auth: PropTypes.bool.isRequired,
   loginError: PropTypes.string,
-  triggered: PropTypes.string,
+  mounted: PropTypes.string,
+  status: PropTypes.string,
+  message: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth.auth,
   loginError: state.auth.loginError,
-  triggered: state.snackBar.triggered,
+  mounted: state.snackBar.mounted,
+  status: state.snackBar.status,
+  message: state.snackBar.message,
 });
 
 const mapDispatchToProps = (dispatch) => ({

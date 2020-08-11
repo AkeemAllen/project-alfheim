@@ -12,7 +12,7 @@ import { HttpLink } from "apollo-link-http";
 import { ApolloProvider } from "@apollo/react-hooks";
 import { setContext } from "@apollo/link-context";
 import { onError } from "apollo-link-error";
-import { handleOpen } from "./redux/actions/snackBarActions";
+import { handleOpen, unMountSnackBar } from "./redux/actions/snackBarActions";
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
@@ -36,10 +36,8 @@ const errorLink = onError(({ response, graphQLErrors, networkError }) => {
   if (graphQLErrors)
     graphQLErrors.map(
       ({ message, locations, path }) => {
-        console.log(
-          `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-        );
-        store.dispatch(handleOpen(message, false));
+        store.dispatch(handleOpen(message, "error"));
+        setTimeout(() => store.dispatch(unMountSnackBar()), 3000);
       }
       // store.dispatch.handleOpen(message, false)
     );

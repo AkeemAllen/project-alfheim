@@ -1,9 +1,9 @@
 import { OPEN_SNACKBAR, CLOSE_SNACKBAR } from "./types";
 
-export const handleOpen = (message, success) => (dispatch) => {
+export const handleOpen = (message, status) => (dispatch) => {
   dispatch({
     type: OPEN_SNACKBAR,
-    payload: { message, success },
+    payload: { message, status },
   });
 };
 

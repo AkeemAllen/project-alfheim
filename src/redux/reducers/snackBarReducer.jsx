@@ -2,8 +2,8 @@ import { OPEN_SNACKBAR, CLOSE_SNACKBAR } from "../actions/types";
 
 const initialState = {
   message: "",
-  success: false,
-  triggered: false,
+  status: "",
+  mounted: false,
 };
 
 export default function (state = initialState, action) {
@@ -12,16 +12,16 @@ export default function (state = initialState, action) {
       return {
         ...state,
         message: action.payload.message,
-        success: action.payload.success,
-        triggered: true,
+        status: action.payload.status,
+        mounted: true,
       };
     }
     case CLOSE_SNACKBAR: {
       return {
         ...state,
         message: "",
-        success: "",
-        triggered: false,
+        status: "",
+        mounted: false,
       };
     }
     default:
