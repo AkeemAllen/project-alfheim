@@ -34,13 +34,11 @@ const authLink = setContext((_, { headers }) => {
 const errorLink = onError(({ response, graphQLErrors, networkError }) => {
   console.log(response);
   if (graphQLErrors)
-    graphQLErrors.map(
-      ({ message, locations, path }) => {
-        store.dispatch(handleOpen(message, "error"));
-        setTimeout(() => store.dispatch(unMountSnackBar()), 3000);
-      }
-      // store.dispatch.handleOpen(message, false)
-    );
+    //eslint-disable-next-line
+    graphQLErrors.map(({ message, locations, path }) => {
+      store.dispatch(handleOpen(message, "error"));
+      setTimeout(() => store.dispatch(unMountSnackBar()), 3000);
+    });
 
   if (networkError) console.log(`[Network error]: ${networkError}`);
 });

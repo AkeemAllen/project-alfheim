@@ -7,6 +7,7 @@ import gql from "graphql-tag";
 import useForm from "../components/forms/useForm";
 import { useMutation } from "@apollo/react-hooks";
 import SnackBar from "../components/SnackBars";
+import Loading from "../components/Loading";
 
 const registerMutation = gql`
   mutation register($email: String!, $password: String!) {
@@ -76,9 +77,6 @@ const Registration = () => {
   const [register, { loading, data, error }] = useMutation(registerMutation, {
     errorPolicy: "all",
   });
-  if (error) {
-    console.log(error);
-  }
 
   const { state, handleOnChange, handleOnSubmit, disable } = useForm(
     stateSchema,
@@ -117,7 +115,19 @@ const Registration = () => {
               errorMessage={state.password.error}
               invalidInput={state.password.error ? true : false}
             />
-            <NormalButton text="Register" disabled={disable} />
+            {loading ? (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                }}
+              >
+                <Loading />
+              </div>
+            ) : (
+              <NormalButton text="Register" disabled={disable} />
+            )}
             <p>
               Already Have An Account? <Link to="/login">Sign In</Link>
             </p>

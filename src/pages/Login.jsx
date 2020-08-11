@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import SnackBar from "../components/SnackBars";
 import { createUseStyles } from "react-jss";
 import { BoxedInput } from "../components/Inputs";
@@ -11,6 +11,7 @@ import { authorizeUser } from "../redux/actions/authActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
+import Loading from "../components/Loading";
 
 const loginQuery = gql`
   query login($email: String!, $password: String!) {
@@ -23,13 +24,9 @@ const loginQuery = gql`
 const Login = (props) => {
   const classes = useStyles();
 
-  const [login, { loading, data, error }] = useLazyQuery(loginQuery, {
+  const [login, { loading, data }] = useLazyQuery(loginQuery, {
     errorPolicy: "all",
   });
-
-  // const [snackBarMounted, setMounted] = useState(false);
-  // const [success, setSuccess] = useState();
-  // const [message, setMessage] = useState();
 
   const isMounted = useRef(false);
 
@@ -38,9 +35,7 @@ const Login = (props) => {
       if (isMounted.current) {
         try {
           props.authorizeUser(data.login.token);
-        } catch (err) {
-          console.log(err);
-        }
+        } catch (err) {}
       } else {
         isMounted.current = true;
       }
@@ -122,7 +117,19 @@ const Login = (props) => {
               errorMessage={state.password.error}
               invalidInput={state.password.error ? true : false}
             />
-            <NormalButton text="Login" disabled={disable} type="submit" />
+            {loading ? (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                }}
+              >
+                <Loading />
+              </div>
+            ) : (
+              <NormalButton text="Login" disabled={disable} type="submit" />
+            )}
             <p>
               Don't Have An Account? <Link to="/register">Sign Up</Link>
             </p>
