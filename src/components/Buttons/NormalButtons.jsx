@@ -8,6 +8,7 @@ export const NormalButton = ({
   disabled,
   color,
   darkerColor,
+  type,
 }) => {
   const [hover, setHover] = useState(false);
   const classes = useStyles();
@@ -31,6 +32,7 @@ export const NormalButton = ({
       onMouseLeave={() => setHover(false)}
       onClick={onClick}
       disabled={disabled}
+      type={type}
     >
       {text}
     </animated.button>
