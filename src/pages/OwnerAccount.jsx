@@ -1,46 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import "../stylesheets/OwnerAccount.scss";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { logOut } from "../redux/actions/authActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
-import RoomManagement from "./AccountPages/RoomManagement";
-import { FiFileText, FiHome } from "react-icons/fi";
-import AccountSettings from "./AccountPages/AccountSettings";
+// import RoomManagement from "./AccountPages/RoomManagement";
+// import { FiFileText, FiHome } from "react-icons/fi";
+// import AccountSettings from "./AccountPages/AccountSettings";
+import SideNav from "../components/SideNav";
 
 const Account = (props) => {
-  const [current, setCurrent] = useState("accountSettings");
+  // const [current, setCurrent] = useState("roomManagement");
 
   return (
-    <div className="account-container">
-      <div className="account-sidebar">
-        <header>
-          <Link to="/" style={{ textDecoration: "none" }}>
-            <h3>Alfheim</h3>
-          </Link>
-        </header>
-        <div className="nav">
-          <button
-            className="nav-item-btn"
-            onClick={() => setCurrent("roomManagement")}
-          >
-            <FiHome size="20" className="icon" color="black" />
-            Room Management
-          </button>
-          <button
-            className="nav-item-btn"
-            onClick={() => setCurrent("accountSettings")}
-          >
-            <FiFileText size="20" className="icon" />
-            Account Settings
-          </button>
-        </div>
-      </div>
-      <div className="account">
+    <div>
+      <SideNav />
+      {/* <div className="account">
         {current === "roomManagement" ? <RoomManagement /> : null}
         {current === "accountSettings" ? <AccountSettings /> : null}
-      </div>
+      </div> */}
     </div>
   );
 };

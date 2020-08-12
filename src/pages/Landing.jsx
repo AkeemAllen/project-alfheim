@@ -55,7 +55,7 @@ const Landing = () => {
           </Link>
         </div>
       </div>
-      <div style={{ backgroundColor: "#E2EBF7" }}>
+      <div style={{ backgroundColor: "#F1F2FA" }}>
         <animated.img
           onMouseMove={({ clientX: x, clientY: y }) => set({ xys: calc(x, y) })}
           onMouseLeave={() => set({ xys: [0, 0, 1] })}
@@ -67,21 +67,21 @@ const Landing = () => {
         <div
           style={{
             textAlign: "center",
-            // color: "var(--main-color)",
             marginTop: "5rem",
           }}
         >
           <h3 style={{ fontSize: "3rem" }}>About This Website</h3>
           <p className={classes.p}>
             Having gone through the struggle of searching for a room to rent as
-            a college student in Jamaica, I understand the struggle. So...I
-            decided to try building a solution.
+            a college student in Jamaica, I understand the issue. So I decided
+            to try building a solution.
           </p>
           <p className={classes.p}>
             On this platform{" "}
             <strong style={{ color: "#3E941C" }}>Landlords</strong> are able to
-            create accounts and show off their rooms to prospective buyers and{" "}
-            <strong style={{ color: "#3E941C" }}>Students/Rentors</strong> are
+            create accounts and show off their rooms to prospective buyers. On
+            the other hand
+            <strong style={{ color: "#3E941C" }}> Students/Rentors</strong> are
             able to go through a large selection of rooms without having to
             leave their homes
           </p>
@@ -89,7 +89,7 @@ const Landing = () => {
       </div>
       <div
         style={{
-          backgroundColor: "#E2EBF7",
+          backgroundColor: "#F1F2FA",
           display: "flex",
           flexDirection: "row",
           justifyContent: "center",
@@ -112,24 +112,11 @@ export default Landing;
 const useStyles = createUseStyles({
   container: {
     height: "100vh",
-    // "&::before": {
-    //   content: "''",
-    //   display: "block",
-    //   position: "absolute",
-    //   borderRadius: "100% 50%",
-    //   backgroundColor: "white ",
-    //   width: "10rem",
-    //   height: "5rem",
-    //   bottom: 0,
-    //   left: 0,
-    // },
   },
   background: {
     backgroundColor: "var(--main-color)",
-    // maxHeight: "28rem",
   },
   nav: {
-    // marginTop: "1rem",
     paddingTop: "1rem",
     display: "grid",
     gridTemplateColumns: "1fr 0.5fr",

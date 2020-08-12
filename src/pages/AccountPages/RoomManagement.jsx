@@ -6,6 +6,7 @@ import AddRoomModal from "../../components/forms/AddRoomModal";
 import { createUseStyles } from "react-jss";
 import FormHolder from "../../components/FormHolder";
 import Room from "../../components/Room";
+import { NormalButton } from "../../components/Buttons";
 
 const RoomManagement = () => {
   const [open, setOpen] = useState(false);
@@ -32,9 +33,7 @@ const RoomManagement = () => {
         <h1 className={classes.header}>Room Management</h1>
         <hr className={classes.divider} />
         <div className={classes.toolbar}>
-          <button className={classes.btn} onClick={modalHandler}>
-            Add Room
-          </button>
+          <NormalButton text="Add Room" onClick={modalHandler} />
           {/* <div className={classes.filter}>
           <div
             style={{

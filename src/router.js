@@ -31,6 +31,5 @@ export default [
   {
     path: "/components",
     component: Test,
-    // requiresAuth: true,
   },
 ];
