@@ -10,12 +10,18 @@ import SnackBar from "../components/SnackBars";
 import Loading from "../components/Loading";
 
 const registerMutation = gql`
-  mutation register($email: String!, $password: String!) {
+  mutation register(
+    $email: String!
+    $password: String!
+    $firstname: String!
+    $lastname: String!
+    $username: String!
+  ) {
     createUser(
       userInput: {
-        username: ""
-        firstname: ""
-        lastname: ""
+        username: $username
+        firstname: $firstname
+        lastname: $lastname
         email: $email
         password: $password
         contact: ""
@@ -30,6 +36,8 @@ const Registration = () => {
   const stateSchema = {
     email: { value: "", error: "" },
     password: { value: "", error: "" },
+    firstname: { value: "", error: "" },
+    lastname: { value: "", error: "" },
   };
 
   const [snackBarMounted, setMounted] = useState(false);
@@ -52,12 +60,30 @@ const Registration = () => {
         error: "Must be longer than 6 characters, include at least (1) number",
       },
     },
+    firstname: {
+      required: true,
+      validator: {
+        regEx: /^([^0-9]*)$/,
+        error: "No Numbers",
+      },
+    },
+    lastname: {
+      required: true,
+      validator: {
+        regEx: /^([^0-9]*)$/,
+        error: "No Numbers",
+      },
+    },
   };
 
   function onSubmitForm(state) {
     const email = state.email.value;
     const password = state.password.value;
-    register({ variables: { email, password } })
+    const firstname = state.firstname.value;
+    const lastname = state.lastname.value;
+    const username = `${firstname}${lastname}`;
+
+    register({ variables: { email, password, firstname, lastname, username } })
       .then((result) => {
         setMounted(true);
         setSuccess("success");
@@ -100,6 +126,20 @@ const Registration = () => {
           {/* <img src={logo} alt="Logo" width="100" style={{ margin: "auto" }} /> */}
           <h1 style={{ margin: "auto" }}>Register</h1>
           <form className={classes.form} onSubmit={handleOnSubmit}>
+            <BoxedInput
+              label="Firstname"
+              onChange={handleOnChange}
+              name="firstname"
+              errorMessage={state.firstname.error}
+              invalidInput={state.firstname.error ? true : false}
+            />
+            <BoxedInput
+              label="Lastname"
+              onChange={handleOnChange}
+              name="lastname"
+              errorMessage={state.lastname.error}
+              invalidInput={state.lastname.error ? true : false}
+            />
             <BoxedInput
               label="Email"
               onChange={handleOnChange}
@@ -157,7 +197,7 @@ const useStyles = createUseStyles({
     justifyContent: "center",
     alignItems: "center",
     // boxShadow: "0 0 25px rgba(0,0,0,0.5)",
-    height: "25rem",
+    height: "35rem",
     marginTop: "10rem",
   },
   form: {

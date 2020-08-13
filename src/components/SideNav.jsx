@@ -5,10 +5,8 @@ import settingsIcon from "../assets/icons/mdi_settings.png";
 import monetizationIcon from "../assets/icons/mdi_monetization_on.png";
 import assessmentIcon from "../assets/icons/mdi_assessment.png";
 
-const SideNav = () => {
+const SideNav = ({ current, setView }) => {
   const classes = useStyles();
-
-  const [current, setCurrent] = useState("dashboard");
 
   return (
     <div className={classes.container}>
@@ -18,9 +16,7 @@ const SideNav = () => {
             className={
               current === "dashboard" ? classes.hightlighted : classes.tab
             }
-            onClick={() => {
-              setCurrent("dashboard");
-            }}
+            onClick={() => setView("dashboard")}
           >
             <img
               src={dashboardIcon}
@@ -34,9 +30,7 @@ const SideNav = () => {
             className={
               current === "analytics" ? classes.hightlighted : classes.tab
             }
-            onClick={() => {
-              setCurrent("analytics");
-            }}
+            onClick={() => setView("analytics")}
           >
             <img
               src={assessmentIcon}
@@ -50,9 +44,7 @@ const SideNav = () => {
             className={
               current === "payments" ? classes.hightlighted : classes.tab
             }
-            onClick={() => {
-              setCurrent("payments");
-            }}
+            onClick={() => setView("payments")}
           >
             <img
               src={monetizationIcon}
@@ -71,7 +63,12 @@ const SideNav = () => {
               className={classes.avatar}
             />
             Akeem Allen
-            <img src={settingsIcon} alt="avatar" width="30px" />
+            <img
+              src={settingsIcon}
+              alt="avatar"
+              width="30px"
+              onClick={() => setView("settings")}
+            />
           </div>
         </div>
       </div>
@@ -87,6 +84,7 @@ const useStyles = createUseStyles({
     height: "100vh",
     width: "250px",
     backgroundColor: "#242E3E",
+    // backgroundColor: "var(--main-color)",
     // borderRadius: "5px",
     boxShadow: "0 0 10px rgba(0,0,0,0.5)",
   },
@@ -111,7 +109,7 @@ const useStyles = createUseStyles({
     border: "none",
     backgroundColor: "#2D394D",
     borderRadius: "5px",
-    fontSize: "1.2rem",
+    fontSize: "1rem",
     cursor: "pointer",
     fontWeight: 600,
     "&:focus": {
@@ -126,7 +124,7 @@ const useStyles = createUseStyles({
     border: "none",
     backgroundColor: "#242E3E",
     borderRadius: "5px",
-    fontSize: "1.2rem",
+    fontSize: "1rem",
     cursor: "pointer",
     fontWeight: 600,
     "&:focus": {

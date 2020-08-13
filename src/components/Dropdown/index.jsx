@@ -14,6 +14,7 @@ const Dropdown = ({ title, items = [], multiSelect = false }) => {
       if (!multiSelect) {
         setTitle(item.value);
         setSelection([item]);
+        setOpen(false);
       } else if (multiSelect) {
         setSelection([...selection, item]);
       }

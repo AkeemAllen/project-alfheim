@@ -1,33 +1,88 @@
 import React from "react";
 import "../stylesheets/component-stylesheets/Modal.scss";
 import { createUseStyles } from "react-jss";
+import Modal from "@material-ui/core/Modal";
+import PropTypes from "prop-types";
+import { useSpring, animated } from "react-spring";
+import Backdrop from "@material-ui/core/Backdrop";
 
-const Modal = (props) => {
-  const useStyles = createUseStyles({ ...props.modalStyles });
-  const classes = useStyles();
+const Fade = React.forwardRef(function Fade(props, ref) {
+  const noOutline = useStyles().noOutline;
+  const { in: open, children, onEnter, onExited, ...other } = props;
+  const style = useSpring({
+    from: { opacity: 0, transform: `translateY(-200px)` },
+    to: {
+      opacity: open ? 1 : 0,
+      transform: `translateY(${open ? 0 : -200}px)`,
+    },
+    onStart: () => {
+      if (open && onEnter) {
+        onEnter();
+      }
+    },
+    onRest: () => {
+      if (!open && onExited) {
+        onExited();
+      }
+    },
+  });
+
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        width: "75vw",
+    <animated.div
+      ref={ref}
+      className={noOutline}
+      style={{ border: "none", ...style }}
+      {...other}
+    >
+      {children}
+    </animated.div>
+  );
+});
+
+Fade.propTypes = {
+  children: PropTypes.element,
+  in: PropTypes.bool.isRequired,
+  onEnter: PropTypes.func,
+  onExited: PropTypes.func,
+};
+
+const AnimatedModal = ({ open, handleClose, children }) => {
+  const classes = useStyles();
+
+  return (
+    <Modal
+      className={classes.modal}
+      open={open}
+      onClose={handleClose}
+      closeAfterTransition
+      BackdropComponent={Backdrop}
+      BackdropProps={{
+        timeout: 500,
       }}
     >
-      <Backdrop show={props.show} clicked={props.modalClosed} />
-      <div
-        className={classes.container}
-        style={{
-          transform: props.show ? "translateY(0)" : "translateY(-100vh)",
-          opacity: props.show ? 1 : 0,
-        }}
-      >
-        {props.children}
-      </div>
-    </div>
+      <Fade in={open}>
+        <div className={classes.container}>{children}</div>
+      </Fade>
+    </Modal>
   );
 };
 
-const Backdrop = (props) =>
-  props.show ? <div className="backdrop" onClick={props.clicked}></div> : null;
+const useStyles = createUseStyles({
+  modal: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  container: {
+    borderRadius: "10px",
+    padding: "2rem",
+    backgroundColor: "white",
+  },
+  noOutline: {
+    "&:focus": {
+      outline: "none",
+    },
+  },
+});
 
-export default Modal;
+export default AnimatedModal;

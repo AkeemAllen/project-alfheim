@@ -33,7 +33,7 @@ const userMutation = gql`
   }
 `;
 
-const AccountSettings = (props) => {
+const Settings = (props) => {
   //eslint-disable-next-line
   const [update, { data, error }] = useMutation(userMutation);
   const classes = useStyles();
@@ -177,7 +177,7 @@ const AccountSettings = (props) => {
   );
 };
 
-AccountSettings.propTypes = {
+Settings.propTypes = {
   updateUser: PropTypes.func.isRequired,
   username: PropTypes.string,
   firstname: PropTypes.string,
@@ -198,7 +198,7 @@ const mapDispatchToProps = (dispatch) => ({
   updateUser: bindActionCreators(updateUser, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AccountSettings);
+export default connect(mapStateToProps, mapDispatchToProps)(Settings);
 
 const useStyles = createUseStyles({
   container: {

@@ -1,25 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import "../stylesheets/OwnerAccount.scss";
-// import { Link } from "react-router-dom";
 import { logOut } from "../redux/actions/authActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
-// import RoomManagement from "./AccountPages/RoomManagement";
-// import { FiFileText, FiHome } from "react-icons/fi";
-// import AccountSettings from "./AccountPages/AccountSettings";
+import Dashboard from "./AccountPages/Dashboard";
+import Settings from "./AccountPages/Settings";
 import SideNav from "../components/SideNav";
+import { createUseStyles } from "react-jss";
 
-const Account = (props) => {
-  // const [current, setCurrent] = useState("roomManagement");
+const Account = () => {
+  const classes = useStyles();
+  const [current, setCurrent] = useState("dashboard");
 
   return (
-    <div>
-      <SideNav />
-      {/* <div className="account">
-        {current === "roomManagement" ? <RoomManagement /> : null}
-        {current === "accountSettings" ? <AccountSettings /> : null}
-      </div> */}
+    <div className={classes.container}>
+      <SideNav current={current} setView={setCurrent} />
+      <div className={classes.account}>
+        {current === "dashboard" ? <Dashboard /> : null}
+        {current === "settings" ? <Settings /> : null}
+      </div>
     </div>
   );
 };
@@ -33,3 +33,15 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(Account);
+
+const useStyles = createUseStyles({
+  container: {
+    display: "grid",
+    gridTemplateColumns: "0.1fr 1fr",
+  },
+  account: {
+    display: "flex",
+    flexDirection: "column",
+    width: "100%",
+  },
+});
