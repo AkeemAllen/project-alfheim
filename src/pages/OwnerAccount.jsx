@@ -40,8 +40,7 @@ const useStyles = createUseStyles({
     gridTemplateColumns: "0.1fr 1fr",
   },
   account: {
-    display: "flex",
-    flexDirection: "column",
-    width: "100%",
+    display: "grid",
+    gridAutoRows: "min-content",
   },
 });

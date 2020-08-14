@@ -112,9 +112,12 @@ export default Landing;
 const useStyles = createUseStyles({
   container: {
     height: "100vh",
+    backgroundColor: "#F1F2FA",
   },
   background: {
     backgroundColor: "var(--main-color)",
+    // borderBottomLeftRadius: "100%",
+    // borderBottomRightRadius: "100%",
   },
   nav: {
     paddingTop: "1rem",

@@ -1,36 +1,34 @@
 import React, { useState } from "react";
 import { createUseStyles } from "react-jss";
-import Room from "../../components/Room";
+// import Room from "../../components/Room";
 import { NormalButton } from "../../components/Buttons";
 import Modal from "../../components/Modal";
 import AddRoomForm from "../../components/forms/AddRoomForm";
+import Table from "../../components/Table";
 
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
 
   return (
-    <div>
+    // <div>
+    <div className={classes.container}>
       <Modal handleClose={() => setOpen(false)} open={open}>
         <AddRoomForm />
       </Modal>
-      <div className={classes.container}>
-        <h1 className={classes.header}>Dashboard</h1>
-        <hr className={classes.divider} />
-        <div className={classes.toolbar}>
-          <NormalButton
-            text="Add Room"
-            onClick={() => setOpen(true)}
-            color="2D394D"
-            darkerColor="242E3E"
-          />
-        </div>
-        <div className={classes.rooms}>
-          <Room />
-          <Room />
-        </div>
+      <h1 className={classes.header}>Dashboard</h1>
+      <hr className={classes.divider} />
+      <div className={classes.toolbar}>
+        <NormalButton
+          text="Add Room"
+          onClick={() => setOpen(true)}
+          color="2D394D"
+          darkerColor="242E3E"
+        />
       </div>
+      <Table />
     </div>
+    // </div>
   );
 };
 
@@ -38,10 +36,9 @@ export default Dashboard;
 
 const useStyles = createUseStyles({
   container: {
-    display: "flex",
-    flexDirection: "column",
-    height: "100vh",
-    width: "100%",
+    display: "grid",
+    // height: "100vh",
+    // width: "100%",
   },
   header: {
     marginTop: "2rem",

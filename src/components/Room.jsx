@@ -57,10 +57,11 @@ const useStyles = createUseStyles({
   mainContainer: {
     display: "grid",
     gridTemplateColumns: "1fr 4.5fr",
-    backgroundColor: "#f1f2fa",
+    backgroundColor: "#fff",
     width: "90%",
     height: "10rem",
     borderRadius: "20px",
+    padding: "1rem",
     // boxShadow: "5px 5px 12px 1px",
   },
   container: {
