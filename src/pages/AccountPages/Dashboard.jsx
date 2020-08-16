@@ -5,16 +5,32 @@ import { NormalButton } from "../../components/Buttons";
 import Modal from "../../components/Modal";
 import AddRoomForm from "../../components/forms/AddRoomForm";
 import Table from "../../components/Table";
+import { useQuery } from "react-apollo";
+import Loading from "../../components/Loading";
+import Snackbar from "../../components/SnackBars";
+import { getSingleOwnerRooms } from "../../gql/Queries";
 
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
+  const { loading, data } = useQuery(getSingleOwnerRooms, {
+    variables: { owner: localStorage.getItem("userId") },
+  });
+
+  const [mounted, setMounted] = useState(false);
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState();
 
   return (
     // <div>
     <div className={classes.container}>
+      <Snackbar mounted={mounted} text={message} status={status} />
       <Modal handleClose={() => setOpen(false)} open={open}>
-        <AddRoomForm />
+        <AddRoomForm
+          setMessage={setMessage}
+          setMounted={setMounted}
+          setStatus={setStatus}
+        />
       </Modal>
       <h1 className={classes.header}>Dashboard</h1>
       <hr className={classes.divider} />
@@ -26,7 +42,8 @@ const Dashboard = () => {
           darkerColor="242E3E"
         />
       </div>
-      <Table />
+      {console.log(data)}
+      {loading ? <Loading /> : <Table data={[...data.getRoomByOwner]} />}
     </div>
     // </div>
   );

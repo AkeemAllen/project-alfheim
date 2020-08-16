@@ -5,21 +5,13 @@ import { BoxedInput } from "../components/Inputs";
 import { NormalButton } from "../components/Buttons";
 import { Link, Redirect } from "react-router-dom";
 import useForm from "../components/forms/useForm";
-import gql from "graphql-tag";
 import { useLazyQuery } from "react-apollo";
 import { authorizeUser } from "../redux/actions/authActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import Loading from "../components/Loading";
-
-const loginQuery = gql`
-  query login($email: String!, $password: String!) {
-    login(email: $email, password: $password) {
-      token
-    }
-  }
-`;
+import { login as loginQuery } from "../gql/Queries";
 
 const Login = (props) => {
   const classes = useStyles();

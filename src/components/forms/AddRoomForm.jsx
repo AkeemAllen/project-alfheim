@@ -34,7 +34,7 @@ const addRoomMutation = gql`
   }
 `;
 
-const AddRoomModal = (props) => {
+const AddRoomModal = ({ setMounted, setMessage, setStatus }) => {
   //eslint-disable-next-line
   const [addRoom, { loading, data, error }] = useMutation(addRoomMutation);
 
@@ -59,6 +59,12 @@ const AddRoomModal = (props) => {
           parish,
           town_city,
         },
+      }).then((result) => {
+        setMounted(true);
+        setMessage("Room Added Successfully");
+        setStatus("success");
+        setTimeout(() => setMounted(false), 3000);
+        console.log(result);
       });
     } catch (error) {
       console.log(error);
@@ -68,45 +74,47 @@ const AddRoomModal = (props) => {
   const classes = useStyles();
 
   return (
-    <form onSubmit={onSubmit} className={classes.container}>
-      <BoxedInput
-        label="Occupancy"
-        onChange={(e) => setOccupancy(e.target.value)}
-        value={occupancy}
-      />
-      <BoxedInput
-        label="Gender"
-        onChange={(e) => setGender(e.target.value)}
-        value={gender}
-      />
-      <BoxedInput label="Rules" onChange={(e) => setRules(e.target.value)} />
-      <BoxedInput
-        label="Amenities"
-        onChange={(e) => setAmenities(e.target.value)}
-      />
-      <BoxedInput
-        label="Street"
-        onChange={(e) => setStreet(e.target.value)}
-        value={street}
-      />
-      <BoxedInput
-        label="Town_City"
-        onChange={(e) => setTown(e.target.value)}
-        value={town_city}
-      />
-      <BoxedInput
-        label="Parish"
-        onChange={(e) => setParish(e.target.value)}
-        value={parish}
-      />
-      <BoxedInput
-        label="Price"
-        onChange={(e) => setPrice(e.target.value)}
-        type="number"
-        value={price}
-      />
-      <NormalButton text="Add Room" type="submit" />
-    </form>
+    <div>
+      <form onSubmit={onSubmit} className={classes.container}>
+        <BoxedInput
+          label="Occupancy"
+          onChange={(e) => setOccupancy(e.target.value)}
+          value={occupancy}
+        />
+        <BoxedInput
+          label="Gender"
+          onChange={(e) => setGender(e.target.value)}
+          value={gender}
+        />
+        <BoxedInput label="Rules" onChange={(e) => setRules(e.target.value)} />
+        <BoxedInput
+          label="Amenities"
+          onChange={(e) => setAmenities(e.target.value)}
+        />
+        <BoxedInput
+          label="Street"
+          onChange={(e) => setStreet(e.target.value)}
+          value={street}
+        />
+        <BoxedInput
+          label="Town_City"
+          onChange={(e) => setTown(e.target.value)}
+          value={town_city}
+        />
+        <BoxedInput
+          label="Parish"
+          onChange={(e) => setParish(e.target.value)}
+          value={parish}
+        />
+        <BoxedInput
+          label="Price"
+          onChange={(e) => setPrice(e.target.value)}
+          type="number"
+          value={price}
+        />
+        <NormalButton text="Add Room" type="submit" />
+      </form>
+    </div>
   );
 };
 

@@ -3,8 +3,10 @@ import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
+const token = localStorage.getItem("token");
+
 const PrivateRoute = ({ Component, auth, ...rest }) => {
-  if (auth === true) {
+  if (auth === true || token) {
     return <Route {...rest} render={(props) => <Component {...props} />} />;
   }
   return <Redirect to="/login" />;

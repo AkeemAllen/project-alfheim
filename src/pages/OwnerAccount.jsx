@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import Dashboard from "./AccountPages/Dashboard";
 import Settings from "./AccountPages/Settings";
+import Analytics from "./AccountPages/Analytics";
 import SideNav from "../components/SideNav";
 import { createUseStyles } from "react-jss";
 
@@ -19,6 +20,7 @@ const Account = () => {
       <div className={classes.account}>
         {current === "dashboard" ? <Dashboard /> : null}
         {current === "settings" ? <Settings /> : null}
+        {current === "analytics" ? <Analytics /> : null}
       </div>
     </div>
   );

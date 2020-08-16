@@ -62,5 +62,6 @@ const styles = {
     position: "absolute",
     top: 10,
     right: 0,
+    zIndex: 2,
   },
 };

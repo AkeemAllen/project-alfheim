@@ -12,6 +12,13 @@ export const authorizeUser = (token) => (dispatch) => {
   try {
     localStorage.setItem("token", token);
     const decodedToken = jwt.verify(token, process.env.REACT_APP_SECRET);
+    localStorage.setItem("userId", decodedToken.userId);
+    localStorage.setItem("username", decodedToken.username);
+    localStorage.setItem("firstname", decodedToken.firstname);
+    localStorage.setItem("lastname", decodedToken.lastname);
+    localStorage.setItem("email", decodedToken.email);
+    localStorage.setItem("iat", decodedToken.iat);
+    localStorage.setItem("exp", decodedToken.exp);
     dispatch({
       type: AUTH_USER,
       payload: decodedToken,

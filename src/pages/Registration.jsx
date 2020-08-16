@@ -3,34 +3,11 @@ import { createUseStyles } from "react-jss";
 import { BoxedInput } from "../components/Inputs";
 import { NormalButton } from "../components/Buttons";
 import { Link } from "react-router-dom";
-import gql from "graphql-tag";
 import useForm from "../components/forms/useForm";
 import { useMutation } from "@apollo/react-hooks";
 import SnackBar from "../components/SnackBars";
 import Loading from "../components/Loading";
-
-const registerMutation = gql`
-  mutation register(
-    $email: String!
-    $password: String!
-    $firstname: String!
-    $lastname: String!
-    $username: String!
-  ) {
-    createUser(
-      userInput: {
-        username: $username
-        firstname: $firstname
-        lastname: $lastname
-        email: $email
-        password: $password
-        contact: ""
-      }
-    ) {
-      email
-    }
-  }
-`;
+import { register as registerMutation } from "../gql/Mutations";
 
 const Registration = () => {
   const stateSchema = {

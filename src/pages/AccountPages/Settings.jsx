@@ -2,40 +2,14 @@ import React, { useState } from "react";
 import { createUseStyles } from "react-jss";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import gql from "graphql-tag";
 import { useMutation } from "react-apollo";
 import { updateUser } from "../../redux/actions/authActions";
 import { bindActionCreators } from "redux";
-
-const userMutation = gql`
-  mutation updateUser(
-    $email: String!
-    $username: String!
-    $firstname: String!
-    $lastname: String!
-    $contact: String!
-  ) {
-    updateUser(
-      userInput: {
-        username: $username
-        firstname: $firstname
-        lastname: $lastname
-        email: $email
-        contact: $contact
-      }
-    ) {
-      username
-      firstname
-      lastname
-      email
-      contact
-    }
-  }
-`;
+import { updateUserInfo } from "../../gql/Mutations";
 
 const Settings = (props) => {
   //eslint-disable-next-line
-  const [update, { data, error }] = useMutation(userMutation);
+  const [update, { data, error }] = useMutation(updateUserInfo);
   const classes = useStyles();
   const { username, firstname, lastname, email, contact } = props;
 

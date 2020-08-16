@@ -13,11 +13,11 @@ const initialState = {
   registrationError: null,
   newUser: null,
   userId: null,
-  username: "allenakeem8",
-  firstname: "Akeem",
-  lastname: "Allen",
-  email: "test@gmail.com",
-  contact: "123-456-7890",
+  username: localStorage.getItem("username"),
+  firstname: localStorage.getItem("firstname"),
+  lastname: localStorage.getItem("lastname"),
+  email: localStorage.getItem("email"),
+  contact: localStorage.getItem("contact"),
 };
 
 export default function (state = initialState, action) {

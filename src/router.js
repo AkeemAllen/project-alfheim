@@ -26,7 +26,7 @@ export default [
   {
     path: "/account",
     component: OwnerAccount,
-    // requiresAuth: true,
+    requiresAuth: true,
   },
   {
     path: "/components",
