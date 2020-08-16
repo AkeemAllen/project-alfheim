@@ -55,9 +55,14 @@ const CustomizedTable = ({ data }) => {
   const [valueToBeUpdated, setValueToBeUpdated] = useState();
   // const [toBeUpdated, setToBeUpdated] = useState(() => {});
 
-  const handleUpdate = (id, column) => {
+  const handleUpdate = (id, column, value) => {
     setRoomId(id);
     setValueToBeUpdated(column);
+    if (column === "isAvailable") {
+      setAvailability(!value);
+    } else if (column === "isVisible") {
+      setVisibility(!value);
+    }
     setOpen(true);
   };
 
@@ -73,12 +78,6 @@ const CustomizedTable = ({ data }) => {
       case "gender":
         setGender(event.target.value);
         break;
-      // case "isAvailable":
-      // setAvailability(event.target.value);
-      // break;
-      // case "isVisible":
-      // setVisibility(event.target.value);
-      // break;
       case "street":
         setStreet(event.target.value);
         break;
@@ -112,6 +111,12 @@ const CustomizedTable = ({ data }) => {
         break;
       case "parish":
         parishUpdate();
+        break;
+      case "isAvailable":
+        availabilityUpdate();
+        break;
+      case "isVisible":
+        visibilityUpdate();
         break;
       default:
         break;
@@ -154,6 +159,18 @@ const CustomizedTable = ({ data }) => {
       id: roomId,
     },
   });
+  const [availabilityUpdate] = useMutation(updateAvailability, {
+    variables: {
+      isAvailable: availability,
+      id: roomId,
+    },
+  });
+  const [visibilityUpdate] = useMutation(updateVisibility, {
+    variables: {
+      isVisibile: visibility,
+      id: roomId,
+    },
+  });
 
   const classes = useStyles();
   return (
@@ -167,12 +184,15 @@ const CustomizedTable = ({ data }) => {
             rowGap: "1rem",
           }}
         >
-          <LineInput
-            type={valueToBeUpdated === "price" ? "number" : "text"}
-            label={`Update ${valueToBeUpdated}`}
-            name={valueToBeUpdated}
-            onChange={(e) => handleChange(e)}
-          />
+          {valueToBeUpdated !== "isAvailable" &&
+          valueToBeUpdated !== "isVisible" ? (
+            <LineInput
+              type={valueToBeUpdated === "price" ? "number" : "text"}
+              label={`Update ${valueToBeUpdated}`}
+              name={valueToBeUpdated}
+              onChange={(e) => handleChange(e)}
+            />
+          ) : null}
           <OutlineButton
             text={`Update ${valueToBeUpdated}`}
             onClick={useAppropriateFunction}
@@ -202,7 +222,7 @@ const CustomizedTable = ({ data }) => {
                     {...cell.getCellProps()}
                     className={classes.td}
                     onClick={() =>
-                      handleUpdate(row.original.id, cell.column.id)
+                      handleUpdate(row.original.id, cell.column.id, cell.value)
                     }
                   >
                     {(index === 2) | (index === 3) ? (
