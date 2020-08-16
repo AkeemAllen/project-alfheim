@@ -35,12 +35,7 @@ const Dashboard = () => {
       <h1 className={classes.header}>Dashboard</h1>
       <hr className={classes.divider} />
       <div className={classes.toolbar}>
-        <NormalButton
-          text="Add Room"
-          onClick={() => setOpen(true)}
-          color="2D394D"
-          darkerColor="242E3E"
-        />
+        <NormalButton text="Add Room" onClick={() => setOpen(true)} />
       </div>
       {console.log(data)}
       {loading ? <Loading /> : <Table data={[...data.getRoomByOwner]} />}

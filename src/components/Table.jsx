@@ -265,7 +265,7 @@ const useStyles = createUseStyles({
     // display: "flex",
     // justifyContent: "center",
     // alignItems: "center",
-    backgroundColor: "#242E3E",
+    backgroundColor: "#4D5FA9",
     color: "rgba(255,255,255,1)",
     borderRadius: "10px",
     fontWeight: 900,
