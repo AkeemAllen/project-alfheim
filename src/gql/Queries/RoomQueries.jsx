@@ -12,6 +12,8 @@ export const getSingleOwnerRooms = gql`
       price
       isAvailable
       isVisible
+      amenities
+      rules
     }
   }
 `;

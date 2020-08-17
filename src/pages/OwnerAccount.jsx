@@ -9,6 +9,7 @@ import Settings from "./AccountPages/Settings";
 import Analytics from "./AccountPages/Analytics";
 import SideNav from "../components/SideNav";
 import { createUseStyles } from "react-jss";
+import Payments from "./AccountPages/Payments";
 
 const Account = () => {
   const classes = useStyles();
@@ -21,6 +22,7 @@ const Account = () => {
         {current === "dashboard" ? <Dashboard /> : null}
         {current === "settings" ? <Settings /> : null}
         {current === "analytics" ? <Analytics /> : null}
+        {current === "payments" ? <Payments /> : null}
       </div>
     </div>
   );

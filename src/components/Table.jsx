@@ -19,7 +19,13 @@ import {
 const CustomizedTable = ({ data }) => {
   const columns = useMemo(
     () => [
-      // { Header: "Id", accessor: "id" },
+      {
+        Header: "",
+        accessor: (originalRow, rowIndex) => {
+          return rowIndex + 1;
+        },
+        id: "id",
+      },
       { Header: "Occupancy", accessor: "occupancy" },
       { Header: "Gender", accessor: "gender" },
       { Header: "Available", accessor: "isAvailable" },
@@ -225,7 +231,7 @@ const CustomizedTable = ({ data }) => {
                       handleUpdate(row.original.id, cell.column.id, cell.value)
                     }
                   >
-                    {(index === 2) | (index === 3) ? (
+                    {(index === 3) | (index === 4) ? (
                       <p
                         className={
                           cell.value === true ? classes.true : classes.false
@@ -265,7 +271,7 @@ const useStyles = createUseStyles({
     // display: "flex",
     // justifyContent: "center",
     // alignItems: "center",
-    backgroundColor: "#4D5FA9",
+    backgroundColor: "var(--main-color)",
     color: "rgba(255,255,255,1)",
     borderRadius: "10px",
     fontWeight: 900,
@@ -273,14 +279,14 @@ const useStyles = createUseStyles({
   },
   trHeader: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr",
+    gridTemplateColumns: "0.1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr",
     textAlign: "center",
     marginBottom: "1rem",
     marginTop: "1rem",
   },
   tr: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr",
+    gridTemplateColumns: "0.1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr",
     textAlign: "center",
     marginBottom: "2rem",
   },

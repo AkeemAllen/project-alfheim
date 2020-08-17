@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 import { createUseStyles } from "react-jss";
 import { BoxedInput } from "../Inputs";
 import { NormalButton } from "../Buttons";
+import { Multiselect } from "multiselect-react-dropdown";
 
 const addRoomMutation = gql`
   mutation createRoom(
@@ -13,6 +14,8 @@ const addRoomMutation = gql`
     $street: String!
     $town_city: String!
     $parish: String!
+    $amenities: [String!]
+    $rules: [String!]
   ) {
     createRoom(
       input: {
@@ -22,6 +25,8 @@ const addRoomMutation = gql`
         street: $street
         town_city: $town_city
         parish: $parish
+        rules: $rules
+        amenities: $amenities
       }
     ) {
       price
@@ -30,6 +35,8 @@ const addRoomMutation = gql`
       street
       town_city
       parish
+      amenities
+      rules
     }
   }
 `;
@@ -45,7 +52,7 @@ const AddRoomModal = ({ setMounted, setMessage, setStatus }) => {
   const [parish, setParish] = useState("");
   const [town_city, setTown] = useState("");
   const [rules, setRules] = useState([]);
-  const [amenities, setAmenities] = useState([]);
+  let [amenities, setAmenities] = useState([]);
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -58,6 +65,8 @@ const AddRoomModal = ({ setMounted, setMessage, setStatus }) => {
           street,
           parish,
           town_city,
+          rules: rules[0],
+          amenities: amenities[0],
         },
       }).then((result) => {
         setMounted(true);
@@ -86,10 +95,57 @@ const AddRoomModal = ({ setMounted, setMessage, setStatus }) => {
           onChange={(e) => setGender(e.target.value)}
           value={gender}
         />
-        <BoxedInput label="Rules" onChange={(e) => setRules(e.target.value)} />
-        <BoxedInput
-          label="Amenities"
-          onChange={(e) => setAmenities(e.target.value)}
+        <Multiselect
+          placeholder="Rules"
+          options={["No Visitors", "No Food In Rooms"]}
+          isObject={false}
+          onSelect={(selectedList) => {
+            setRules([selectedList]);
+          }}
+          onRemove={(selectedList) => {
+            setRules([selectedList]);
+          }}
+          style={{
+            searchBox: {
+              borderRadius: "10px",
+              border: "2px solid #263D9C",
+              padding: "0.8rem 3rem 0.8rem 1rem",
+              "&:focus": {
+                outline: "none",
+                boxShadow: "0px 0px 1px 4px #A3B4FA",
+                border: "none",
+              },
+            },
+            inputField: {
+              fontSize: "1rem",
+            },
+          }}
+        />
+        <Multiselect
+          placeholder="Amenities"
+          options={["Water", "Electricity"]}
+          isObject={false}
+          onSelect={(selectedList) => {
+            setAmenities([selectedList]);
+          }}
+          onRemove={(selectedList) => {
+            setAmenities([selectedList]);
+          }}
+          style={{
+            searchBox: {
+              borderRadius: "10px",
+              border: "2px solid #263D9C",
+              padding: "0.8rem 3rem 0.8rem 1rem",
+              "&:focus": {
+                outline: "none",
+                boxShadow: "0px 0px 1px 4px #A3B4FA",
+                border: "none",
+              },
+            },
+            inputField: {
+              fontSize: "1rem",
+            },
+          }}
         />
         <BoxedInput
           label="Street"
@@ -124,5 +180,19 @@ const useStyles = createUseStyles({
   container: {
     display: "grid",
     rowGap: "1rem",
+  },
+  mutliselect: {
+    padding: "0.8rem 3rem 0.8rem 1rem",
+    backgroundColor: "white",
+    borderRadius: "10px",
+    border: "2px solid #263D9C",
+    fontSize: "1rem",
+    transition: "all",
+    transitionDuration: "250ms",
+    "&:focus": {
+      outline: "none",
+      boxShadow: "0px 0px 1px 4px #A3B4FA",
+      border: "none",
+    },
   },
 });

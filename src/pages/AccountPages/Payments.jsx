@@ -1,7 +1,7 @@
 import React from "react";
 import { createUseStyles } from "react-jss";
 
-const Analytics = () => {
+const Payments = () => {
   const classes = useStyles();
   return (
     <div className={classes.container}>
@@ -10,7 +10,7 @@ const Analytics = () => {
   );
 };
 
-export default Analytics;
+export default Payments;
 
 const useStyles = createUseStyles({
   container: {

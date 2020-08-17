@@ -37,7 +37,6 @@ const Dashboard = () => {
       <div className={classes.toolbar}>
         <NormalButton text="Add Room" onClick={() => setOpen(true)} />
       </div>
-      {console.log(data)}
       {loading ? <Loading /> : <Table data={[...data.getRoomByOwner]} />}
     </div>
     // </div>
@@ -56,6 +55,7 @@ const useStyles = createUseStyles({
     marginTop: "2rem",
     marginLeft: "2rem",
     marginBottom: "0.5rem",
+    color: "rgba(0,0,0,0.8)",
   },
   divider: {
     border: "0.5px solid rgba(0,0,0,0.1)",
