@@ -24,11 +24,6 @@ const Gallary = () => {
 
   return (
     <div className="gallary-container">
-      <div className="gallary-sidebar">
-        <Link to="/" style={{ textDecoration: "none" }}>
-          <h3>Alfheim</h3>
-        </Link>
-      </div>
       <div className="gallary">
         <div className="filters">
           <button className="filter">

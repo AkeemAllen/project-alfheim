@@ -9,6 +9,7 @@ export const NormalButton = ({
   color,
   darkerColor,
   type,
+  style,
 }) => {
   const [hover, setHover] = useState(false);
   const classes = useStyles();
@@ -26,7 +27,7 @@ export const NormalButton = ({
       style={
         disabled
           ? { ...styles.disabled }
-          : { backgroundColor, ...styles.normalButton }
+          : { backgroundColor, ...styles.normalButton, ...style }
       }
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}

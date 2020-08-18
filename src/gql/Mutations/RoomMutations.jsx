@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 
 export const updatePrice = gql`
-  mutation updateRoom($id: ID!, $price: Int!) {
+  mutation updatePrice($id: ID!, $price: Int!) {
     updateRoom(id: $id, input: { price: $price }) {
       street
       parish
@@ -16,7 +16,7 @@ export const updatePrice = gql`
 `;
 
 export const updateGender = gql`
-  mutation updateRoom($id: ID!, $gender: String!) {
+  mutation updateGender($id: ID!, $gender: String!) {
     updateRoom(id: $id, input: { gender: $gender }) {
       street
       parish
@@ -31,7 +31,7 @@ export const updateGender = gql`
 `;
 
 export const updateOccupancy = gql`
-  mutation updateRoom($id: ID!, $occupancy: String!) {
+  mutation updateOccupancy($id: ID!, $occupancy: String!) {
     updateRoom(id: $id, input: { occupancy: $occupancy }) {
       street
       parish
@@ -46,7 +46,7 @@ export const updateOccupancy = gql`
 `;
 
 export const updateAvailability = gql`
-  mutation updateRoom($id: ID!, $isAvailable: Boolean!) {
+  mutation updateAvailability($id: ID!, $isAvailable: Boolean!) {
     updateRoom(id: $id, input: { isAvailable: $isAvailable }) {
       street
       parish
@@ -61,7 +61,7 @@ export const updateAvailability = gql`
 `;
 
 export const updateVisibility = gql`
-  mutation updateRoom($id: ID!, $isVisible: Boolean!) {
+  mutation updateVisibility($id: ID!, $isVisible: Boolean!) {
     updateRoom(id: $id, input: { isVisible: $isVisible }) {
       street
       parish
@@ -76,7 +76,7 @@ export const updateVisibility = gql`
 `;
 
 export const updateStreet = gql`
-  mutation updateRoom($id: ID!, $street: String!) {
+  mutation updateStreet($id: ID!, $street: String!) {
     updateRoom(id: $id, input: { street: $street }) {
       street
       parish
@@ -91,7 +91,7 @@ export const updateStreet = gql`
 `;
 
 export const updateTown = gql`
-  mutation updateRoom($id: ID!, $town_city: String!) {
+  mutation updateTown($id: ID!, $town_city: String!) {
     updateRoom(id: $id, input: { town_city: $town_city }) {
       street
       parish
@@ -106,7 +106,7 @@ export const updateTown = gql`
 `;
 
 export const updateParish = gql`
-  mutation updateRoom($id: ID!, $parish: String!) {
+  mutation updateParish($id: ID!, $parish: String!) {
     updateRoom(id: $id, input: { parish: $parish }) {
       street
       parish

@@ -15,6 +15,7 @@ import {
   updateGender,
   updateVisibility,
 } from "../gql/Mutations";
+import { useSprings, animated } from "react-spring";
 
 const CustomizedTable = ({ data }) => {
   const columns = useMemo(
@@ -48,6 +49,12 @@ const CustomizedTable = ({ data }) => {
     prepareRow,
   } = tableInstance;
 
+  const [hover, setHover] = useState(false);
+  const [tableAmenities, setTableAmenities] = useSprings(
+    data.length,
+    (index) => ({ opacity: 0 })
+  );
+  //#region
   const [open, setOpen] = useState(false);
   const [roomId, setRoomId] = useState("");
   const [price, setPrice] = useState(undefined);
@@ -59,8 +66,8 @@ const CustomizedTable = ({ data }) => {
   const [availability, setAvailability] = useState(undefined);
   const [visibility, setVisibility] = useState(undefined);
   const [valueToBeUpdated, setValueToBeUpdated] = useState();
-  // const [toBeUpdated, setToBeUpdated] = useState(() => {});
-
+  //#endregion
+  //#region
   const handleUpdate = (id, column, value) => {
     setRoomId(id);
     setValueToBeUpdated(column);
@@ -177,6 +184,7 @@ const CustomizedTable = ({ data }) => {
       id: roomId,
     },
   });
+  //#endregion
 
   const classes = useStyles();
   return (
@@ -231,7 +239,8 @@ const CustomizedTable = ({ data }) => {
                       handleUpdate(row.original.id, cell.column.id, cell.value)
                     }
                   >
-                    {(index === 3) | (index === 4) ? (
+                    {(cell.column.id === "isAvailable") |
+                    (cell.column.id === "isVisible") ? (
                       <p
                         className={
                           cell.value === true ? classes.true : classes.false
@@ -241,6 +250,47 @@ const CustomizedTable = ({ data }) => {
                           ? cell.value.toString()
                           : null}
                       </p>
+                    ) : (cell.column.id === "amenities") |
+                      (cell.column.id === "rules") ? (
+                      <div style={{ position: "relative" }}>
+                        <p
+                          onMouseMove={() =>
+                            setTableAmenities((index) => ({ opacity: 1 }))
+                          }
+                          onMouseLeave={() =>
+                            setTableAmenities((index) => ({ opacity: 0 }))
+                          }
+                        >
+                          Display List
+                        </p>
+                        {tableAmenities.map(({ opacity, index }) => (
+                          <animated.p
+                            key={index}
+                            style={{
+                              position: "absolute",
+                              top: 20,
+                              padding: "1rem",
+                              right: -50,
+                              background: "white",
+                              // width: "60%",
+                              borderRadius: "5px",
+                              boxShadow: "2px 5px 10px rgba(0,0,0,0.2)",
+                              zIndex: 1,
+                              display: "grid",
+                              gridTemplateColumns: "1fr",
+                              rowGap: "0.5rem",
+                              textAlign: "start",
+                              opacity,
+                            }}
+                          >
+                            {cell.value.map((value) => {
+                              return <p>{value}</p>;
+                            })}
+                          </animated.p>
+                        ))}
+                      </div>
+                    ) : cell.column.id === "price" ? (
+                      `$${cell.value}`
                     ) : (
                       cell.render("Cell")
                     )}
