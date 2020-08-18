@@ -7,7 +7,7 @@ import { NormalButton } from "../components/Buttons";
 
 const trans = (x, y) => `translate(${x}px, ${y}px)`;
 
-const GallaryCard = () => {
+const GallaryCard = ({ occupancy, price, gender, street, town_city }) => {
   const [open, setOpen] = useState(false);
 
   const modalHandler = (event) => {
@@ -34,22 +34,27 @@ const GallaryCard = () => {
         <div className={classes.detail_wrapper}>
           <div className={classes.detail}>
             <label className={classes.label}>Price</label>
-            <h2 className={classes.item}>$15,000</h2>
+            <h2 className={classes.item}>${price}</h2>
           </div>
           <animated.div className={classes.detail}>
             <label className={classes.label}>Occupancy</label>
-            <h2 className={classes.item}>Single</h2>
+            <h2 className={classes.item}>{occupancy}</h2>
           </animated.div>
           <animated.div className={classes.detail}>
             <label className={classes.label}>Gender</label>
-            <h2 className={classes.item}>Male</h2>
+            <h2 className={classes.item}>{gender}</h2>
           </animated.div>
           <animated.div className={classes.detail}>
             <label className={classes.label}>Location</label>
-            <h2 className={classes.item}>4 Riverview Avenue</h2>
+            <h2 className={classes.item}>{street}</h2>
           </animated.div>
         </div>
-        <NormalButton text="More Details" style={{ opacity, width: "100%" }} />
+        <NormalButton
+          text="More Details"
+          style={{ opacity, width: "100%" }}
+          color="51cb20"
+          darkerColor="3E941C"
+        />
       </animated.div>
     </div>
   );
@@ -62,6 +67,8 @@ const useStyles = createUseStyles({
     padding: "1rem",
     backgroundColor: "white",
     borderRadius: "10px",
+    boxShadow: "0px 0px 20px rgba(0,0,0,0.1)",
+    maxWidth: "500px",
   },
   media: {
     width: "500px",
@@ -73,7 +80,7 @@ const useStyles = createUseStyles({
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
     gridTemplateRows: "1fr 1fr",
-    rowGap: "1rem",
+    rowGap: "2rem",
     marginBottom: "1rem",
   },
   detail: {
@@ -87,5 +94,6 @@ const useStyles = createUseStyles({
   },
   item: {
     color: "var(--main-color)",
+    maxHeight: "1.2rem",
   },
 });

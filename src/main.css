@@ -11,6 +11,8 @@
   --primary-font: "Inter";
   --secondary-font: "Poppins";
   --styled-font: "Lobster";
+  --main-green: #51cb20;
+  --darker-green: #3e941c;
 }
 
 * {
