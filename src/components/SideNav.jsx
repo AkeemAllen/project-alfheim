@@ -4,9 +4,27 @@ import dashboardIcon from "../assets/icons/mdi_dashboard.png";
 import settingsIcon from "../assets/icons/mdi_settings.png";
 import monetizationIcon from "../assets/icons/mdi_monetization_on.png";
 import assessmentIcon from "../assets/icons/mdi_assessment.png";
+import { TextButton } from "./Buttons";
+import { useSpring, animated, config } from "react-spring";
+import PropTypes from "prop-types";
+import { logOut } from "../redux/actions/authActions";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
-const SideNav = ({ current, setView }) => {
+const SideNav = ({ current, setView, logOut, auth }) => {
   const classes = useStyles();
+  const [settingsOptionsOpen, setSettingsOptionsOpen] = useState(false);
+
+  const { opacity, transform } = useSpring({
+    opacity: settingsOptionsOpen ? 1 : 0,
+    transform: `scale(${settingsOptionsOpen ? 1 : 0.2})`,
+    config: config.gentle,
+  });
+
+  if (!auth) {
+    return <Redirect to="/login" />;
+  }
 
   return (
     <div className={classes.container}>
@@ -55,7 +73,13 @@ const SideNav = ({ current, setView }) => {
             Payments
           </button>
         </div>
-        <div style={{ display: "grid", alignItems: "flex-end" }}>
+        <div
+          style={{
+            display: "grid",
+            alignItems: "flex-end",
+            position: "relative",
+          }}
+        >
           <div className={classes.profile}>
             <img
               src="https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
@@ -67,16 +91,48 @@ const SideNav = ({ current, setView }) => {
               src={settingsIcon}
               alt="avatar"
               width="30px"
-              onClick={() => setView("settings")}
+              onClick={() => setSettingsOptionsOpen(true)}
             />
           </div>
+          <animated.div
+            className={classes.settingsOptions}
+            style={{ opacity, transform }}
+          >
+            <TextButton
+              text="Settings"
+              onClick={() => {
+                setView("settings");
+                setSettingsOptionsOpen(false);
+              }}
+            />
+            <TextButton
+              text="Logout"
+              onClick={() => {
+                logOut();
+                setSettingsOptionsOpen(false);
+              }}
+            />
+          </animated.div>
         </div>
       </div>
     </div>
   );
 };
 
-export default SideNav;
+SideNav.propTypes = {
+  logOut: PropTypes.func.isRequired,
+  auth: PropTypes.bool.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth.auth,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  logOut: bindActionCreators(logOut, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideNav);
 
 const useStyles = createUseStyles({
   container: {
@@ -150,5 +206,17 @@ const useStyles = createUseStyles({
     borderRadius: "50%",
     // marginLeft: "0.5rem",
     // marginRight: "0.5rem",
+  },
+  settingsOptions: {
+    position: "absolute",
+    padding: "1rem",
+    backgroundColor: "#f1f2fa",
+    right: -80,
+    zIndex: 1,
+    bottom: 70,
+    borderRadius: "5px",
+    display: "grid",
+    justifyContent: "center",
+    rowGap: "0.5rem",
   },
 });

@@ -17,3 +17,23 @@ export const getSingleOwnerRooms = gql`
     }
   }
 `;
+
+export const getAllRooms = gql`
+  query allRooms {
+    allRooms {
+      price
+      occupancy
+      gender
+      street
+      amenities
+      rules
+      owner {
+        email
+        username
+        firstname
+        lastname
+        contact
+      }
+    }
+  }
+`;

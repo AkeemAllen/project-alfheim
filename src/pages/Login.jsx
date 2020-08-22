@@ -10,15 +10,13 @@ import { authorizeUser } from "../redux/actions/authActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
-import Loading from "../components/Loading";
+// import Loading from "../components/Loading";
 import { login as loginQuery } from "../gql/Queries";
 
 const Login = (props) => {
   const classes = useStyles();
 
-  const [login, { loading, data }] = useLazyQuery(loginQuery, {
-    errorPolicy: "all",
-  });
+  const [login, { loading, data }] = useLazyQuery(loginQuery);
 
   const isMounted = useRef(false);
 
@@ -117,7 +115,7 @@ const Login = (props) => {
                   justifyContent: "center",
                 }}
               >
-                <Loading />
+                {/* <Loading /> */}
               </div>
             ) : (
               <NormalButton text="Login" disabled={disable} type="submit" />

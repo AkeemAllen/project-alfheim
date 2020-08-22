@@ -10,8 +10,8 @@ import jwt from "jsonwebtoken";
 
 export const authorizeUser = (token) => (dispatch) => {
   try {
-    localStorage.setItem("token", token);
     const decodedToken = jwt.verify(token, process.env.REACT_APP_SECRET);
+    localStorage.setItem("token", token);
     localStorage.setItem("userId", decodedToken.userId);
     localStorage.setItem("username", decodedToken.username);
     localStorage.setItem("firstname", decodedToken.firstname);
@@ -42,7 +42,7 @@ export const updateUser = (userdata) => (dispatch) => {
 export const createNewUser = () => (dispatch) => {};
 
 export const logOut = () => (dispatch) => {
-  localStorage.removeItem("token");
+  localStorage.clear();
   dispatch({
     type: LOG_OUT,
   });

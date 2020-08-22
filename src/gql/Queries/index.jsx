@@ -1,4 +1,4 @@
-import { getSingleOwnerRooms } from "./RoomQueries";
+import { getSingleOwnerRooms, getAllRooms } from "./RoomQueries";
 import { login } from "./UserQueries";
 
-export { getSingleOwnerRooms, login };
+export { getSingleOwnerRooms, login, getAllRooms };
