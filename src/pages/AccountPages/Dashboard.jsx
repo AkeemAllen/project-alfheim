@@ -9,10 +9,16 @@ import { useQuery } from "react-apollo";
 import Loading from "../../components/Loading";
 import Snackbar from "../../components/SnackBars";
 import { getSingleOwnerRooms } from "../../gql/Queries";
+import Card from "../../components/Dashboard Components/Card";
+import RoomDetails from "../../components/Dashboard Components/RoomDetails";
 
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
+  const [detailedViewOpen, setDetailedViewOpen] = useState(true);
+  const [index, setIndex] = useState(0);
+
   const classes = useStyles();
+
   const { loading, data } = useQuery(getSingleOwnerRooms, {
     variables: { owner: localStorage.getItem("userId") },
   });
@@ -37,7 +43,38 @@ const Dashboard = () => {
       <div className={classes.toolbar}>
         <NormalButton text="Add Room" onClick={() => setOpen(true)} />
       </div>
-      {loading ? <Loading /> : <Table data={[...data.getRoomByOwner]} />}
+      {loading ? (
+        <Loading />
+      ) : detailedViewOpen ? (
+        <RoomDetails
+          returnToCards={() => setDetailedViewOpen(false)}
+          data={data.getRoomByOwner[index]}
+        />
+      ) : (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr 1fr",
+            margin: "2rem",
+            columnGap: "3rem",
+          }}
+        >
+          {data.getRoomByOwner.map((room, index) => {
+            return (
+              <Card
+                price={room.price}
+                available={room.isAvailable}
+                visible={room.isVisible}
+                id={room.id}
+                openDetailedView={() => {
+                  setDetailedViewOpen(true);
+                  setIndex(index);
+                }}
+              />
+            );
+          })}
+        </div>
+      )}
     </div>
     // </div>
   );

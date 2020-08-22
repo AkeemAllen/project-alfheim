@@ -6,8 +6,6 @@ import { createUseStyles } from "react-jss";
 import { NormalButton } from "../components/Buttons";
 import Modal from "../components/Modal";
 
-const trans = (x, y) => `translate(${x}px, ${y}px)`;
-
 const GallaryCard = ({
   occupancy,
   price,

@@ -28,7 +28,7 @@ const SideNav = ({ current, setView, logOut, auth }) => {
 
   useOnClickOutside(ref, () => setSettingsOptionsOpen(false));
 
-  if (!auth) {
+  if (!auth && localStorage.getItem("token") === undefined) {
     return <Redirect to="/login" />;
   }
 

@@ -3,7 +3,7 @@ import { createUseStyles } from "react-jss";
 import { useTable } from "react-table";
 import Modal from "../components/Modal";
 import { useMutation } from "react-apollo";
-import { OutlineButton } from "../components/Buttons";
+import { OutlineButton, TextButton } from "../components/Buttons";
 import { LineInput } from "../components/Inputs";
 import {
   updatePrice,
@@ -49,7 +49,6 @@ const CustomizedTable = ({ data }) => {
     prepareRow,
   } = tableInstance;
 
-  const [hover, setHover] = useState(false);
   const [tableAmenities, setTableAmenities] = useSprings(
     data.length,
     (index) => ({ opacity: 0 })
@@ -291,6 +290,8 @@ const CustomizedTable = ({ data }) => {
                       </div>
                     ) : cell.column.id === "price" ? (
                       `$${cell.value}`
+                    ) : cell.column.id === "photos" ? (
+                      <TextButton text="Upload Photo" />
                     ) : (
                       cell.render("Cell")
                     )}
