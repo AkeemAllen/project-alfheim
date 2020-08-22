@@ -11,6 +11,8 @@ import { logOut } from "../redux/actions/authActions";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import useOnClickOutside from "../components/useOnClickOutside";
+import { useRef } from "react";
 
 const SideNav = ({ current, setView, logOut, auth }) => {
   const classes = useStyles();
@@ -21,6 +23,10 @@ const SideNav = ({ current, setView, logOut, auth }) => {
     transform: `scale(${settingsOptionsOpen ? 1 : 0.2})`,
     config: config.gentle,
   });
+
+  const ref = useRef();
+
+  useOnClickOutside(ref, () => setSettingsOptionsOpen(false));
 
   if (!auth) {
     return <Redirect to="/login" />;
@@ -97,6 +103,7 @@ const SideNav = ({ current, setView, logOut, auth }) => {
           <animated.div
             className={classes.settingsOptions}
             style={{ opacity, transform }}
+            ref={ref}
           >
             <TextButton
               text="Settings"
