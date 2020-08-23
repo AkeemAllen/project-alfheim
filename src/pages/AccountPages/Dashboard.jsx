@@ -4,7 +4,6 @@ import { createUseStyles } from "react-jss";
 import { NormalButton } from "../../components/Buttons";
 import Modal from "../../components/Modal";
 import AddRoomForm from "../../components/forms/AddRoomForm";
-import Table from "../../components/Table";
 import { useQuery } from "react-apollo";
 import Loading from "../../components/Loading";
 import Snackbar from "../../components/SnackBars";
@@ -38,11 +37,17 @@ const Dashboard = () => {
           setStatus={setStatus}
         />
       </Modal>
-      <h1 className={classes.header}>Dashboard</h1>
-      <hr className={classes.divider} />
-      <div className={classes.toolbar}>
-        <NormalButton text="Add Room" onClick={() => setOpen(true)} />
-      </div>
+      <h2 className={classes.header}>Dashboard</h2>
+      {detailedViewOpen ? null : (
+        <div className={classes.toolbar}>
+          <NormalButton
+            text="Add Room"
+            onClick={() => setOpen(true)}
+            color="51cb20"
+            darkerColor="3e941c"
+          />
+        </div>
+      )}
       {loading ? (
         <Loading />
       ) : detailedViewOpen ? (
@@ -66,6 +71,7 @@ const Dashboard = () => {
                 available={room.isAvailable}
                 visible={room.isVisible}
                 id={room.id}
+                personalID={room.personalID}
                 openDetailedView={() => {
                   setDetailedViewOpen(true);
                   setIndex(index);
@@ -92,7 +98,7 @@ const useStyles = createUseStyles({
     marginTop: "2rem",
     marginLeft: "2rem",
     marginBottom: "0.5rem",
-    color: "rgba(0,0,0,0.8)",
+    color: "rgba(0,0,0,0.5)",
   },
   divider: {
     border: "0.5px solid rgba(0,0,0,0.1)",

@@ -1,5 +1,43 @@
 import gql from "graphql-tag";
 
+export const createRoom = gql`
+  mutation createRoom(
+    $price: Int!
+    $personalID: String!
+    $occupancy: String!
+    $gender: String!
+    $street: String!
+    $town_city: String!
+    $parish: String!
+    $amenities: [String!]
+    $rules: [String!]
+  ) {
+    createRoom(
+      input: {
+        price: $price
+        occupancy: $occupancy
+        gender: $gender
+        street: $street
+        town_city: $town_city
+        parish: $parish
+        rules: $rules
+        amenities: $amenities
+        personalID: $personalID
+      }
+    ) {
+      price
+      occupancy
+      gender
+      street
+      town_city
+      personalID
+      parish
+      amenities
+      rules
+    }
+  }
+`;
+
 export const updatePrice = gql`
   mutation updatePrice($id: ID!, $price: Int!) {
     updateRoom(id: $id, input: { price: $price }) {
@@ -11,6 +49,7 @@ export const updatePrice = gql`
       price
       isAvailable
       isVisible
+      personalID
     }
   }
 `;
@@ -26,6 +65,7 @@ export const updateGender = gql`
       price
       isAvailable
       isVisible
+      personalID
     }
   }
 `;
@@ -34,6 +74,7 @@ export const updateOccupancy = gql`
   mutation updateOccupancy($id: ID!, $occupancy: String!) {
     updateRoom(id: $id, input: { occupancy: $occupancy }) {
       street
+      personalID
       parish
       town_city
       gender
@@ -52,6 +93,7 @@ export const updateAvailability = gql`
       parish
       town_city
       gender
+      personalID
       occupancy
       price
       isAvailable
@@ -66,6 +108,7 @@ export const updateVisibility = gql`
       street
       parish
       town_city
+      personalID
       gender
       occupancy
       price
@@ -81,6 +124,7 @@ export const updateStreet = gql`
       street
       parish
       town_city
+      personalID
       gender
       occupancy
       price
@@ -98,6 +142,7 @@ export const updateTown = gql`
       town_city
       gender
       occupancy
+      personalID
       price
       isAvailable
       isVisible
@@ -114,6 +159,7 @@ export const updateParish = gql`
       gender
       occupancy
       price
+      personalID
       isAvailable
       isVisible
     }

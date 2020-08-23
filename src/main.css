@@ -13,6 +13,7 @@
   --styled-font: "Lobster";
   --main-green: #51cb20;
   --darker-green: #3e941c;
+  --transparent-white: rgba(0, 0, 0, 0.5);
 }
 
 * {

@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import useOnClickOutside from "../components/useOnClickOutside";
 import { useRef } from "react";
+import { invert } from "lodash";
 
 const SideNav = ({ current, setView, logOut, auth }) => {
   const classes = useStyles();
@@ -42,12 +43,12 @@ const SideNav = ({ current, setView, logOut, auth }) => {
             }
             onClick={() => setView("dashboard")}
           >
-            <img
+            {/* <img
               src={dashboardIcon}
               alt="dashboardIcon"
               width="30px"
-              style={{ marginRight: "1rem" }}
-            />
+              className={classes.icon}
+            /> */}
             Dashboard
           </button>
           <button
@@ -56,12 +57,12 @@ const SideNav = ({ current, setView, logOut, auth }) => {
             }
             onClick={() => setView("analytics")}
           >
-            <img
+            {/* <img
               src={assessmentIcon}
               alt="assessmentIcon"
               width="30px"
-              style={{ marginRight: "1rem" }}
-            />
+              className={classes.icon}
+            /> */}
             Analytics
           </button>
           <button
@@ -70,12 +71,12 @@ const SideNav = ({ current, setView, logOut, auth }) => {
             }
             onClick={() => setView("payments")}
           >
-            <img
+            {/* <img
               src={monetizationIcon}
               alt="monetizationIcon"
               width="30px"
-              style={{ marginRight: "1rem" }}
-            />
+              className={classes.icon}
+            /> */}
             Payments
           </button>
         </div>
@@ -98,6 +99,7 @@ const SideNav = ({ current, setView, logOut, auth }) => {
               alt="avatar"
               width="30px"
               onClick={() => setSettingsOptionsOpen(true)}
+              style={{ filter: "invert()" }}
             />
           </div>
           <animated.div
@@ -146,10 +148,13 @@ const useStyles = createUseStyles({
     display: "flex",
     height: "100vh",
     width: "250px",
-    backgroundColor: "var(--main-color)",
+    backgroundColor: "#f1f2fa",
     // backgroundColor: "var(--main-color)",
-    // borderRadius: "5px",
-    boxShadow: "0 0 10px rgba(0,0,0,0.5)",
+    // boxShadow: "0 0 10px rgba(0,0,0,0.5)",
+  },
+  icon: {
+    marginRight: "1rem",
+    filter: "invert()",
   },
   sidenav: {
     display: "grid",
@@ -167,10 +172,12 @@ const useStyles = createUseStyles({
   hightlighted: {
     display: "flex",
     alignItems: "center",
-    color: "white",
+    // color: "white",
+    color: "rgba(0,0,0,0.75)",
     padding: "0.5rem 2.5rem 0.5rem 0.5rem",
     border: "none",
-    backgroundColor: "#4D5FA9",
+    // backgroundColor: "#4D5FA9",
+    backgroundColor: "#CBCCD4",
     borderRadius: "5px",
     fontSize: "1rem",
     cursor: "pointer",
@@ -182,10 +189,10 @@ const useStyles = createUseStyles({
   tab: {
     display: "flex",
     alignItems: "center",
-    color: "white",
+    color: "rgba(0,0,0,0.75)",
     padding: "0.5rem 2.5rem 0.5rem 0.5rem",
     border: "none",
-    backgroundColor: "var(--main-color)",
+    backgroundColor: "transparent",
     borderRadius: "5px",
     fontSize: "1rem",
     cursor: "pointer",
@@ -201,10 +208,10 @@ const useStyles = createUseStyles({
     alignItems: "center",
     width: "100%",
     height: "50px",
-    backgroundColor: "#4D5FA9",
+    backgroundColor: "#CBCCD4",
     borderRadius: "5px",
     // padding: "5px",
-    color: "white",
+    color: "black",
     fontWeight: 600,
   },
   avatar: {

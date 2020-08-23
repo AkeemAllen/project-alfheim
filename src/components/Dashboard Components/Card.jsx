@@ -3,7 +3,7 @@ import { createUseStyles } from "react-jss";
 import room from "../../assets/stock photos/room1.jpg";
 import { useSpring, animated } from "react-spring";
 
-const Card = ({ price, available, visible, id, openDetailedView }) => {
+const Card = ({ price, available, visible, personalID, openDetailedView }) => {
   const classes = useStyles();
 
   const [hover, setHover] = useState(false);
@@ -27,26 +27,43 @@ const Card = ({ price, available, visible, id, openDetailedView }) => {
     >
       <img src={room} alt="room" className={classes.image} />
       <div>
+        <p style={{ fontWeight: "bold" }}>{personalID}</p>
         <h1
           style={{
-            color: "var(--main-color)",
-            marginBottom: "0.5rem",
+            color: "var(--main-green)",
+            marginTop: "0.5rem",
+            alignSelf: "center",
           }}
         >
           ${price}
         </h1>
-        <p>Room Id: {id.slice(0, 6)}...</p>
       </div>
       <div>
-        <h3 style={{ fontWeight: 500, marginBottom: "0.5rem" }}>Available</h3>
+        <h3
+          style={{
+            fontWeight: 500,
+            marginBottom: "0.5rem",
+            color: "var(--transparent-white)",
+          }}
+        >
+          Available
+        </h3>
         {available ? (
           <h2 style={{ marginLeft: "1.2rem", color: "#51CB20" }}>Yes</h2>
         ) : (
-          <h2 style={{ marginLeft: "1.2rem", color: "#FF5C7D" }}>No</h2>
+          <h2 style={{ marginLeft: "1.2rem" }}>No</h2>
         )}
       </div>
       <div>
-        <h3 style={{ fontWeight: 500, marginBottom: "0.5rem" }}>Visible</h3>
+        <h3
+          style={{
+            fontWeight: 500,
+            marginBottom: "0.5rem",
+            color: "var(--transparent-white)",
+          }}
+        >
+          Visible
+        </h3>
         {visible ? (
           <h2 style={{ marginLeft: "1.2rem", color: "#51CB20" }}>Yes</h2>
         ) : (
@@ -62,7 +79,8 @@ export default Card;
 const useStyles = createUseStyles({
   container: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr",
+    gridTemplateColumns: "min-content min-content",
+    columnGap: "2rem",
     rowGap: "2rem",
     padding: "1rem",
     backgroundColor: "#f1f2fa",

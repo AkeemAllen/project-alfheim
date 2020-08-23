@@ -14,6 +14,7 @@ export const getSingleOwnerRooms = gql`
       isVisible
       amenities
       rules
+      personalID
     }
   }
 `;
@@ -24,6 +25,7 @@ export const getAllRooms = gql`
       price
       occupancy
       gender
+      personalID
       street
       amenities
       rules

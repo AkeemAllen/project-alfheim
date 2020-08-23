@@ -1,49 +1,14 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
-import gql from "graphql-tag";
 import { createUseStyles } from "react-jss";
 import { BoxedInput } from "../Inputs";
 import { NormalButton } from "../Buttons";
 import { Multiselect } from "multiselect-react-dropdown";
-
-const addRoomMutation = gql`
-  mutation createRoom(
-    $price: Int!
-    $occupancy: String!
-    $gender: String!
-    $street: String!
-    $town_city: String!
-    $parish: String!
-    $amenities: [String!]
-    $rules: [String!]
-  ) {
-    createRoom(
-      input: {
-        price: $price
-        occupancy: $occupancy
-        gender: $gender
-        street: $street
-        town_city: $town_city
-        parish: $parish
-        rules: $rules
-        amenities: $amenities
-      }
-    ) {
-      price
-      occupancy
-      gender
-      street
-      town_city
-      parish
-      amenities
-      rules
-    }
-  }
-`;
+import { createRoom } from "../../gql/Mutations";
 
 const AddRoomModal = ({ setMounted, setMessage, setStatus }) => {
   //eslint-disable-next-line
-  const [addRoom, { loading, data, error }] = useMutation(addRoomMutation);
+  const [addRoom, { loading, data, error }] = useMutation(createRoom);
 
   const [price, setPrice] = useState();
   const [gender, setGender] = useState("");
@@ -51,6 +16,7 @@ const AddRoomModal = ({ setMounted, setMessage, setStatus }) => {
   const [street, setStreet] = useState("");
   const [parish, setParish] = useState("");
   const [town_city, setTown] = useState("");
+  const [personalID, setPersonalID] = useState("");
   const [rules, setRules] = useState([]);
   let [amenities, setAmenities] = useState([]);
 
@@ -65,6 +31,7 @@ const AddRoomModal = ({ setMounted, setMessage, setStatus }) => {
           street,
           parish,
           town_city,
+          personalID,
           rules: rules[0],
           amenities: amenities[0],
         },
@@ -85,6 +52,11 @@ const AddRoomModal = ({ setMounted, setMessage, setStatus }) => {
   return (
     <div>
       <form onSubmit={onSubmit} className={classes.container}>
+        <BoxedInput
+          label="Room ID (can be anything)"
+          onChange={(e) => setPersonalID(e.target.value)}
+          value={personalID}
+        />
         <BoxedInput
           label="Occupancy"
           onChange={(e) => setOccupancy(e.target.value)}
