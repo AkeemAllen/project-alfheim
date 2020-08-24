@@ -13,7 +13,7 @@ import RoomDetails from "../../components/Dashboard Components/RoomDetails";
 
 const Dashboard = () => {
   const [open, setOpen] = useState(false);
-  const [detailedViewOpen, setDetailedViewOpen] = useState(true);
+  const [detailedViewOpen, setDetailedViewOpen] = useState(false);
   const [index, setIndex] = useState(0);
 
   const classes = useStyles();
@@ -27,7 +27,6 @@ const Dashboard = () => {
   const [status, setStatus] = useState();
 
   return (
-    // <div>
     <div className={classes.container}>
       <Snackbar mounted={mounted} text={message} status={status} />
       <Modal handleClose={() => setOpen(false)} open={open}>
@@ -82,7 +81,6 @@ const Dashboard = () => {
         </div>
       )}
     </div>
-    // </div>
   );
 };
 
@@ -91,8 +89,6 @@ export default Dashboard;
 const useStyles = createUseStyles({
   container: {
     display: "grid",
-    // height: "100vh",
-    // width: "100%",
   },
   header: {
     marginTop: "2rem",

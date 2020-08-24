@@ -17,7 +17,9 @@ const Account = () => {
 
   return (
     <div className={classes.container}>
+      {/* <div style={{ position: "relative" }}> */}
       <SideNav current={current} setView={setCurrent} />
+      {/* </div> */}
       <div className={classes.account}>
         {current === "dashboard" ? <Dashboard /> : null}
         {current === "settings" ? <Settings /> : null}

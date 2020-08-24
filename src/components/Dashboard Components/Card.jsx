@@ -17,6 +17,11 @@ const Card = ({ price, available, visible, personalID, openDetailedView }) => {
     },
   });
 
+  const settings = [
+    { name: "Available", value: available },
+    { name: "Visible", value: visible },
+  ];
+
   return (
     <animated.div
       onMouseMove={() => setHover(true)}
@@ -28,48 +33,20 @@ const Card = ({ price, available, visible, personalID, openDetailedView }) => {
       <img src={room} alt="room" className={classes.image} />
       <div>
         <p style={{ fontWeight: "bold" }}>{personalID}</p>
-        <h1
-          style={{
-            color: "var(--main-green)",
-            marginTop: "0.5rem",
-            alignSelf: "center",
-          }}
-        >
-          ${price}
-        </h1>
+        <h1 className={classes.attentionGrabber}>${price}</h1>
       </div>
-      <div>
-        <h3
-          style={{
-            fontWeight: 500,
-            marginBottom: "0.5rem",
-            color: "var(--transparent-white)",
-          }}
-        >
-          Available
-        </h3>
-        {available ? (
-          <h2 style={{ marginLeft: "1.2rem", color: "#51CB20" }}>Yes</h2>
-        ) : (
-          <h2 style={{ marginLeft: "1.2rem" }}>No</h2>
-        )}
-      </div>
-      <div>
-        <h3
-          style={{
-            fontWeight: 500,
-            marginBottom: "0.5rem",
-            color: "var(--transparent-white)",
-          }}
-        >
-          Visible
-        </h3>
-        {visible ? (
-          <h2 style={{ marginLeft: "1.2rem", color: "#51CB20" }}>Yes</h2>
-        ) : (
-          <h2 style={{ marginLeft: "1.2rem", color: "#FF5C7D" }}>No</h2>
-        )}
-      </div>
+      {settings.map((setting) => {
+        return (
+          <div>
+            <h3 className={classes.settingName}>{setting.name}</h3>
+            {setting.value ? (
+              <h2 className={classes.true}>Yes</h2>
+            ) : (
+              <h2 className={classes.false}>No</h2>
+            )}
+          </div>
+        );
+      })}
     </animated.div>
   );
 };
@@ -87,9 +64,27 @@ const useStyles = createUseStyles({
     boxShadow: "none",
     borderRadius: "10px",
   },
+  settingName: {
+    fontWeight: 500,
+    marginBottom: "0.5rem",
+    color: "var(--transparent-white)",
+  },
+  attentionGrabber: {
+    color: "var(--main-green)",
+    marginTop: "0.5rem",
+    alignSelf: "center",
+  },
   image: {
     width: "10rem",
     height: "7rem",
     borderRadius: "7px",
+  },
+  true: {
+    marginLeft: "1.2rem",
+    color: "#51CB20",
+  },
+  false: {
+    marginLeft: "1.2rem",
+    color: "#FF5C7D",
   },
 });
