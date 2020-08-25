@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../stylesheets/component-stylesheets/GallaryCard.scss";
 import room from "../assets/stock photos/room2.jpg";
 import { useSpring, animated } from "react-spring";
 import { createUseStyles } from "react-jss";
