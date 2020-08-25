@@ -1,7 +1,5 @@
 import React from "react";
 import { animated, useSpring } from "react-spring";
-// import styled from "styled-components";
-import "../stylesheets/component-stylesheets/Loading.scss";
 import range from "lodash-es/range";
 import { createUseStyles } from "react-jss";
 

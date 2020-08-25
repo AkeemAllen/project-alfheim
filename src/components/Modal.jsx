@@ -1,5 +1,4 @@
 import React from "react";
-import "../stylesheets/component-stylesheets/Modal.scss";
 import { createUseStyles } from "react-jss";
 import Modal from "@material-ui/core/Modal";
 import PropTypes from "prop-types";
