@@ -29,6 +29,7 @@ export const updateRoom = (fieldToUpdate, value, index) => (dispatch) => {
 };
 
 export const deleteRoom = (id) => (dispatch) => {
+  console.log(id);
   dispatch({
     type: DELETE_ROOM,
     payload: id,

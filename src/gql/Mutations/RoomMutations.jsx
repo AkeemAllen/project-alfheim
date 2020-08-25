@@ -37,6 +37,7 @@ export const createRoom = gql`
         personalID: $personalID
       }
     ) {
+      id
       price
       occupancy
       gender

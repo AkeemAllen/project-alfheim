@@ -57,7 +57,7 @@ const Dashboard = ({ addOwnerRoomsToState, rooms }) => {
           setOpen={setOpen}
         />
       </Modal>
-      <h2 className={classes.header}>Dashboard</h2>
+      {/* <h2 className={classes.header}>Dashboard</h2> */}
       {detailedViewOpen ? null : (
         <div className={classes.toolbar}>
           <NormalButton

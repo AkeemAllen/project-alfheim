@@ -2,34 +2,34 @@ import React, { useState } from "react";
 import { createUseStyles } from "react-jss";
 import { NormalButton } from "../Buttons";
 import room from "../../assets/stock photos/room3.jpg";
-import Modal from "../Modal";
-import { BoxedInput } from "../Inputs";
 import {
   addRule,
   addAmenity,
   updateRoom,
-  deleteRoom,
   deleteSingleRule,
   deleteSingleAmenity,
 } from "../../gql/Mutations";
 import { useMutation } from "react-apollo";
 import removeIcon from "../../assets/icons/Remove Icon.png";
+import occupancyIcon from "../../assets/icons/Occupancy Icon.png";
+import dollarIcon from "../../assets/icons/Dollar Icon.png";
+import genderIcon from "../../assets/icons/Gender Icon.png";
 import {
   updateRoom as reduxUpdateRoom,
-  deleteRoom as reduxDelRoom,
   removeRule as reduxDelRule,
   removeAmenity as reduxDelAmenity,
 } from "../../redux/actions/roomActions";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import DeleteRoomModal from "../Modals/DeleteRoomModal";
+import UpdateRoomModal from "../Modals/UpdateRoomModal";
 
 const RoomDetails = ({
   returnToCards,
   data,
   reduxUpdateRoom,
   index,
-  reduxDelRoom,
   reduxDelRule,
   reduxDelAmenity,
 }) => {
@@ -46,9 +46,14 @@ const RoomDetails = ({
   };
 
   const details = [
-    { title: "Occupancy", value: data.occupancy, id: "occupancy" },
-    { title: "Gender", value: data.gender, id: "gender" },
-    { title: "Price", value: `$${data.price}`, id: "price" },
+    {
+      title: "Occupancy",
+      value: data.occupancy,
+      id: "occupancy",
+      icon: occupancyIcon,
+    },
+    { title: "Gender", value: data.gender, id: "gender", icon: genderIcon },
+    { title: "Price", value: `$${data.price}`, id: "price", icon: dollarIcon },
     {
       title: "Available",
       value: data.isAvailable ? "Yes" : "No",
@@ -81,6 +86,14 @@ const RoomDetails = ({
     }
 
     setModalOpen(false);
+  };
+
+  const handleRemoval = (field, value) => {
+    setFieldValue(value);
+    field === "rules"
+      ? setTimeout(() => deleteRule(), 1000) && reduxDelRule(data.id, value)
+      : setTimeout(() => deleteAmenity(), 1000) &&
+        reduxDelAmenity(data.id, value);
   };
 
   const [update] = useMutation(updateRoom, {
@@ -118,12 +131,6 @@ const RoomDetails = ({
     },
   });
 
-  const [removeRoom] = useMutation(deleteRoom, {
-    variables: {
-      id: data.id,
-    },
-  });
-
   const [newAmenity] = useMutation(addAmenity, {
     variables: {
       id: data.id,
@@ -134,10 +141,43 @@ const RoomDetails = ({
   return (
     <div className={classes.container}>
       <div className={classes.topSection}>
-        <h2 className={classes.lightBlack}>ID: {data.personalID}</h2>
+        <h2 className={classes.lightBlack}>{data.personalID}</h2>
         <NormalButton text="Back" onClick={returnToCards} />{" "}
       </div>
-      <h2 className={classes.lightBlack}>Overview</h2>
+      {/* <h2 className={classes.lightBlack}>Overview</h2> */}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr",
+          columnGap: "2rem",
+          width: "70rem",
+          margin: "auto",
+          marginBottom: "7rem",
+        }}
+      >
+        <img src={room} alt="room" className={classes.image} />
+        <div
+          style={{
+            backgroundColor: "#f1f2fa",
+            borderRadius: "10px",
+            padding: "1rem",
+          }}
+        >
+          <h2 className={classes.lightBlack} style={{ marginBottom: "1rem" }}>
+            Location
+          </h2>
+          {address.map((location) => {
+            return (
+              <h2
+                style={{ color: "var(--main-color)", paddingLeft: "1rem" }}
+                onClick={() => handleOpen(location.id)}
+              >
+                {location.value}
+              </h2>
+            );
+          })}
+        </div>
+      </div>
       <div className={classes.detail_wrapper}>
         {details.map((detail) => {
           return (
@@ -145,13 +185,24 @@ const RoomDetails = ({
               className={classes.detail}
               onClick={() => handleOpen(detail.id)}
             >
-              <h4 className={classes.lightBlack}>{detail.title}</h4>
-              <h2 style={{ color: "var(--main-color)" }}>{detail.value}</h2>
+              <div>
+                <h4 className={classes.lightBlack}>{detail.title}</h4>
+                <h2 style={{ color: "var(--main-color)" }}>{detail.value}</h2>
+              </div>
+              {(detail.title === "Available") |
+              (detail.title === "Visible") ? null : (
+                <img
+                  src={detail.icon}
+                  alt="icon"
+                  width="50"
+                  style={{ justifySelf: "flex-end" }}
+                />
+              )}
             </div>
           );
         })}
       </div>
-      <div>
+      {/* <div>
         <h2 className={classes.lightBlack} style={{ marginBottom: "1rem" }}>
           Location
         </h2>
@@ -162,22 +213,20 @@ const RoomDetails = ({
                 className={classes.detail}
                 onClick={() => handleOpen(detail.id)}
               >
-                <h4 style={{ color: "rgba(0,0,0,0.5)" }}>{detail.title}</h4>
-                <h2 style={{ color: "var(--main-color)" }}>{detail.value}</h2>
+                <div>
+                  <h4 style={{ color: "rgba(0,0,0,0.5)" }}>{detail.title}</h4>
+                  <h2 style={{ color: "var(--main-color)" }}>{detail.value}</h2>
+                </div>
               </div>
             );
           })}
         </div>
-      </div>
+      </div> */}
       <div className={classes.splitColumns}>
-        <div
-          style={{
-            display: "grid",
-            rowGap: "0.5rem",
-            gridAutoRows: "min-content",
-          }}
-        >
-          <h2 style={{ color: "rgba(0,0,0,0.5)" }}>Rules</h2>
+        <div className={classes.listColumn}>
+          <h2 style={{ color: "rgba(0,0,0,0.5)", marginBottom: "1rem" }}>
+            Rules
+          </h2>
           {data.rules.map((rule) => {
             return (
               <div className={classes.listItem}>
@@ -186,26 +235,18 @@ const RoomDetails = ({
                   src={removeIcon}
                   alt="remove"
                   width="20"
-                  onClick={() => {
-                    setFieldValue(rule);
-                    setTimeout(() => deleteRule(), 1000);
-                    reduxDelRule(data.id, rule);
-                  }}
+                  onClick={() => handleRemoval("rules", rule)}
                 />
               </div>
             );
           })}
           <NormalButton text="Add Rule" onClick={() => handleOpen("rules")} />
         </div>
-        <div
-          style={{
-            display: "grid",
-            rowGap: "0.5rem",
-            gridAutoRows: "min-content",
-          }}
-        >
-          <h2 style={{ color: "rgba(0,0,0,0.5)" }}>Amenities</h2>
-          {data.amenities.map((amenity, index) => {
+        <div className={classes.listColumn}>
+          <h2 style={{ color: "rgba(0,0,0,0.5)", marginBottom: "1rem" }}>
+            Amenities
+          </h2>
+          {data.amenities.map((amenity) => {
             return (
               <div className={classes.listItem}>
                 {amenity}{" "}
@@ -213,11 +254,7 @@ const RoomDetails = ({
                   src={removeIcon}
                   alt="remove"
                   width="20"
-                  onClick={() => {
-                    setFieldValue(amenity);
-                    setTimeout(() => deleteAmenity(), 1000);
-                    reduxDelAmenity(data.id, amenity);
-                  }}
+                  onClick={() => handleRemoval("amenities", amenity)}
                 />
               </div>
             );
@@ -227,15 +264,8 @@ const RoomDetails = ({
             onClick={() => handleOpen("amenities")}
           />
         </div>
-        <img src={room} alt="room" className={classes.image} />
       </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "flex-end",
-          marginTop: "3rem",
-        }}
-      >
+      <div className={classes.bottomSection}>
         <NormalButton
           text="Delete"
           color="CDCDCD"
@@ -243,63 +273,32 @@ const RoomDetails = ({
           onClick={() => setConfirmDelModal(true)}
         />
       </div>
-      <Modal open={modalOpen} handleClose={() => setModalOpen(false)}>
-        <div style={{ display: "grid", rowGap: "1rem" }}>
-          {(field === "isVisible") | (field === "isAvailable") ? null : (
-            <BoxedInput
-              type={field === "price" ? "number" : "text"}
-              label={field}
-              onChange={(e) => setFieldValue(e.target.value)}
-            />
-          )}
-          <NormalButton
-            text={
-              field === "isAvailable"
-                ? `Set To ${!data.isAvailable ? "Yes" : "No"}`
-                : field === "isVisible"
-                ? `Set To ${!data.isVisible ? "Yes" : "No"}`
-                : field === "rules"
-                ? "Add New Rule"
-                : field === "amenities"
-                ? "Add New Amenity"
-                : `Update ${field}`
-            }
-            onClick={handleUpdate}
-          />
-        </div>
-      </Modal>
-      <Modal
+      <UpdateRoomModal
+        open={modalOpen}
+        closeHandler={() => setModalOpen(false)}
+        field={field}
+        setFieldValue={setFieldValue}
+        handleUpdate={handleUpdate}
+        data={data}
+      />
+      <DeleteRoomModal
         open={confirmDelModal}
-        handleClose={() => setConfirmDelModal(false)}
-      >
-        <div style={{ display: "grid", rowGap: "1rem" }}>
-          Deleting Room...
-          <NormalButton
-            text="Are Your Sure?"
-            onClick={() => {
-              returnToCards();
-              reduxDelRoom(data.id);
-              removeRoom();
-            }}
-            color="FF7893"
-            darkerColor="FF2E58"
-          />
-        </div>
-      </Modal>
+        closeHandler={() => setConfirmDelModal(false)}
+        returnToCards={() => returnToCards()}
+        id={data.id}
+      />
     </div>
   );
 };
 
 RoomDetails.propTypes = {
   reduxUpdateRoom: PropTypes.func.isRequired,
-  reduxDelRoom: PropTypes.func.isRequired,
   reduxDelRule: PropTypes.func.isRequired,
   reduxDelAmenity: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
   reduxUpdateRoom: bindActionCreators(reduxUpdateRoom, dispatch),
-  reduxDelRoom: bindActionCreators(reduxDelRoom, dispatch),
   reduxDelAmenity: bindActionCreators(reduxDelAmenity, dispatch),
   reduxDelRule: bindActionCreators(reduxDelRule, dispatch),
 });
@@ -318,7 +317,7 @@ const useStyles = createUseStyles({
   },
   splitColumns: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr",
+    gridTemplateColumns: "1fr 1fr",
     columnGap: "1rem",
   },
   lightBlack: {
@@ -338,6 +337,7 @@ const useStyles = createUseStyles({
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
     columnGap: "0.5rem",
+    marginBottom: "3rem",
   },
   detail: {
     backgroundColor: "#f1f2fa",
@@ -346,7 +346,9 @@ const useStyles = createUseStyles({
     borderRadius: "10px",
     justifySelf: "flex-start",
     display: "grid",
+    gridTemplateColumns: "1fr 1fr",
     rowGap: "1rem",
+    // justifyContent: "space-between",
   },
   listItem: {
     padding: "0.5rem",
@@ -356,5 +358,15 @@ const useStyles = createUseStyles({
     display: "grid",
     gridTemplateColumns: "1fr 0.1fr",
     alignItems: "center",
+  },
+  bottomSection: {
+    display: "flex",
+    justifyContent: "flex-end",
+    marginTop: "3rem",
+  },
+  listColumn: {
+    display: "grid",
+    rowGap: "0.5rem",
+    gridAutoRows: "min-content",
   },
 });

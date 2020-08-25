@@ -1,25 +1,32 @@
 import React, { useState } from "react";
-import "../stylesheets/OwnerAccount.scss";
-import { logOut } from "../redux/actions/authActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { bindActionCreators } from "redux";
 import Dashboard from "./AccountPages/Dashboard";
 import Settings from "./AccountPages/Settings";
 import Analytics from "./AccountPages/Analytics";
 import SideNav from "../components/SideNav";
 import { createUseStyles } from "react-jss";
 import Payments from "./AccountPages/Payments";
+import { Redirect } from "react-router-dom";
 
-const Account = () => {
+const Account = ({ auth }) => {
   const classes = useStyles();
   const [current, setCurrent] = useState("dashboard");
 
+  if (!auth && localStorage.getItem("token") === undefined) {
+    return <Redirect to="/login" />;
+  }
   return (
     <div className={classes.container}>
-      {/* <div style={{ position: "relative" }}> */}
-      <SideNav current={current} setView={setCurrent} />
-      {/* </div> */}
+      <div
+        style={{
+          position: "fixed",
+          display: "flex",
+          height: "100vh",
+        }}
+      >
+        <SideNav current={current} setView={setCurrent} />
+      </div>
       <div className={classes.account}>
         {current === "dashboard" ? <Dashboard /> : null}
         {current === "settings" ? <Settings /> : null}
@@ -31,22 +38,23 @@ const Account = () => {
 };
 
 Account.propTypes = {
-  logOut: PropTypes.func.isRequired,
+  auth: PropTypes.bool.isRequired,
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  logOut: bindActionCreators(logOut, dispatch),
+const mapStateToProps = (state) => ({
+  auth: state.auth.auth,
 });
 
-export default connect(null, mapDispatchToProps)(Account);
+export default connect(mapStateToProps, [])(Account);
 
 const useStyles = createUseStyles({
   container: {
     display: "grid",
-    gridTemplateColumns: "0.1fr 1fr",
+    // gridTemplateColumns: "0.1fr 1fr",
   },
   account: {
     display: "grid",
     gridAutoRows: "min-content",
+    marginLeft: "18rem",
   },
 });

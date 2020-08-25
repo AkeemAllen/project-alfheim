@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { createUseStyles } from "react-jss";
-import dashboardIcon from "../assets/icons/mdi_dashboard.png";
 import settingsIcon from "../assets/icons/mdi_settings.png";
-import monetizationIcon from "../assets/icons/mdi_monetization_on.png";
-import assessmentIcon from "../assets/icons/mdi_assessment.png";
 import { TextButton } from "./Buttons";
 import { useSpring, animated, config } from "react-spring";
 import PropTypes from "prop-types";
@@ -13,7 +10,6 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import useOnClickOutside from "../components/useOnClickOutside";
 import { useRef } from "react";
-import { invert } from "lodash";
 
 const SideNav = ({ current, setView, logOut, auth }) => {
   const classes = useStyles();
@@ -43,12 +39,6 @@ const SideNav = ({ current, setView, logOut, auth }) => {
             }
             onClick={() => setView("dashboard")}
           >
-            {/* <img
-              src={dashboardIcon}
-              alt="dashboardIcon"
-              width="30px"
-              className={classes.icon}
-            /> */}
             Dashboard
           </button>
           <button
@@ -57,12 +47,6 @@ const SideNav = ({ current, setView, logOut, auth }) => {
             }
             onClick={() => setView("analytics")}
           >
-            {/* <img
-              src={assessmentIcon}
-              alt="assessmentIcon"
-              width="30px"
-              className={classes.icon}
-            /> */}
             Analytics
           </button>
           <button
@@ -71,12 +55,6 @@ const SideNav = ({ current, setView, logOut, auth }) => {
             }
             onClick={() => setView("payments")}
           >
-            {/* <img
-              src={monetizationIcon}
-              alt="monetizationIcon"
-              width="30px"
-              className={classes.icon}
-            /> */}
             Payments
           </button>
         </div>
@@ -146,11 +124,14 @@ export default connect(mapStateToProps, mapDispatchToProps)(SideNav);
 const useStyles = createUseStyles({
   container: {
     display: "flex",
-    height: "100vh",
+    height: "98%",
     width: "250px",
-    backgroundColor: "#f1f2fa",
-    // backgroundColor: "var(--main-color)",
-    // boxShadow: "0 0 10px rgba(0,0,0,0.5)",
+    // backgroundColor: "#f1f2fa",
+    backgroundColor: "var(--main-color)",
+    boxShadow: "0 0 10px rgba(0,0,0,0.5)",
+    marginLeft: "1rem",
+    borderRadius: "10px",
+    alignSelf: "center",
   },
   icon: {
     marginRight: "1rem",
@@ -172,12 +153,12 @@ const useStyles = createUseStyles({
   hightlighted: {
     display: "flex",
     alignItems: "center",
-    // color: "white",
-    color: "rgba(0,0,0,0.75)",
+    color: "white",
+    // color: "rgba(0,0,0,0.75)",
     padding: "0.5rem 2.5rem 0.5rem 0.5rem",
     border: "none",
-    // backgroundColor: "#4D5FA9",
-    backgroundColor: "#CBCCD4",
+    backgroundColor: "#4D5FA9",
+    // backgroundColor: "#CBCCD4",
     borderRadius: "5px",
     fontSize: "1rem",
     cursor: "pointer",
@@ -189,7 +170,8 @@ const useStyles = createUseStyles({
   tab: {
     display: "flex",
     alignItems: "center",
-    color: "rgba(0,0,0,0.75)",
+    // color: "rgba(0,0,0,0.75)",
+    color: "white",
     padding: "0.5rem 2.5rem 0.5rem 0.5rem",
     border: "none",
     backgroundColor: "transparent",
@@ -208,10 +190,12 @@ const useStyles = createUseStyles({
     alignItems: "center",
     width: "100%",
     height: "50px",
-    backgroundColor: "#CBCCD4",
+    // backgroundColor: "#CBCCD4",
+    backgroundColor: "#4D5FA9",
     borderRadius: "5px",
     // padding: "5px",
-    color: "black",
+    // color: "black",
+    color: "white",
     fontWeight: 600,
   },
   avatar: {

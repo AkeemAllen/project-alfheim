@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "../stylesheets/Gallary.scss";
 import Card from "../components/GallaryCard";
 import { Link } from "react-router-dom";
 import { LineInput } from "../components/Inputs";
