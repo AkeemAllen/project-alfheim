@@ -25,8 +25,6 @@ export const createRoom = gql`
     $street: String!
     $town_city: String!
     $parish: String!
-    $amenities: [String!]
-    $rules: [String!]
   ) {
     createRoom(
       input: {
@@ -36,8 +34,6 @@ export const createRoom = gql`
         street: $street
         town_city: $town_city
         parish: $parish
-        rules: $rules
-        amenities: $amenities
         personalID: $personalID
       }
     ) {
@@ -50,6 +46,8 @@ export const createRoom = gql`
       parish
       amenities
       rules
+      isAvailable
+      isVisible
     }
   }
 `;
@@ -83,7 +81,31 @@ export const updateRoom = gql`
         isVisible: $isVisible
       }
     ) {
+      id
+    }
+  }
+`;
+
+export const deleteRoom = gql`
+  mutation deleteRoom($id: ID!) {
+    deleteRoom(id: $id) {
       street
+    }
+  }
+`;
+
+export const deleteSingleRule = gql`
+  mutation deleteSingleRule($id: ID!, $ruleToDelete: String!) {
+    deleteSingleRule(id: $id, ruleToDelete: $ruleToDelete) {
+      id
+    }
+  }
+`;
+
+export const deleteSingleAmenity = gql`
+  mutation deleteSingleAmenity($id: ID!, $amenityToDelete: String!) {
+    deleteSingleAmenity(amenityToDelete: $amenityToDelete, id: $id) {
+      id
     }
   }
 `;

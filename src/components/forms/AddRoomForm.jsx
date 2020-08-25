@@ -3,10 +3,19 @@ import { useMutation } from "@apollo/react-hooks";
 import { createUseStyles } from "react-jss";
 import { BoxedInput } from "../Inputs";
 import { NormalButton } from "../Buttons";
-import { Multiselect } from "multiselect-react-dropdown";
 import { createRoom } from "../../gql/Mutations";
+import { addRoom as newRoom } from "../../redux/actions/roomActions";
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
-const AddRoomModal = ({ setMounted, setMessage, setStatus }) => {
+const AddRoomModal = ({
+  setMounted,
+  setMessage,
+  setStatus,
+  newRoom,
+  setOpen,
+}) => {
   //eslint-disable-next-line
   const [addRoom, { loading, data, error }] = useMutation(createRoom);
 
@@ -17,8 +26,6 @@ const AddRoomModal = ({ setMounted, setMessage, setStatus }) => {
   const [parish, setParish] = useState("");
   const [town_city, setTown] = useState("");
   const [personalID, setPersonalID] = useState("");
-  const [rules, setRules] = useState([]);
-  let [amenities, setAmenities] = useState([]);
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -32,15 +39,15 @@ const AddRoomModal = ({ setMounted, setMessage, setStatus }) => {
           parish,
           town_city,
           personalID,
-          rules: rules[0],
-          amenities: amenities[0],
         },
       }).then((result) => {
         setMounted(true);
         setMessage("Room Added Successfully");
         setStatus("success");
+        setOpen(false);
         setTimeout(() => setMounted(false), 3000);
         console.log(result);
+        newRoom(result.data.createRoom);
       });
     } catch (error) {
       console.log(error);
@@ -66,58 +73,6 @@ const AddRoomModal = ({ setMounted, setMessage, setStatus }) => {
           label="Gender"
           onChange={(e) => setGender(e.target.value)}
           value={gender}
-        />
-        <Multiselect
-          placeholder="Rules"
-          options={["No Visitors", "No Food In Rooms"]}
-          isObject={false}
-          onSelect={(selectedList) => {
-            setRules([selectedList]);
-          }}
-          onRemove={(selectedList) => {
-            setRules([selectedList]);
-          }}
-          style={{
-            searchBox: {
-              borderRadius: "10px",
-              border: "2px solid #263D9C",
-              padding: "0.8rem 3rem 0.8rem 1rem",
-              "&:focus": {
-                outline: "none",
-                boxShadow: "0px 0px 1px 4px #A3B4FA",
-                border: "none",
-              },
-            },
-            inputField: {
-              fontSize: "1rem",
-            },
-          }}
-        />
-        <Multiselect
-          placeholder="Amenities"
-          options={["Water", "Electricity"]}
-          isObject={false}
-          onSelect={(selectedList) => {
-            setAmenities([selectedList]);
-          }}
-          onRemove={(selectedList) => {
-            setAmenities([selectedList]);
-          }}
-          style={{
-            searchBox: {
-              borderRadius: "10px",
-              border: "2px solid #263D9C",
-              padding: "0.8rem 3rem 0.8rem 1rem",
-              "&:focus": {
-                outline: "none",
-                boxShadow: "0px 0px 1px 4px #A3B4FA",
-                border: "none",
-              },
-            },
-            inputField: {
-              fontSize: "1rem",
-            },
-          }}
         />
         <BoxedInput
           label="Street"
@@ -146,25 +101,19 @@ const AddRoomModal = ({ setMounted, setMessage, setStatus }) => {
   );
 };
 
-export default AddRoomModal;
+AddRoomModal.propTypes = {
+  newRoom: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  newRoom: bindActionCreators(newRoom, dispatch),
+});
+
+export default connect(null, mapDispatchToProps)(AddRoomModal);
 
 const useStyles = createUseStyles({
   container: {
     display: "grid",
     rowGap: "1rem",
-  },
-  mutliselect: {
-    padding: "0.8rem 3rem 0.8rem 1rem",
-    backgroundColor: "white",
-    borderRadius: "10px",
-    border: "2px solid #263D9C",
-    fontSize: "1rem",
-    transition: "all",
-    transitionDuration: "250ms",
-    "&:focus": {
-      outline: "none",
-      boxShadow: "0px 0px 1px 4px #A3B4FA",
-      border: "none",
-    },
   },
 });

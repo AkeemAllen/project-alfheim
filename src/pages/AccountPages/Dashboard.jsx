@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { createUseStyles } from "react-jss";
 // import Room from "../../components/Room";
 import { NormalButton } from "../../components/Buttons";
@@ -8,10 +8,14 @@ import { useQuery } from "react-apollo";
 import Loading from "../../components/Loading";
 import Snackbar from "../../components/SnackBars";
 import { getSingleOwnerRooms } from "../../gql/Queries";
+import { addOwnerRoomsToState } from "../../redux/actions/roomActions";
 import Card from "../../components/Dashboard Components/Card";
 import RoomDetails from "../../components/Dashboard Components/RoomDetails";
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
-const Dashboard = () => {
+const Dashboard = ({ addOwnerRoomsToState, rooms }) => {
   const [open, setOpen] = useState(false);
   const [detailedViewOpen, setDetailedViewOpen] = useState(false);
   const [index, setIndex] = useState(0);
@@ -21,6 +25,22 @@ const Dashboard = () => {
   const { loading, data } = useQuery(getSingleOwnerRooms, {
     variables: { owner: localStorage.getItem("userId") },
   });
+
+  const isMounted = useRef(false);
+
+  useEffect(
+    () => {
+      if (isMounted.current) {
+        try {
+          addOwnerRoomsToState(data.getRoomByOwner);
+        } catch (err) {}
+      } else {
+        isMounted.current = true;
+      }
+    },
+    //eslint-disable-next-line
+    [data]
+  );
 
   const [mounted, setMounted] = useState(false);
   const [message, setMessage] = useState("");
@@ -34,6 +54,7 @@ const Dashboard = () => {
           setMessage={setMessage}
           setMounted={setMounted}
           setStatus={setStatus}
+          setOpen={setOpen}
         />
       </Modal>
       <h2 className={classes.header}>Dashboard</h2>
@@ -52,7 +73,8 @@ const Dashboard = () => {
       ) : detailedViewOpen ? (
         <RoomDetails
           returnToCards={() => setDetailedViewOpen(false)}
-          data={data.getRoomByOwner[index]}
+          data={rooms[index]}
+          index={index}
         />
       ) : (
         <div
@@ -61,9 +83,10 @@ const Dashboard = () => {
             gridTemplateColumns: "1fr 1fr 1fr",
             margin: "2rem",
             columnGap: "3rem",
+            rowGap: "3rem",
           }}
         >
-          {data.getRoomByOwner.map((room, index) => {
+          {rooms.map((room, index) => {
             return (
               <Card
                 price={room.price}
@@ -84,7 +107,19 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+Dashboard.propTypes = {
+  addOwnerRoomsToState: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  rooms: state.room.rooms,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  addOwnerRoomsToState: bindActionCreators(addOwnerRoomsToState, dispatch),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
 
 const useStyles = createUseStyles({
   container: {

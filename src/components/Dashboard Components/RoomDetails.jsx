@@ -4,14 +4,39 @@ import { NormalButton } from "../Buttons";
 import room from "../../assets/stock photos/room3.jpg";
 import Modal from "../Modal";
 import { BoxedInput } from "../Inputs";
-import { addRule, addAmenity, updateRoom } from "../../gql/Mutations";
+import {
+  addRule,
+  addAmenity,
+  updateRoom,
+  deleteRoom,
+  deleteSingleRule,
+  deleteSingleAmenity,
+} from "../../gql/Mutations";
 import { useMutation } from "react-apollo";
 import removeIcon from "../../assets/icons/Remove Icon.png";
+import {
+  updateRoom as reduxUpdateRoom,
+  deleteRoom as reduxDelRoom,
+  removeRule as reduxDelRule,
+  removeAmenity as reduxDelAmenity,
+} from "../../redux/actions/roomActions";
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
-const RoomDetails = ({ returnToCards, data }) => {
+const RoomDetails = ({
+  returnToCards,
+  data,
+  reduxUpdateRoom,
+  index,
+  reduxDelRoom,
+  reduxDelRule,
+  reduxDelAmenity,
+}) => {
   const classes = useStyles();
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [confirmDelModal, setConfirmDelModal] = useState(false);
   const [field, setField] = useState("");
   const [fieldValue, setFieldValue] = useState("");
 
@@ -39,20 +64,30 @@ const RoomDetails = ({ returnToCards, data }) => {
   ];
 
   const handleUpdate = () => {
-    if (field === "rule") {
+    if (field === "rules") {
       newRule();
-    } else if (field === "amenity") {
+    } else if (field === "amenities") {
       newAmenity();
     } else {
       update();
     }
+
+    if (field === "isAvailable") {
+      reduxUpdateRoom(field, !data.isAvailable, index);
+    } else if (field === "isVisible") {
+      reduxUpdateRoom(field, !data.isVisible, index);
+    } else {
+      reduxUpdateRoom(field, fieldValue, index);
+    }
+
+    setModalOpen(false);
   };
 
   const [update] = useMutation(updateRoom, {
     variables: {
       occupancy: field === "occupancy" ? fieldValue : undefined,
       gender: field === "gender" ? fieldValue : undefined,
-      price: field === "price" ? fieldValue : undefined,
+      price: field === "price" ? parseInt(fieldValue, 10) : undefined,
       street: field === "street" ? fieldValue : undefined,
       parish: field === "parish" ? fieldValue : undefined,
       town_city: field === "town_city" ? fieldValue : undefined,
@@ -62,10 +97,30 @@ const RoomDetails = ({ returnToCards, data }) => {
     },
   });
 
+  const [deleteRule] = useMutation(deleteSingleRule, {
+    variables: {
+      id: data.id,
+      ruleToDelete: fieldValue,
+    },
+  });
+
+  const [deleteAmenity] = useMutation(deleteSingleAmenity, {
+    variables: {
+      id: data.id,
+      amenityToDelete: fieldValue,
+    },
+  });
+
   const [newRule] = useMutation(addRule, {
     variables: {
       id: data.id,
       rule: fieldValue,
+    },
+  });
+
+  const [removeRoom] = useMutation(deleteRoom, {
+    variables: {
+      id: data.id,
     },
   });
 
@@ -127,11 +182,20 @@ const RoomDetails = ({ returnToCards, data }) => {
             return (
               <div className={classes.listItem}>
                 {rule}
-                <img src={removeIcon} alt="remove" width="20" />
+                <img
+                  src={removeIcon}
+                  alt="remove"
+                  width="20"
+                  onClick={() => {
+                    setFieldValue(rule);
+                    setTimeout(() => deleteRule(), 1000);
+                    reduxDelRule(data.id, rule);
+                  }}
+                />
               </div>
             );
           })}
-          <NormalButton text="Add Rule" onClick={() => handleOpen("rule")} />
+          <NormalButton text="Add Rule" onClick={() => handleOpen("rules")} />
         </div>
         <div
           style={{
@@ -141,12 +205,26 @@ const RoomDetails = ({ returnToCards, data }) => {
           }}
         >
           <h2 style={{ color: "rgba(0,0,0,0.5)" }}>Amenities</h2>
-          {data.amenities.map((amenity) => {
-            return <p className={classes.listItem}>{amenity}</p>;
+          {data.amenities.map((amenity, index) => {
+            return (
+              <div className={classes.listItem}>
+                {amenity}{" "}
+                <img
+                  src={removeIcon}
+                  alt="remove"
+                  width="20"
+                  onClick={() => {
+                    setFieldValue(amenity);
+                    setTimeout(() => deleteAmenity(), 1000);
+                    reduxDelAmenity(data.id, amenity);
+                  }}
+                />
+              </div>
+            );
           })}
           <NormalButton
             text="Add Amenity"
-            onClick={() => handleOpen("amenity")}
+            onClick={() => handleOpen("amenities")}
           />
         </div>
         <img src={room} alt="room" className={classes.image} />
@@ -158,7 +236,12 @@ const RoomDetails = ({ returnToCards, data }) => {
           marginTop: "3rem",
         }}
       >
-        <NormalButton text="Delete" color="CDCDCD" darkerColor="FF7893" />
+        <NormalButton
+          text="Delete"
+          color="CDCDCD"
+          darkerColor="FF7893"
+          onClick={() => setConfirmDelModal(true)}
+        />
       </div>
       <Modal open={modalOpen} handleClose={() => setModalOpen(false)}>
         <div style={{ display: "grid", rowGap: "1rem" }}>
@@ -175,9 +258,9 @@ const RoomDetails = ({ returnToCards, data }) => {
                 ? `Set To ${!data.isAvailable ? "Yes" : "No"}`
                 : field === "isVisible"
                 ? `Set To ${!data.isVisible ? "Yes" : "No"}`
-                : field === "rule"
+                : field === "rules"
                 ? "Add New Rule"
-                : field === "amenity"
+                : field === "amenities"
                 ? "Add New Amenity"
                 : `Update ${field}`
             }
@@ -185,11 +268,43 @@ const RoomDetails = ({ returnToCards, data }) => {
           />
         </div>
       </Modal>
+      <Modal
+        open={confirmDelModal}
+        handleClose={() => setConfirmDelModal(false)}
+      >
+        <div style={{ display: "grid", rowGap: "1rem" }}>
+          Deleting Room...
+          <NormalButton
+            text="Are Your Sure?"
+            onClick={() => {
+              returnToCards();
+              reduxDelRoom(data.id);
+              removeRoom();
+            }}
+            color="FF7893"
+            darkerColor="FF2E58"
+          />
+        </div>
+      </Modal>
     </div>
   );
 };
 
-export default RoomDetails;
+RoomDetails.propTypes = {
+  reduxUpdateRoom: PropTypes.func.isRequired,
+  reduxDelRoom: PropTypes.func.isRequired,
+  reduxDelRule: PropTypes.func.isRequired,
+  reduxDelAmenity: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  reduxUpdateRoom: bindActionCreators(reduxUpdateRoom, dispatch),
+  reduxDelRoom: bindActionCreators(reduxDelRoom, dispatch),
+  reduxDelAmenity: bindActionCreators(reduxDelAmenity, dispatch),
+  reduxDelRule: bindActionCreators(reduxDelRule, dispatch),
+});
+
+export default connect(null, mapDispatchToProps)(RoomDetails);
 
 const useStyles = createUseStyles({
   container: {
