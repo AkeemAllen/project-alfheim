@@ -1,5 +1,5 @@
 import React from "react";
-import "../../stylesheets/Checkbox.scss";
+// import "../../stylesheets/Checkbox.scss";
 
 const Checkbox = ({ onClick, label }) => {
   return (
