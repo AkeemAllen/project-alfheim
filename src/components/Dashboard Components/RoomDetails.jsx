@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { createUseStyles } from "react-jss";
 import { NormalButton } from "../Buttons";
-import room from "../../assets/stock photos/room3.jpg";
 import {
   addRule,
   addAmenity,
@@ -45,7 +44,6 @@ const RoomDetails = ({
   const [confirmDelModal, setConfirmDelModal] = useState(false);
   const [field, setField] = useState("");
   const [fieldValue, setFieldValue] = useState("");
-  const [imageHover, setImageHover] = useState(false);
   const [imageModalOpen, setImageModalOpen] = useState(false);
 
   const handleOpen = (id) => {
@@ -181,8 +179,6 @@ const RoomDetails = ({
             src={`${imageViewUri}/${data.image}`}
             alt="room"
             className={classes.image}
-            onMouseEnter={() => setImageHover(true)}
-            onMouseLeave={() => setImageHover(false)}
             onClick={() => setImageModalOpen(true)}
           />
         )}

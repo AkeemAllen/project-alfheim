@@ -11,7 +11,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { login as loginQuery } from "../gql/Queries";
-import { useSpring, animated, config } from "react-spring";
+import { useSpring, animated } from "react-spring";
 
 const Login = (props) => {
   const classes = useStyles();

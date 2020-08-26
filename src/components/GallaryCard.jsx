@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import room from "../assets/stock photos/room2.jpg";
 import { useSpring, animated } from "react-spring";
 import { createUseStyles } from "react-jss";
 import { NormalButton } from "../components/Buttons";
