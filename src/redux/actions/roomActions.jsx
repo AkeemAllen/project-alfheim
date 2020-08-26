@@ -6,6 +6,7 @@ import {
   REMOVE_RULE,
   REMOVE_AMENITY,
 } from "./types";
+import axios from "axios";
 
 export const addOwnerRoomsToState = (rooms) => (dispatch) => {
   dispatch({
@@ -48,4 +49,25 @@ export const removeAmenity = (id, amenity) => (dispatch) => {
     type: REMOVE_AMENITY,
     payload: { id, amenity },
   });
+};
+
+export const uploadImage = (id, formData, addImage, index) => (dispatch) => {
+  let imageUploadUri;
+  process.env.NODE_ENV !== "production"
+    ? (imageUploadUri = "http://localhost:8081/upload")
+    : (imageUploadUri = `${process.env.REACT_APP_BASE_URI}/upload`);
+
+  axios
+    .post(imageUploadUri, formData)
+    .then((res) => {
+      addImage({ variables: { id, image: res.data.file.filename } });
+      return res;
+    })
+    .then((res) => {
+      console.log(res);
+      dispatch(updateRoom("image", res.data.file.filename, index));
+    })
+    .catch((err) => {
+      throw err;
+    });
 };

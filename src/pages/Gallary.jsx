@@ -76,6 +76,7 @@ const Gallary = () => {
                   amenities={room.amenities}
                   rules={room.rules}
                   ownerInfo={room.owner}
+                  image={room.image}
                 />
               );
             })}

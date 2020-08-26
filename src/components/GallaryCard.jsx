@@ -13,6 +13,7 @@ const GallaryCard = ({
   amenities,
   rules,
   ownerInfo,
+  image,
 }) => {
   const [hover, setHover] = useState(false);
   const [selected, setSelected] = useState(false);
@@ -31,6 +32,11 @@ const GallaryCard = ({
 
   const classes = useStyles();
 
+  let imageViewUri;
+  process.env.NODE_ENV !== "production"
+    ? (imageViewUri = "http://localhost:8081/image")
+    : (imageViewUri = `${process.env.REACT_APP_BASE_URI}/image`);
+
   return (
     <div>
       <animated.div
@@ -39,7 +45,11 @@ const GallaryCard = ({
         className={classes.container}
         style={{ transform, zIndex }}
       >
-        <img src={room} alt="room" className={classes.media} />
+        <img
+          src={`${imageViewUri}/${image}`}
+          alt="room"
+          className={classes.media}
+        />
         <div className={classes.detail_wrapper}>
           <div className={classes.detail}>
             <label className={classes.label}>Price</label>

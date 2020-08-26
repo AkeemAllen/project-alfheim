@@ -24,6 +24,7 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import DeleteRoomModal from "../Modals/DeleteRoomModal";
 import UpdateRoomModal from "../Modals/UpdateRoomModal";
+import UploadImageModal from "../Modals/UploadImageModal";
 
 const RoomDetails = ({
   returnToCards,
@@ -35,11 +36,17 @@ const RoomDetails = ({
 }) => {
   const classes = useStyles();
 
+  let imageViewUri;
+  process.env.NODE_ENV !== "production"
+    ? (imageViewUri = "http://localhost:8081/image")
+    : (imageViewUri = `${process.env.REACT_APP_BASE_URI}/image`);
+
   const [modalOpen, setModalOpen] = useState(false);
   const [confirmDelModal, setConfirmDelModal] = useState(false);
   const [field, setField] = useState("");
   const [fieldValue, setFieldValue] = useState("");
   const [imageHover, setImageHover] = useState(false);
+  const [imageModalOpen, setImageModalOpen] = useState(false);
 
   const handleOpen = (id) => {
     setModalOpen(true);
@@ -156,13 +163,29 @@ const RoomDetails = ({
           marginBottom: "7rem",
         }}
       >
-        <img
-          src={room}
-          alt="room"
-          className={classes.image}
-          onMouseEnter={() => setImageHover(true)}
-          onMouseLeave={() => setImageHover(false)}
-        />
+        {(data.image === null) | (data.image === undefined) ? (
+          <div
+            className={classes.image}
+            style={{
+              backgroundColor: "#cdcdcd",
+              display: "grid",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            onClick={() => setImageModalOpen(true)}
+          >
+            Upload Photo
+          </div>
+        ) : (
+          <img
+            src={`${imageViewUri}/${data.image}`}
+            alt="room"
+            className={classes.image}
+            onMouseEnter={() => setImageHover(true)}
+            onMouseLeave={() => setImageHover(false)}
+            onClick={() => setImageModalOpen(true)}
+          />
+        )}
         <div
           style={{
             backgroundColor: "#f1f2fa",
@@ -273,6 +296,12 @@ const RoomDetails = ({
         closeHandler={() => setConfirmDelModal(false)}
         returnToCards={() => returnToCards()}
         id={data.id}
+      />
+      <UploadImageModal
+        open={imageModalOpen}
+        closeHandler={() => setImageModalOpen(false)}
+        id={data.id}
+        index={index}
       />
     </div>
   );

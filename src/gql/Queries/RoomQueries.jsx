@@ -15,6 +15,7 @@ export const getSingleOwnerRooms = gql`
       amenities
       rules
       personalID
+      image
     }
   }
 `;
@@ -29,6 +30,7 @@ export const getAllRooms = gql`
       street
       amenities
       rules
+      image
       owner {
         email
         username
