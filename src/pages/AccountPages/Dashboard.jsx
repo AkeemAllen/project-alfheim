@@ -98,6 +98,7 @@ const Dashboard = ({ addOwnerRoomsToState, rooms }) => {
                   setDetailedViewOpen(true);
                   setIndex(index);
                 }}
+                image={room.image}
               />
             );
           })}

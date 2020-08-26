@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import { createUseStyles } from "react-jss";
-import room from "../../assets/stock photos/room1.jpg";
 import { useSpring, animated } from "react-spring";
 
-const Card = ({ price, available, visible, personalID, openDetailedView }) => {
+const Card = ({
+  price,
+  available,
+  visible,
+  personalID,
+  openDetailedView,
+  image,
+}) => {
   const classes = useStyles();
 
   const [hover, setHover] = useState(false);
@@ -22,6 +28,11 @@ const Card = ({ price, available, visible, personalID, openDetailedView }) => {
     { name: "Visible", value: visible },
   ];
 
+  let imageViewUri;
+  process.env.NODE_ENV !== "production"
+    ? (imageViewUri = "http://localhost:8081/image")
+    : (imageViewUri = `${process.env.REACT_APP_BASE_URI}/image`);
+
   return (
     <animated.div
       onMouseMove={() => setHover(true)}
@@ -30,7 +41,25 @@ const Card = ({ price, available, visible, personalID, openDetailedView }) => {
       style={{ transform, boxShadow }}
       className={classes.container}
     >
-      <img src={room} alt="room" className={classes.image} />
+      {(image === null) | (image === undefined) ? (
+        <div
+          className={classes.image}
+          style={{
+            backgroundColor: "#cdcdcd",
+            display: "grid",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <h2>No image</h2>
+        </div>
+      ) : (
+        <img
+          src={`${imageViewUri}/${image}`}
+          alt="room"
+          className={classes.image}
+        />
+      )}
       <div>
         <p style={{ fontWeight: "bold" }}>{personalID}</p>
         <h1 className={classes.attentionGrabber}>${price}</h1>
