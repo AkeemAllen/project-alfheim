@@ -10,13 +10,21 @@ import { authorizeUser } from "../redux/actions/authActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
-// import Loading from "../components/Loading";
 import { login as loginQuery } from "../gql/Queries";
+import { useSpring, animated, config } from "react-spring";
 
 const Login = (props) => {
   const classes = useStyles();
 
-  const [login, { loading, data }] = useLazyQuery(loginQuery);
+  const animateForm = useSpring({
+    from: { opacity: 0, transform: `translateX(1600px)` },
+    to: { opacity: 1, transform: `translateX(0px)` },
+    config: { mass: 5, tension: 500, friction: 80 },
+  });
+
+  const [login, { error, data }] = useLazyQuery(loginQuery, {
+    errorPolicy: "all",
+  });
 
   const isMounted = useRef(false);
 
@@ -24,14 +32,16 @@ const Login = (props) => {
     () => {
       if (isMounted.current) {
         try {
-          props.authorizeUser(data.login.token);
-        } catch (err) {}
+          props.authorizeUser(data.login.token, error ? "error" : null);
+        } catch (err) {
+          console.log(error);
+        }
       } else {
         isMounted.current = true;
       }
     },
     //eslint-disable-next-line
-    [data]
+    [data, error]
   );
 
   const stateSchema = {
@@ -79,52 +89,51 @@ const Login = (props) => {
     <div className={classes.container}>
       <SnackBar mounted={mounted} status={status} text={message} />
       <div
-        style={{ backgroundColor: "var(--main-color)", height: "100vh" }}
-      ></div>
-      <div
         style={{
-          boxShadow: "0 0 25px rgba(0,0,0,0.5)",
+          backgroundColor: "var(--main-color)",
           height: "100vh",
           display: "grid",
+          alignItems: "center",
+          justifyContent: "flex-end",
         }}
       >
-        <div className={classes.formContainer}>
-          {/* <img src={logo} alt="Logo" width="100" style={{ margin: "auto" }} /> */}
-          <h1 style={{ margin: "auto" }}>Login</h1>
-          <form className={classes.form} onSubmit={handleOnSubmit}>
-            <BoxedInput
-              label="Email"
-              onChange={handleOnChange}
-              name="email"
-              errorMessage={state.email.error}
-              invalidInput={state.email.error ? true : false}
-            />
-            <BoxedInput
-              label="Password"
-              onChange={handleOnChange}
-              name="password"
-              type="password"
-              errorMessage={state.password.error}
-              invalidInput={state.password.error ? true : false}
-            />
-            {loading ? (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                }}
-              >
-                {/* <Loading /> */}
-              </div>
-            ) : (
+        <animated.div
+          style={{
+            boxShadow: "0 0 25px rgba(0,0,0,0.5)",
+            height: "95vh",
+            width: "50vw",
+            display: "grid",
+            borderRadius: "20px",
+            marginRight: "2rem",
+            backgroundColor: "white",
+            ...animateForm,
+          }}
+        >
+          <div className={classes.formContainer}>
+            <h1 style={{ margin: "auto" }}>Login</h1>
+            <form className={classes.form} onSubmit={handleOnSubmit}>
+              <BoxedInput
+                label="Email"
+                onChange={handleOnChange}
+                name="email"
+                errorMessage={state.email.error}
+                invalidInput={state.email.error ? true : false}
+              />
+              <BoxedInput
+                label="Password"
+                onChange={handleOnChange}
+                name="password"
+                type="password"
+                errorMessage={state.password.error}
+                invalidInput={state.password.error ? true : false}
+              />
               <NormalButton text="Login" disabled={disable} type="submit" />
-            )}
-            <p>
-              Don't Have An Account? <Link to="/register">Sign Up</Link>
-            </p>
-          </form>
-        </div>
+              <p>
+                Don't Have An Account? <Link to="/register">Sign Up</Link>
+              </p>
+            </form>
+          </div>
+        </animated.div>
       </div>
     </div>
   );
@@ -155,18 +164,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 const useStyles = createUseStyles({
   container: {
-    display: "grid",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-    gridTemplateColumns: "1fr 1fr",
+    overflow: "hidden",
   },
   formContainer: {
     display: "grid",
     gridTemplateRows: "1fr 1fr",
     justifyContent: "center",
     alignItems: "center",
-    // boxShadow: "0 0 25px rgba(0,0,0,0.5)",
     height: "25rem",
     marginTop: "10rem",
   },

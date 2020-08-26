@@ -39,6 +39,7 @@ const RoomDetails = ({
   const [confirmDelModal, setConfirmDelModal] = useState(false);
   const [field, setField] = useState("");
   const [fieldValue, setFieldValue] = useState("");
+  const [imageHover, setImageHover] = useState(false);
 
   const handleOpen = (id) => {
     setModalOpen(true);
@@ -155,7 +156,13 @@ const RoomDetails = ({
           marginBottom: "7rem",
         }}
       >
-        <img src={room} alt="room" className={classes.image} />
+        <img
+          src={room}
+          alt="room"
+          className={classes.image}
+          onMouseEnter={() => setImageHover(true)}
+          onMouseLeave={() => setImageHover(false)}
+        />
         <div
           style={{
             backgroundColor: "#f1f2fa",
@@ -202,26 +209,6 @@ const RoomDetails = ({
           );
         })}
       </div>
-      {/* <div>
-        <h2 className={classes.lightBlack} style={{ marginBottom: "1rem" }}>
-          Location
-        </h2>
-        <div className={classes.splitColumns}>
-          {address.map((detail) => {
-            return (
-              <div
-                className={classes.detail}
-                onClick={() => handleOpen(detail.id)}
-              >
-                <div>
-                  <h4 style={{ color: "rgba(0,0,0,0.5)" }}>{detail.title}</h4>
-                  <h2 style={{ color: "var(--main-color)" }}>{detail.value}</h2>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div> */}
       <div className={classes.splitColumns}>
         <div className={classes.listColumn}>
           <h2 style={{ color: "rgba(0,0,0,0.5)", marginBottom: "1rem" }}>

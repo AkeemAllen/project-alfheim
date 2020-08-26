@@ -6,8 +6,8 @@ import { Link } from "react-router-dom";
 import useForm from "../components/forms/useForm";
 import { useMutation } from "@apollo/react-hooks";
 import SnackBar from "../components/SnackBars";
-import Loading from "../components/Loading";
 import { register as registerMutation } from "../gql/Mutations";
+import { useSpring, animated } from "react-spring";
 
 const Registration = () => {
   const stateSchema = {
@@ -16,6 +16,12 @@ const Registration = () => {
     firstname: { value: "", error: "" },
     lastname: { value: "", error: "" },
   };
+
+  const animateForm = useSpring({
+    from: { opacity: 0, transform: `translateX(-1600px)` },
+    to: { opacity: 1, transform: `translateX(0px)` },
+    config: { mass: 5, tension: 500, friction: 80 },
+  });
 
   const [snackBarMounted, setMounted] = useState(false);
   const [success, setSuccess] = useState();
@@ -93,67 +99,73 @@ const Registration = () => {
       <SnackBar mounted={snackBarMounted} status={success} text={message} />
       <div
         style={{
-          boxShadow: "0 0 25px rgba(0,0,0,0.5)",
+          backgroundColor: "var(--main-color)",
           height: "100vh",
           display: "grid",
-          zIndex: 1,
+          alignItems: "center",
+          justifyContent: "flex-start",
         }}
       >
-        <div className={classes.formContainer}>
-          {/* <img src={logo} alt="Logo" width="100" style={{ margin: "auto" }} /> */}
-          <h1 style={{ margin: "auto" }}>Register</h1>
-          <form className={classes.form} onSubmit={handleOnSubmit}>
-            <BoxedInput
-              label="Firstname"
-              onChange={handleOnChange}
-              name="firstname"
-              errorMessage={state.firstname.error}
-              invalidInput={state.firstname.error ? true : false}
-            />
-            <BoxedInput
-              label="Lastname"
-              onChange={handleOnChange}
-              name="lastname"
-              errorMessage={state.lastname.error}
-              invalidInput={state.lastname.error ? true : false}
-            />
-            <BoxedInput
-              label="Email"
-              onChange={handleOnChange}
-              name="email"
-              errorMessage={state.email.error}
-              invalidInput={state.email.error ? true : false}
-            />
-            <BoxedInput
-              label="Password"
-              onChange={handleOnChange}
-              name="password"
-              type="password"
-              errorMessage={state.password.error}
-              invalidInput={state.password.error ? true : false}
-            />
-            {loading ? (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                }}
-              >
-                <Loading />
-              </div>
-            ) : (
+        <animated.div
+          style={{
+            boxShadow: "0 0 25px rgba(0,0,0,0.5)",
+            height: "95vh",
+            display: "grid",
+            backgroundColor: "white",
+            width: "50vw",
+            borderRadius: "20px",
+            marginLeft: "2rem",
+            ...animateForm,
+          }}
+        >
+          <div className={classes.formContainer}>
+            <h1
+              style={{
+                display: "flex",
+                justifySelf: "center",
+                marginBottom: "1rem",
+              }}
+            >
+              Register
+            </h1>
+            <form className={classes.form} onSubmit={handleOnSubmit}>
+              <BoxedInput
+                label="Firstname"
+                onChange={handleOnChange}
+                name="firstname"
+                errorMessage={state.firstname.error}
+                invalidInput={state.firstname.error ? true : false}
+              />
+              <BoxedInput
+                label="Lastname"
+                onChange={handleOnChange}
+                name="lastname"
+                errorMessage={state.lastname.error}
+                invalidInput={state.lastname.error ? true : false}
+              />
+              <BoxedInput
+                label="Email"
+                onChange={handleOnChange}
+                name="email"
+                errorMessage={state.email.error}
+                invalidInput={state.email.error ? true : false}
+              />
+              <BoxedInput
+                label="Password"
+                onChange={handleOnChange}
+                name="password"
+                type="password"
+                errorMessage={state.password.error}
+                invalidInput={state.password.error ? true : false}
+              />
               <NormalButton text="Register" disabled={disable} />
-            )}
-            <p>
-              Already Have An Account? <Link to="/login">Sign In</Link>
-            </p>
-          </form>
-        </div>
+              <p>
+                Already Have An Account? <Link to="/login">Sign In</Link>
+              </p>
+            </form>
+          </div>
+        </animated.div>
       </div>
-      <div
-        style={{ backgroundColor: "var(--main-color)", height: "100vh" }}
-      ></div>
     </div>
   );
 };
@@ -162,11 +174,7 @@ export default Registration;
 
 const useStyles = createUseStyles({
   container: {
-    display: "grid",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "100vh",
-    gridTemplateColumns: "1fr 1fr",
+    overflow: "hidden",
   },
   formContainer: {
     display: "grid",
@@ -174,8 +182,8 @@ const useStyles = createUseStyles({
     justifyContent: "center",
     alignItems: "center",
     // boxShadow: "0 0 25px rgba(0,0,0,0.5)",
-    height: "35rem",
-    marginTop: "10rem",
+    height: "50%",
+    alignSelf: "center",
   },
   form: {
     display: "grid",
