@@ -45,11 +45,25 @@ const GallaryCard = ({
         className={classes.container}
         style={{ transform, zIndex }}
       >
-        <img
-          src={`${imageViewUri}/${image}`}
-          alt="room"
-          className={classes.media}
-        />
+        {(image === null) | (image === undefined) ? (
+          <div
+            className={classes.media}
+            style={{
+              backgroundColor: "#f1f2fa",
+              display: "grid",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <h2>No image provided</h2>
+          </div>
+        ) : (
+          <img
+            src={`${imageViewUri}/${image}`}
+            alt="room"
+            className={classes.media}
+          />
+        )}
         <div className={classes.detail_wrapper}>
           <div className={classes.detail}>
             <label className={classes.label}>Price</label>
@@ -152,6 +166,7 @@ const useStyles = createUseStyles({
     width: "500px",
     borderRadius: "10px",
     height: "200px",
+    objectFit: "cover",
     marginBottom: "1rem",
   },
   list: {
