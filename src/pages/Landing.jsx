@@ -5,6 +5,8 @@ import { createUseStyles } from "react-jss";
 import { NormalButton, TextButton } from "../components/Buttons";
 import room from "../assets/stock photos/room1.jpg";
 import logo from "../assets/Logo.png";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 const calc = (x, y) => [
   -(y - window.innerHeight / 2) / 20,
@@ -14,7 +16,7 @@ const calc = (x, y) => [
 const trans = (x, y, s) =>
   `perspective(2000px) rotateX(${x}deg) rotateY(${y}deg) scale(${s})`;
 
-const Landing = () => {
+const Landing = ({ auth, firstname }) => {
   const [props, set] = useSpring(() => ({
     xys: [0, 0, 1],
     config: { mass: 5, tension: 350, friction: 40 },
@@ -26,20 +28,29 @@ const Landing = () => {
       <div className={classes.background}>
         <div className={classes.nav}>
           <h1 style={{ fontFamily: "Lobster", color: "white" }}>Alfheim</h1>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              justifyContent: "flex-end",
-              columnGap: "1rem",
-            }}
-          >
-            <Link to="/login" className={classes.link}>
-              <NormalButton text="Sign In" />
-            </Link>
-            <Link to="/register" className={classes.link}>
-              <TextButton text="Sign Up" />
-            </Link>
+          <div>
+            {auth ? (
+              <Link to="/account" className={classes.link}>
+                <NormalButton text={firstname} />
+              </Link>
+            ) : (
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  justifyContent: "flex-end",
+                  columnGap: "1rem",
+                }}
+              >
+                <Link to="/login" className={classes.link}>
+                  <NormalButton text="Sign In" />
+                </Link>
+
+                <Link to="/register" className={classes.link}>
+                  <TextButton text="Sign Up" />
+                </Link>
+              </div>
+            )}
           </div>
         </div>
         <div className={classes.heroSection}>
@@ -107,7 +118,17 @@ const Landing = () => {
   );
 };
 
-export default Landing;
+Landing.propTypes = {
+  auth: PropTypes.bool.isRequired,
+  firstname: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  auth: state.auth.auth,
+  firstname: state.auth.firstname,
+});
+
+export default connect(mapStateToProps, [])(Landing);
 
 const useStyles = createUseStyles({
   container: {

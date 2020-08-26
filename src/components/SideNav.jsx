@@ -11,9 +11,10 @@ import { Redirect } from "react-router-dom";
 import useOnClickOutside from "../components/useOnClickOutside";
 import { useRef } from "react";
 
-const SideNav = ({ current, setView, logOut, auth }) => {
+const SideNav = ({ current, setView, logOut, auth, firstname, lastname }) => {
   const classes = useStyles();
   const [settingsOptionsOpen, setSettingsOptionsOpen] = useState(false);
+  const [redirectToHome, setRedirectToHome] = useState(false);
 
   const { opacity, transform } = useSpring({
     opacity: settingsOptionsOpen ? 1 : 0,
@@ -29,10 +30,22 @@ const SideNav = ({ current, setView, logOut, auth }) => {
     return <Redirect to="/login" />;
   }
 
+  if (redirectToHome === true) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <div className={classes.container}>
       <div className={classes.sidenav}>
         <div className={classes.tabs}>
+          <button
+            className={
+              current === "payments" ? classes.hightlighted : classes.tab
+            }
+            onClick={() => setRedirectToHome(true)}
+          >
+            Home
+          </button>
           <button
             className={
               current === "dashboard" ? classes.hightlighted : classes.tab
@@ -66,18 +79,12 @@ const SideNav = ({ current, setView, logOut, auth }) => {
           }}
         >
           <div className={classes.profile}>
-            <img
-              src="https://images.unsplash.com/photo-1518806118471-f28b20a1d79d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-              alt="avatar"
-              className={classes.avatar}
-            />
-            Akeem Allen
+            {firstname} {lastname}
             <img
               src={settingsIcon}
               alt="avatar"
               width="30px"
               onClick={() => setSettingsOptionsOpen(true)}
-              style={{ filter: "invert()" }}
             />
           </div>
           <animated.div
@@ -109,10 +116,14 @@ const SideNav = ({ current, setView, logOut, auth }) => {
 SideNav.propTypes = {
   logOut: PropTypes.func.isRequired,
   auth: PropTypes.bool.isRequired,
+  firstname: PropTypes.string.isRequired,
+  lastname: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth.auth,
+  firstname: state.auth.firstname,
+  lastname: state.auth.lastname,
 });
 
 const mapDispatchToProps = (dispatch) => ({
