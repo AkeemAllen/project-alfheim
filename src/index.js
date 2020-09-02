@@ -17,7 +17,7 @@ import { handleOpen, unMountSnackBar } from "./redux/actions/snackBarActions";
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
-  uri: process.env.REACT_APP_BASE_URI,
+  uri: `${process.env.REACT_APP_BASE_URI}/graphql`,
 });
 
 const authLink = setContext((_, { headers }) => {
