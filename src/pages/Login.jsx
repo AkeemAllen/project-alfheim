@@ -32,7 +32,7 @@ const Login = (props) => {
     () => {
       if (isMounted.current) {
         try {
-          props.authorizeUser(data.login.token, error ? "error" : null);
+          props.authorizeUser(data.login.token, data.login.firstTimeLogIn);
         } catch (err) {
           console.log(error);
         }
