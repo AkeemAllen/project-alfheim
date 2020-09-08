@@ -10,6 +10,7 @@ const UpdateRoomModal = ({
   setFieldValue,
   handleUpdate,
   data,
+  fieldValue,
 }) => {
   return (
     <Modal open={open} handleClose={closeHandler}>
@@ -32,6 +33,12 @@ const UpdateRoomModal = ({
               : field === "amenities"
               ? "Add New Amenity"
               : `Update ${field}`
+          }
+          disabled={
+            (fieldValue === null) |
+            (fieldValue === undefined) |
+            (fieldValue === "") |
+            (fieldValue === 0)
           }
           onClick={handleUpdate}
         />

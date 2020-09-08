@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSpring, animated } from "react-spring";
 import { createUseStyles } from "react-jss";
 import { NormalButton } from "../components/Buttons";
-import Modal from "../components/Modal";
+import DetailModal from "./Modals/GallaryRoomDetailModal";
 
 const GallaryCard = ({
   occupancy,
@@ -89,64 +89,13 @@ const GallaryCard = ({
           onClick={handleSelected}
         />
       </animated.div>
-      <Modal handleClose={() => setOpen(false)} open={open}>
-        <div className={classes.modal_wrapper}>
-          <h1>Details</h1>
-          <div className={classes.details_wrapper}>
-            <div style={{ display: "grid", gridAutoRows: "min-content" }}>
-              <h3>Amenities</h3>
-              <ul style={{ marginLeft: "2rem" }}>
-                {amenities.map((amenity) => {
-                  return <li className={classes.list}>{amenity}</li>;
-                })}
-              </ul>
-            </div>
-            <div>
-              <h3>Rules</h3>
-              <ul style={{ marginLeft: "2rem" }}>
-                {rules.map((rule) => {
-                  return <li className={classes.list}>{rule}</li>;
-                })}
-              </ul>
-            </div>
-            <div>
-              <h3>Things To Note</h3>
-            </div>
-            <div>
-              <h3>Owner</h3>
-              <div className={classes.list}>
-                <p
-                  style={{
-                    marginLeft: "1rem",
-                    fontWeight: 500,
-                    color: "rgba(0,0,0,0.5)",
-                  }}
-                >
-                  {ownerInfo.firstname} {ownerInfo.lastname}
-                </p>
-                <p
-                  style={{
-                    marginLeft: "1rem",
-                    fontWeight: 500,
-                    color: "rgba(0,0,0,0.5)",
-                  }}
-                >
-                  {ownerInfo.email}
-                </p>
-                <p
-                  style={{
-                    marginLeft: "1rem",
-                    fontWeight: 500,
-                    color: "rgba(0,0,0,0.5)",
-                  }}
-                >
-                  {ownerInfo.contact}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Modal>
+      <DetailModal
+        ownerInfo={ownerInfo}
+        setOpen={setOpen}
+        open={open}
+        rules={rules}
+        amenities={amenities}
+      />
     </div>
   );
 };
@@ -174,7 +123,7 @@ const useStyles = createUseStyles({
   },
   modal_wrapper: {
     display: "grid",
-    gridTemplateRows: "1fr 4fr",
+    // gridTemplateRows: "1fr 4fr",
     rowGap: "2rem",
   },
   details_wrapper: {

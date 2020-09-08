@@ -39,9 +39,7 @@ const SideNav = ({ current, setView, logOut, auth, firstname, lastname }) => {
       <div className={classes.sidenav}>
         <div className={classes.tabs}>
           <button
-            className={
-              current === "payments" ? classes.hightlighted : classes.tab
-            }
+            className={classes.tab}
             onClick={() => setRedirectToHome(true)}
           >
             Home

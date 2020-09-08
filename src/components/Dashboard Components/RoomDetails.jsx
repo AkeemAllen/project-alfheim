@@ -175,12 +175,26 @@ const RoomDetails = ({
             Upload Photo
           </div>
         ) : (
-          <img
-            src={`${imageViewUri}/${data.image}`}
-            alt="room"
-            className={classes.image}
-            onClick={() => setImageModalOpen(true)}
-          />
+          <div style={{ position: "relative" }}>
+            <img
+              src={`${imageViewUri}/${data.image}`}
+              alt="room"
+              className={classes.image}
+              onClick={() => setImageModalOpen(true)}
+            />
+            {/* <text
+              style={{
+                position: "absolute",
+                bottom: 50,
+                left: 10,
+                zIndex: 1,
+                color: "white",
+                backgroundColor: "white",
+              }}
+            >
+              Click to Replace Image
+            </text> */}
+          </div>
         )}
         <div
           style={{
@@ -195,6 +209,7 @@ const RoomDetails = ({
           {address.map((location) => {
             return (
               <h2
+                className={classes.locationValue}
                 style={{ color: "var(--main-color)", paddingLeft: "1rem" }}
                 onClick={() => handleOpen(location.id)}
               >
@@ -284,6 +299,7 @@ const RoomDetails = ({
         closeHandler={() => setModalOpen(false)}
         field={field}
         setFieldValue={setFieldValue}
+        fieldValue={fieldValue}
         handleUpdate={handleUpdate}
         data={data}
       />
@@ -340,10 +356,14 @@ const useStyles = createUseStyles({
     gridTemplateColumns: "1fr 0.1fr",
   },
   image: {
+    position: "relative",
     width: "100%",
     height: "10rem",
     borderRadius: "10px",
     objectFit: "cover",
+    "&:hover": {
+      cursor: "pointer",
+    },
   },
   detail_wrapper: {
     display: "grid",
@@ -360,7 +380,11 @@ const useStyles = createUseStyles({
     display: "grid",
     gridTemplateColumns: "1fr 1fr",
     rowGap: "1rem",
-    // justifyContent: "space-between",
+    transition: "200ms",
+    "&:hover": {
+      cursor: "pointer",
+      boxShadow: "0px 0px 10px rgba(0,0,0,0.25)",
+    },
   },
   listItem: {
     padding: "0.5rem",
@@ -380,5 +404,13 @@ const useStyles = createUseStyles({
     display: "grid",
     rowGap: "0.5rem",
     gridAutoRows: "min-content",
+  },
+  locationValue: {
+    transition: "200ms",
+    marginBottom: "0.5rem",
+    "&:hover": {
+      cursor: "pointer",
+      textShadow: "0px 5px 5px rgba(0,0,0,0.25)",
+    },
   },
 });

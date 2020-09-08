@@ -133,6 +133,17 @@ const Login = (props) => {
               </p>
             </form>
           </div>
+          <div
+            style={{
+              display: "grid",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Link to="/">
+              <NormalButton text="Back" />
+            </Link>
+          </div>
         </animated.div>
       </div>
     </div>

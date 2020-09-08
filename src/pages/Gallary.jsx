@@ -99,7 +99,7 @@ const useStyles = createUseStyles({
   container: {
     display: "grid",
     gridTemplateRows: "min-content 1fr",
-    height: "100%",
+    minHeight: "100vh",
     backgroundColor: "#f1f2fa",
     backgroundSize: "cover",
   },

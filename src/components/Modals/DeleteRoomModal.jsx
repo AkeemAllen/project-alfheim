@@ -23,18 +23,34 @@ const DeleteRoomModal = ({
   return (
     <Modal open={open} handleClose={closeHandler}>
       <div style={{ display: "grid", rowGap: "1rem" }}>
-        Deleting Room...
-        <NormalButton
-          text="Are Your Sure?"
-          onClick={() => {
-            deleteRoom(id);
-            closeHandler();
-            returnToCards();
-            removeRoom(id);
+        Deleting Room...Are You Sure?
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            columnGap: "0.5rem",
           }}
-          color="FF7893"
-          darkerColor="FF2E58"
-        />
+        >
+          <NormalButton
+            text="Cancel"
+            onClick={() => {
+              closeHandler();
+            }}
+            color="FF7893"
+            darkerColor="FF2E58"
+          />
+          <NormalButton
+            text="Yes"
+            onClick={() => {
+              deleteRoom(id);
+              closeHandler();
+              returnToCards();
+              removeRoom(id);
+            }}
+            color="CDCDCD"
+            darkerColor="FF2E58"
+          />
+        </div>
       </div>
     </Modal>
   );
