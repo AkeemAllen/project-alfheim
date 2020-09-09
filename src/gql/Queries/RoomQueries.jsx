@@ -16,6 +16,7 @@ export const getSingleOwnerRooms = gql`
       rules
       personalID
       image
+      isVisible
     }
   }
 `;
@@ -31,6 +32,8 @@ export const getAllRooms = gql`
       amenities
       rules
       image
+      isVisible
+      isAvailable
       owner {
         email
         username

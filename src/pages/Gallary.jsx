@@ -66,6 +66,7 @@ const Gallary = () => {
               }
               return parseInt(room.price, 10) <= parseInt(price, 10);
             })
+            .filter((room) => room.isVisible !== false)
             .map((room) => {
               return (
                 <Card
