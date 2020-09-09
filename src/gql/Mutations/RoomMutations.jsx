@@ -66,7 +66,6 @@ export const updateRoom = gql`
     $rules: [String]
     $isAvailable: Boolean
     $isVisible: Boolean
-    $image: String!
   ) {
     updateRoom(
       id: $id
@@ -81,7 +80,6 @@ export const updateRoom = gql`
         amenities: $amenities
         isAvailable: $isAvailable
         isVisible: $isVisible
-        image: $image
       }
     ) {
       id

@@ -112,6 +112,7 @@ const Login = (props) => {
           <div className={classes.formContainer}>
             <h1 style={{ margin: "auto" }}>Login</h1>
             <form className={classes.form} onSubmit={handleOnSubmit}>
+              <div id="loginButton"></div>
               <BoxedInput
                 label="Email"
                 onChange={handleOnChange}

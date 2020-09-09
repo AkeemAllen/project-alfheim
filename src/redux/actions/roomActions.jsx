@@ -64,7 +64,6 @@ export const uploadImage = (id, formData, addImage, index) => (dispatch) => {
       return res;
     })
     .then((res) => {
-      console.log(res);
       dispatch(updateRoom("image", res.data.file.filename, index));
     })
     .catch((err) => {
