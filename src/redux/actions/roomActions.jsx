@@ -7,6 +7,10 @@ import {
   REMOVE_AMENITY,
 } from "./types";
 import axios from "axios";
+import {
+  handleOpen as mountSnackbar,
+  unMountSnackBar,
+} from "./snackBarActions";
 
 export const addOwnerRoomsToState = (rooms) => (dispatch) => {
   dispatch({
@@ -65,6 +69,13 @@ export const uploadImage = (id, formData, addImage, index) => (dispatch) => {
     })
     .then((res) => {
       dispatch(updateRoom("image", res.data.file.filename, index));
+    })
+    .then(() => {
+      console.log("Here");
+      dispatch(mountSnackbar("Image is being Uploaded", "success"));
+    })
+    .then(() => {
+      setTimeout(() => dispatch(unMountSnackBar(), 3000));
     })
     .catch((err) => {
       throw err;

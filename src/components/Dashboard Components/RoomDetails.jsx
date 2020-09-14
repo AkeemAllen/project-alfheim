@@ -182,18 +182,6 @@ const RoomDetails = ({
               className={classes.image}
               onClick={() => setImageModalOpen(true)}
             />
-            {/* <text
-              style={{
-                position: "absolute",
-                bottom: 50,
-                left: 10,
-                zIndex: 1,
-                color: "white",
-                backgroundColor: "white",
-              }}
-            >
-              Click to Replace Image
-            </text> */}
           </div>
         )}
         <div

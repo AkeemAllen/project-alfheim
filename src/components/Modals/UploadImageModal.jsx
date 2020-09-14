@@ -27,7 +27,13 @@ const UploadImageModal = ({ id, open, closeHandler, uploadImage, index }) => {
   };
 
   return (
-    <Modal open={open} handleClose={closeHandler}>
+    <Modal
+      open={open}
+      handleClose={() => {
+        closeHandler();
+        setFile(null);
+      }}
+    >
       <form
         encType="multipart/form-data"
         style={{ display: "grid", rowGap: "1rem" }}
@@ -39,7 +45,11 @@ const UploadImageModal = ({ id, open, closeHandler, uploadImage, index }) => {
           id="file"
           onChange={fileSelectedHandler}
         />
-        <NormalButton text="Upload Image" onClick={(e) => fileUploadHandler(e)}>
+        <NormalButton
+          text="Upload Image"
+          onClick={(e) => fileUploadHandler(e)}
+          disabled={file === null}
+        >
           Upload
         </NormalButton>
       </form>
