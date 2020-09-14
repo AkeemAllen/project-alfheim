@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSpring, animated } from "react-spring";
 import { createUseStyles } from "react-jss";
-import { NormalButton, TextButton } from "../components/Buttons";
+import { NormalButton } from "../components/Buttons";
 import room from "../assets/stock photos/room1.jpg";
 import logo from "../assets/Logo.png";
 import PropTypes from "prop-types";
@@ -37,17 +37,13 @@ const Landing = ({ auth, firstname }) => {
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
+                  gridTemplateColumns: "1fr",
                   justifyContent: "flex-end",
                   columnGap: "1rem",
                 }}
               >
                 <Link to="/login" className={classes.link}>
                   <NormalButton text="Sign In" />
-                </Link>
-
-                <Link to="/register" className={classes.link}>
-                  <TextButton text="Sign Up" />
                 </Link>
               </div>
             )}
@@ -63,6 +59,13 @@ const Landing = ({ auth, firstname }) => {
               color="51CB20"
               darkerColor="3E941C"
             />
+          </Link>
+          <Link
+            to="/register"
+            className={classes.link}
+            style={{ marginTop: "1rem" }}
+          >
+            <NormalButton text="Sign Up To Advertise Your Room" />
           </Link>
         </div>
       </div>

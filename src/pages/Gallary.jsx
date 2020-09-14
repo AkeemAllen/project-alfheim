@@ -50,7 +50,16 @@ const Gallary = () => {
         </div>
       </div>
       {loading && !data ? (
-        <Loading />
+        <div
+          style={{
+            width: "100vw",
+            display: "grid",
+            justifyContent: "center",
+            alignItems: "flex-start",
+          }}
+        >
+          <Loading />
+        </div>
       ) : data.allRooms.length > 0 ? (
         <div className={classes.showcase}>
           {data.allRooms

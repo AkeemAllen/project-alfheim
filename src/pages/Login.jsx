@@ -12,6 +12,7 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { login as loginQuery } from "../gql/Queries";
 import { useSpring, animated } from "react-spring";
+import Loading from "../components/Loading";
 
 const Login = (props) => {
   const classes = useStyles();
@@ -22,7 +23,7 @@ const Login = (props) => {
     config: { mass: 5, tension: 500, friction: 80 },
   });
 
-  const [login, { error, data }] = useLazyQuery(loginQuery, {
+  const [login, { loading, error, data }] = useLazyQuery(loginQuery, {
     errorPolicy: "all",
   });
 
@@ -61,7 +62,7 @@ const Login = (props) => {
     password: {
       required: true,
       validator: {
-        regEx: /^(?=.*[A-Z])(?=.*[\W])(?=.*[0-9])(?=.*[a-z]).{8,128}$/,
+        regEx: /^(.*)$/,
         error:
           "At least 8 characters, uppercase, lowercase, number, and a symbol",
       },
@@ -133,6 +134,7 @@ const Login = (props) => {
               <p>
                 Don't Have An Account? <Link to="/register">Sign Up</Link>
               </p>
+              {loading ? <Loading /> : null}
             </form>
           </div>
           <div

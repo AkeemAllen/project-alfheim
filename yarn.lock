@@ -10798,6 +10798,14 @@ react-jss@^10.3.0:
     theming "3.2.0"
     tiny-warning "^1.0.2"
 
+react-loader-spinner@^3.1.14:
+  version "3.1.14"
+  resolved "https://registry.yarnpkg.com/react-loader-spinner/-/react-loader-spinner-3.1.14.tgz#2a201f07379c492766175609903c0f2ced57c720"
+  integrity sha512-7V+upnW+RVA/O94LIB/EQLK2uaz/TpZBHG5uNXlOXgvxvALxlxVYeEDmus5Oex2C58fiwrsRvSyu/4VRmLbZ9Q==
+  dependencies:
+    babel-runtime "^6.26.0"
+    prop-types "^15.7.2"
+
 react-redux@^7.2.1:
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.2.1.tgz#8dedf784901014db2feca1ab633864dee68ad985"
@@ -10897,6 +10905,11 @@ react-scripts@3.4.1:
     workbox-webpack-plugin "4.3.1"
   optionalDependencies:
     fsevents "2.1.2"
+
+react-spring-loaders@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/react-spring-loaders/-/react-spring-loaders-1.0.1.tgz#447e109ca6c61e5deb8ce175c1395447a3f3b5cc"
+  integrity sha512-BHfT6CoMUUDAEwKgPtRGHsbpKHSJaKDF/mL4mikHOzyi+UorZJxi7ccUvHyyDuQYNjJ8ir/y2GOTHJbgrMKuPQ==
 
 react-spring@^8.0.27:
   version "8.0.27"

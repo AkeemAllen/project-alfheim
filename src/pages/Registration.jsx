@@ -8,6 +8,7 @@ import { useMutation } from "@apollo/react-hooks";
 import SnackBar from "../components/SnackBars";
 import { register as registerMutation } from "../gql/Mutations";
 import { useSpring, animated } from "react-spring";
+import Loading from "../components/Loading";
 
 const Registration = () => {
   const stateSchema = {
@@ -163,6 +164,7 @@ const Registration = () => {
               <p>
                 Already Have An Account? <Link to="/login">Sign In</Link>
               </p>
+              {loading ? <Loading /> : null}
             </form>
           </div>
           <div
