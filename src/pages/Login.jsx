@@ -61,8 +61,9 @@ const Login = (props) => {
     password: {
       required: true,
       validator: {
-        regEx: /^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$/,
-        error: "Must be longer than 6 characters, include at least (1) number",
+        regEx: /^(?=.*[A-Z])(?=.*[\W])(?=.*[0-9])(?=.*[a-z]).{8,128}$/,
+        error:
+          "At least 8 characters, uppercase, lowercase, number, and a symbol",
       },
     },
   };
