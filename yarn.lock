@@ -10906,11 +10906,6 @@ react-scripts@3.4.1:
   optionalDependencies:
     fsevents "2.1.2"
 
-react-spring-loaders@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/react-spring-loaders/-/react-spring-loaders-1.0.1.tgz#447e109ca6c61e5deb8ce175c1395447a3f3b5cc"
-  integrity sha512-BHfT6CoMUUDAEwKgPtRGHsbpKHSJaKDF/mL4mikHOzyi+UorZJxi7ccUvHyyDuQYNjJ8ir/y2GOTHJbgrMKuPQ==
-
 react-spring@^8.0.27:
   version "8.0.27"
   resolved "https://registry.yarnpkg.com/react-spring/-/react-spring-8.0.27.tgz#97d4dee677f41e0b2adcb696f3839680a3aa356a"
