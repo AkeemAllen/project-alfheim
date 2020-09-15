@@ -9,8 +9,9 @@ import SnackBar from "../components/SnackBars";
 import { register as registerMutation } from "../gql/Mutations";
 import { useSpring, animated } from "react-spring";
 import Loading from "../components/Loading";
+import { withFirebase } from "../components/Firebase";
 
-const Registration = () => {
+const Registration = (props) => {
   const stateSchema = {
     email: { value: "", error: "" },
     password: { value: "", error: "" },
@@ -64,24 +65,38 @@ const Registration = () => {
   function onSubmitForm(state) {
     const email = state.email.value;
     const password = state.password.value;
-    const firstname = state.firstname.value;
-    const lastname = state.lastname.value;
-    const username = `${firstname}${lastname}`;
+    // const firstname = state.firstname.value;
+    // const lastname = state.lastname.value;
+    // const username = `${firstname}${lastname}`;
 
-    register({ variables: { email, password, firstname, lastname, username } })
-      .then((result) => {
-        setMounted(true);
-        setSuccess("success");
-        setMessage("Verify Your Email");
-        setTimeout(() => setMounted(false), 3000);
-      })
-      .catch((err) => {
-        const error = err.toString().split(":")[2];
-        setMounted(true);
-        setSuccess("error");
-        setMessage(error);
-        setTimeout(() => setMounted(false), 3000);
-      });
+    props.firebase.doCreateUserWithEmailAndPassword(email, password);
+    // .then((authUser) => {
+    //   setMounted(true);
+    //   setSuccess("success");
+    //   setMessage("Verify Your Email");
+    //   setTimeout(() => setMounted(false), 3000);
+    // })
+    // .catch((err) => {
+    //   const error = err.toString().split(":")[2];
+    //   setMounted(true);
+    //   setSuccess("error");
+    //   setMessage(error);
+    //   setTimeout(() => setMounted(false), 3000);
+    // });
+    // register({ variables: { email, password, firstname, lastname, username } })
+    //   .then((result) => {
+    // setMounted(true);
+    // setSuccess("success");
+    // setMessage("Verify Your Email");
+    // setTimeout(() => setMounted(false), 3000);
+    //   })
+    //   .catch((err) => {
+    // const error = err.toString().split(":")[2];
+    // setMounted(true);
+    // setSuccess("error");
+    // setMessage(error);
+    // setTimeout(() => setMounted(false), 3000);
+    //   });
   }
 
   //eslint-disable-next-line
@@ -184,7 +199,7 @@ const Registration = () => {
   );
 };
 
-export default Registration;
+export default withFirebase(Registration);
 
 const useStyles = createUseStyles({
   container: {

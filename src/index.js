@@ -14,6 +14,7 @@ import { ApolloProvider } from "@apollo/react-hooks";
 import { setContext } from "@apollo/link-context";
 import { onError } from "apollo-link-error";
 import { handleOpen, unMountSnackBar } from "./redux/actions/snackBarActions";
+import Firebase, { FirebaseContext } from "./components/Firebase";
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
@@ -54,7 +55,9 @@ ReactDOM.render(
     <Provider store={store}>
       <React.StrictMode>
         <BrowserRouter>
-          <App />
+          <FirebaseContext.Provider value={new Firebase()}>
+            <App />
+          </FirebaseContext.Provider>
         </BrowserRouter>
       </React.StrictMode>
     </Provider>
