@@ -24,8 +24,6 @@ import { connect } from "react-redux";
 import DeleteRoomModal from "../Modals/DeleteRoomModal";
 import UpdateRoomModal from "../Modals/UpdateRoomModal";
 import UploadImageModal from "../Modals/UploadImageModal";
-// import { updateRoom as updateImage } from "../../gql/Mutations/RoomMutations";
-import Loading from "../Loading";
 
 const RoomDetails = ({
   returnToCards,
@@ -118,8 +116,6 @@ const RoomDetails = ({
     },
   });
 
-  const [addImage, { loading }] = useMutation(updateRoom);
-
   const [deleteRule] = useMutation(deleteSingleRule, {
     variables: {
       id: data.id,
@@ -165,9 +161,7 @@ const RoomDetails = ({
           marginBottom: "7rem",
         }}
       >
-        {loading ? (
-          <Loading />
-        ) : (data.image === null) | (data.image === undefined) ? (
+        {(data.image === null) | (data.image === undefined) ? (
           <div
             className={classes.image}
             style={{
@@ -308,7 +302,6 @@ const RoomDetails = ({
         closeHandler={() => setImageModalOpen(false)}
         id={data.id}
         index={index}
-        addImage={addImage}
       />
     </div>
   );

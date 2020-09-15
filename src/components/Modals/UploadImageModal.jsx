@@ -6,18 +6,12 @@ import { uploadImage } from "../../redux/actions/roomActions";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-// import { updateRoom } from "../../gql/Mutations/RoomMutations";
-// import { useMutation } from "react-apollo";
+import { updateRoom } from "../../gql/Mutations/RoomMutations";
+import { useMutation } from "react-apollo";
 
-const UploadImageModal = ({
-  id,
-  open,
-  closeHandler,
-  uploadImage,
-  index,
-  addImage,
-}) => {
+const UploadImageModal = ({ id, open, closeHandler, uploadImage, index }) => {
   const [file, setFile] = useState(null);
+  const [addImage] = useMutation(updateRoom);
 
   const fileSelectedHandler = (event) => {
     setFile(event.target.files[0]);
