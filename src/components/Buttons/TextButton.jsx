@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSpring, animated, config } from "react-spring";
 import { createUseStyles } from "react-jss";
 
-export const TextButton = ({ text, onClick, disabled, darkerColor }) => {
+export const TextButton = ({ text, onClick, disabled, darkerColor, style }) => {
   const [hover, setHover] = useState(false);
   const classes = useStyles();
 
@@ -18,7 +18,7 @@ export const TextButton = ({ text, onClick, disabled, darkerColor }) => {
       style={
         disabled
           ? { ...styles.disabled }
-          : { background, color, ...styles.normalButton }
+          : { background, color, ...styles.normalButton, ...style }
       }
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
