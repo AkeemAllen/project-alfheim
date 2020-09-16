@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react";
 import SnackBar from "../components/SnackBars";
 import { createUseStyles } from "react-jss";
 import { BoxedInput } from "../components/Inputs";
-import { NormalButton } from "../components/Buttons";
+import { NormalButton, TextButton } from "../components/Buttons";
 import { Link, Redirect } from "react-router-dom";
 import useForm from "../components/forms/useForm";
 import { useLazyQuery } from "react-apollo";
@@ -11,17 +11,10 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { login as loginQuery } from "../gql/Queries";
-import { useSpring, animated } from "react-spring";
-import Loading from "../components/Loading";
+import { useState } from "react";
 
-const Login = (props) => {
+const Login = ({ history, authorizeUser, auth, mounted, status, message }) => {
   const classes = useStyles();
-
-  const animateForm = useSpring({
-    from: { opacity: 0, transform: `translateX(1600px)` },
-    to: { opacity: 1, transform: `translateX(0px)` },
-    config: { mass: 5, tension: 500, friction: 80 },
-  });
 
   const [login, { loading, error, data }] = useLazyQuery(loginQuery, {
     errorPolicy: "all",
@@ -29,11 +22,13 @@ const Login = (props) => {
 
   const isMounted = useRef(false);
 
+  const [emailLogin, setEmailLogin] = useState(false);
+
   useEffect(
     () => {
       if (isMounted.current) {
         try {
-          props.authorizeUser(data.login.token, data.login.firstTimeLogIn);
+          authorizeUser(data.login.token, data.login.firstTimeLogIn);
         } catch (err) {
           console.log(error);
         }
@@ -81,74 +76,81 @@ const Login = (props) => {
     onSubmitForm
   );
 
-  const { auth, mounted, status, message } = props;
-
   if (auth) {
     return <Redirect to="/account" />;
   }
 
   return (
-    <div className={classes.container}>
-      <SnackBar mounted={mounted} status={status} text={message} />
-      <div
+    <div>
+      <NormalButton
+        text="< Back To Alfheim"
+        color="f3f3f3"
+        darkerColor="f3f3f3"
         style={{
-          backgroundColor: "var(--main-color)",
-          height: "100vh",
-          display: "grid",
-          alignItems: "center",
-          justifyContent: "flex-end",
+          color: "black",
+          fontWeight: 700,
+          fontSize: "1rem",
+          position: "absolute",
+          top: 20,
+          left: 40,
         }}
-      >
-        <animated.div
-          style={{
-            boxShadow: "0 0 25px rgba(0,0,0,0.5)",
-            height: "95vh",
-            width: "50vw",
-            display: "grid",
-            borderRadius: "20px",
-            marginRight: "2rem",
-            backgroundColor: "white",
-            ...animateForm,
-          }}
-        >
-          <div className={classes.formContainer}>
-            <h1 style={{ margin: "auto" }}>Login</h1>
-            <form className={classes.form} onSubmit={handleOnSubmit}>
-              <div id="loginButton"></div>
+        onClick={() => history.push("/")}
+      />
+      <div className={classes.container}>
+        <article className={classes.formContainer}>
+          <h1 style={{ fontSize: "24px", fontWeight: 800 }}>
+            Welcome To Alfheim
+          </h1>
+          <p style={{ fontWeight: 500, color: "rgba(0,0,0,0.5)" }}>
+            Don't Have an Account?{" "}
+            <text
+              onClick={() => history.push("/register")}
+              className={classes.signInText}
+            >
+              Sign up
+            </text>
+          </p>
+          <NormalButton
+            text="Continue with Google"
+            style={{ fontSize: "1rem", fontWeight: 700, height: "45px" }}
+          />
+          {emailLogin ? (
+            <div style={{ display: "grid", rowGap: "1rem" }}>
+              <text style={{ opacity: 0.5, fontWeight: 500 }}>or</text>
               <BoxedInput
-                label="Email"
+                label="email"
+                style={{ width: "350px" }}
                 onChange={handleOnChange}
                 name="email"
                 errorMessage={state.email.error}
                 invalidInput={state.email.error ? true : false}
-              />
+              />{" "}
               <BoxedInput
-                label="Password"
+                label="password"
+                style={{ width: "350px" }}
                 onChange={handleOnChange}
                 name="password"
                 type="password"
                 errorMessage={state.password.error}
                 invalidInput={state.password.error ? true : false}
               />
-              <NormalButton text="Login" disabled={disable} type="submit" />
-              <p>
-                Don't Have An Account? <Link to="/register">Sign Up</Link>
-              </p>
-              {loading ? <Loading /> : null}
-            </form>
-          </div>
-          <div
-            style={{
-              display: "grid",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <Link to="/">
-              <NormalButton text="Back" />
-            </Link>
-          </div>
-        </animated.div>
+            </div>
+          ) : null}
+          {emailLogin ? (
+            <NormalButton
+              text="Sign in"
+              style={{ fontSize: "1rem", fontWeight: 700, height: "45px" }}
+              onClick={() => setEmailLogin(!emailLogin)}
+              disabled={disable}
+            />
+          ) : (
+            <TextButton
+              text="Sign in with email"
+              style={{ fontSize: "1rem", fontWeight: 700, height: "45px" }}
+              onClick={() => setEmailLogin(true)}
+            />
+          )}
+        </article>
       </div>
     </div>
   );
@@ -179,19 +181,23 @@ export default connect(mapStateToProps, mapDispatchToProps)(Login);
 
 const useStyles = createUseStyles({
   container: {
-    overflow: "hidden",
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    height: "100vh",
   },
   formContainer: {
     display: "grid",
-    gridTemplateRows: "1fr 1fr",
-    justifyContent: "center",
-    alignItems: "center",
-    height: "25rem",
-    marginTop: "10rem",
-  },
-  form: {
-    display: "grid",
-    rowGap: "2rem",
+    rowGap: "1rem",
+    justifySelf: "center",
+    alignSelf: "center",
     textAlign: "center",
+    minWidth: "400px",
+    transform: "translateY(-80px)",
+  },
+  signInText: {
+    "&:hover": {
+      cursor: "pointer",
+    },
+    color: "var(--main-green)",
   },
 });

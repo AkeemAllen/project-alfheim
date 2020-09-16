@@ -112,7 +112,7 @@ const Registration = ({ history, firebase }) => {
       />
       <div className={classes.container}>
         <article className={classes.formContainer}>
-          <h2>Create Account</h2>
+          <h1 style={{ fontSize: "24px", fontWeight: 800 }}>Create Account</h1>
           <p style={{ fontWeight: 500, color: "rgba(0,0,0,0.5)" }}>
             Already Have an Account?{" "}
             <text
@@ -124,7 +124,7 @@ const Registration = ({ history, firebase }) => {
           </p>
           <NormalButton
             text="Sign up with Google"
-            style={{ fontSize: "1rem", fontWeight: 700 }}
+            style={{ fontSize: "1rem", fontWeight: 700, height: "45px" }}
           />
           <text style={{ opacity: 0.5, fontWeight: 500 }}>or</text>
           <div
@@ -170,7 +170,8 @@ const Registration = ({ history, firebase }) => {
           />
           <NormalButton
             text="Sign up with email"
-            style={{ fontSize: "1rem", fontWeight: 700 }}
+            style={{ fontSize: "1rem", fontWeight: 700, height: "45px" }}
+            disabled={disable}
           />
         </article>
       </div>
@@ -195,7 +196,7 @@ const useStyles = createUseStyles({
     alignSelf: "center",
     textAlign: "center",
     minWidth: "400px",
-    transform: "translateY(-100px)",
+    transform: "translateY(-80px)",
   },
   signInText: {
     "&:hover": {

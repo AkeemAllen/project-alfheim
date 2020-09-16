@@ -26,7 +26,7 @@ export const NormalButton = ({
       className={classes.removeOutline}
       style={
         disabled
-          ? { ...styles.disabled }
+          ? { ...styles.disabled, ...style }
           : { backgroundColor, ...styles.normalButton, ...style }
       }
       onMouseEnter={() => setHover(true)}
