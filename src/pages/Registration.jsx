@@ -69,13 +69,14 @@ const Registration = (props) => {
     // const lastname = state.lastname.value;
     // const username = `${firstname}${lastname}`;
 
-    props.firebase.doCreateUserWithEmailAndPassword(email, password);
-    // .then((authUser) => {
-    //   setMounted(true);
-    //   setSuccess("success");
-    //   setMessage("Verify Your Email");
-    //   setTimeout(() => setMounted(false), 3000);
-    // })
+    props.firebase
+      .doCreateUserWithEmailAndPassword(email, password)
+      .then((authUser) => {
+        setMounted(true);
+        setSuccess("success");
+        setMessage("Verify Your Email");
+        setTimeout(() => setMounted(false), 3000);
+      });
     // .catch((err) => {
     //   const error = err.toString().split(":")[2];
     //   setMounted(true);
