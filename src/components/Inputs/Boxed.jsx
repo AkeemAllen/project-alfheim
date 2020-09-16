@@ -9,6 +9,7 @@ const BoxedInput = ({
   value,
   invalidInput,
   errorMessage,
+  style,
 }) => {
   const classes = useStyles();
   return (
@@ -20,6 +21,7 @@ const BoxedInput = ({
         name={name}
         onChange={onChange}
         value={value}
+        style={{ ...style }}
       />
       {invalidInput ? (
         <p className={classes.errorMessage}>{errorMessage}</p>

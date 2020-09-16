@@ -22,8 +22,3 @@
   font-family: var(--primary-font);
   color: var(--primary-color);
 }
-
-html,
-body {
-  /* overflow-x: hidden; */
-}

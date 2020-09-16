@@ -1,33 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import { createUseStyles } from "react-jss";
-import { BoxedInput } from "../components/Inputs";
-import { NormalButton } from "../components/Buttons";
-import { Link } from "react-router-dom";
 import useForm from "../components/forms/useForm";
 import { useMutation } from "@apollo/react-hooks";
-import SnackBar from "../components/SnackBars";
 import { register as registerMutation } from "../gql/Mutations";
-import { useSpring, animated } from "react-spring";
-import Loading from "../components/Loading";
 import { withFirebase } from "../components/Firebase";
+import { NormalButton } from "../components/Buttons";
+import { withRouter } from "react-router";
+import { compose } from "recompose";
+import { BoxedInput } from "../components/Inputs";
 
-const Registration = (props) => {
+const Registration = ({ history, firebase }) => {
   const stateSchema = {
     email: { value: "", error: "" },
     password: { value: "", error: "" },
     firstname: { value: "", error: "" },
     lastname: { value: "", error: "" },
   };
-
-  const animateForm = useSpring({
-    from: { opacity: 0, transform: `translateX(-1600px)` },
-    to: { opacity: 1, transform: `translateX(0px)` },
-    config: { mass: 5, tension: 500, friction: 80 },
-  });
-
-  const [snackBarMounted, setMounted] = useState(false);
-  const [success, setSuccess] = useState();
-  const [message, setMessage] = useState();
 
   const validationStateSchema = {
     email: {
@@ -69,14 +57,7 @@ const Registration = (props) => {
     // const lastname = state.lastname.value;
     // const username = `${firstname}${lastname}`;
 
-    props.firebase
-      .doCreateUserWithEmailAndPassword(email, password)
-      .then((authUser) => {
-        setMounted(true);
-        setSuccess("success");
-        setMessage("Verify Your Email");
-        setTimeout(() => setMounted(false), 3000);
-      });
+    firebase.doCreateUserWithEmailAndPassword(email, password);
     // .catch((err) => {
     //   const error = err.toString().split(":")[2];
     //   setMounted(true);
@@ -105,6 +86,7 @@ const Registration = (props) => {
     errorPolicy: "all",
   });
 
+  //eslint-disable-next-line
   const { state, handleOnChange, handleOnSubmit, disable } = useForm(
     stateSchema,
     validationStateSchema,
@@ -113,111 +95,112 @@ const Registration = (props) => {
 
   const classes = useStyles();
   return (
-    <div className={classes.container}>
-      <SnackBar mounted={snackBarMounted} status={success} text={message} />
-      <div
+    <div>
+      <NormalButton
+        text="< Back To Alfheim"
+        color="f3f3f3"
+        darkerColor="f3f3f3"
         style={{
-          backgroundColor: "var(--main-color)",
-          height: "100vh",
-          display: "grid",
-          alignItems: "center",
-          justifyContent: "flex-start",
+          color: "black",
+          fontWeight: 700,
+          fontSize: "1rem",
+          position: "absolute",
+          top: 20,
+          left: 40,
         }}
-      >
-        <animated.div
-          style={{
-            boxShadow: "0 0 25px rgba(0,0,0,0.5)",
-            height: "95vh",
-            display: "grid",
-            backgroundColor: "white",
-            width: "50vw",
-            borderRadius: "20px",
-            marginLeft: "2rem",
-            ...animateForm,
-          }}
-        >
-          <div className={classes.formContainer}>
-            <h1
-              style={{
-                display: "flex",
-                justifySelf: "center",
-                marginBottom: "1rem",
-              }}
+        onClick={() => history.push("/")}
+      />
+      <div className={classes.container}>
+        <article className={classes.formContainer}>
+          <h2>Create Account</h2>
+          <p style={{ fontWeight: 500, color: "rgba(0,0,0,0.5)" }}>
+            Already Have an Account?{" "}
+            <text
+              onClick={() => history.push("/login")}
+              className={classes.signInText}
             >
-              Register
-            </h1>
-            <form className={classes.form} onSubmit={handleOnSubmit}>
-              <BoxedInput
-                label="Firstname"
-                onChange={handleOnChange}
-                name="firstname"
-                errorMessage={state.firstname.error}
-                invalidInput={state.firstname.error ? true : false}
-              />
-              <BoxedInput
-                label="Lastname"
-                onChange={handleOnChange}
-                name="lastname"
-                errorMessage={state.lastname.error}
-                invalidInput={state.lastname.error ? true : false}
-              />
-              <BoxedInput
-                label="Email"
-                onChange={handleOnChange}
-                name="email"
-                errorMessage={state.email.error}
-                invalidInput={state.email.error ? true : false}
-              />
-              <BoxedInput
-                label="Password"
-                onChange={handleOnChange}
-                name="password"
-                type="password"
-                errorMessage={state.password.error}
-                invalidInput={state.password.error ? true : false}
-              />
-              <NormalButton text="Register" disabled={disable} />
-              <p>
-                Already Have An Account? <Link to="/login">Sign In</Link>
-              </p>
-              {loading ? <Loading /> : null}
-            </form>
-          </div>
+              Sign In
+            </text>
+          </p>
+          <NormalButton
+            text="Sign up with Google"
+            style={{ fontSize: "1rem", fontWeight: 700 }}
+          />
+          <text style={{ opacity: 0.5, fontWeight: 500 }}>or</text>
           <div
             style={{
               display: "grid",
-              justifyContent: "center",
-              alignItems: "center",
+              gridTemplateColumns: "1fr 1fr",
+              columnGap: "0.5rem",
             }}
           >
-            <Link to="/">
-              <NormalButton text="Back" />
-            </Link>
+            <BoxedInput
+              label="FirstName"
+              style={{ width: "125px" }}
+              onChange={handleOnChange}
+              name="firstname"
+              errorMessage={state.firstname.error}
+              invalidInput={state.firstname.error ? true : false}
+            />
+            <BoxedInput
+              label="LastName"
+              style={{ width: "125px" }}
+              onChange={handleOnChange}
+              name="lastname"
+              errorMessage={state.lastname.error}
+              invalidInput={state.lastname.error ? true : false}
+            />
           </div>
-        </animated.div>
+          <BoxedInput
+            label="Email"
+            style={{ width: "325px" }}
+            onChange={handleOnChange}
+            name="email"
+            errorMessage={state.email.error}
+            invalidInput={state.email.error ? true : false}
+          />
+          <BoxedInput
+            label="Password"
+            style={{ width: "325px" }}
+            onChange={handleOnChange}
+            name="password"
+            type="password"
+            errorMessage={state.password.error}
+            invalidInput={state.password.error ? true : false}
+          />
+          <NormalButton
+            text="Sign up with email"
+            style={{ fontSize: "1rem", fontWeight: 700 }}
+          />
+        </article>
       </div>
     </div>
   );
 };
 
-export default withFirebase(Registration);
+const ComposedRegistration = compose(withFirebase, withRouter)(Registration);
+
+export default ComposedRegistration;
 
 const useStyles = createUseStyles({
   container: {
-    overflow: "hidden",
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    height: "100vh",
   },
   formContainer: {
     display: "grid",
-    gridTemplateRows: "1fr 1fr",
-    justifyContent: "center",
-    alignItems: "center",
-    // boxShadow: "0 0 25px rgba(0,0,0,0.5)",
-    height: "50%",
+    rowGap: "1rem",
+    justifySelf: "center",
     alignSelf: "center",
-  },
-  form: {
-    display: "grid",
-    rowGap: "2rem",
     textAlign: "center",
+    minWidth: "400px",
+    transform: "translateY(-100px)",
+  },
+  signInText: {
+    "&:hover": {
+      cursor: "pointer",
+    },
+    color: "var(--main-green)",
   },
 });

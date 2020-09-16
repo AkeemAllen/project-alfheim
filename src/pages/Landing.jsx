@@ -1,10 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { useSpring, animated } from "react-spring";
 import { createUseStyles } from "react-jss";
 import { NormalButton, TextButton } from "../components/Buttons";
-import room from "../assets/stock photos/room1.jpg";
-import logo from "../assets/Logo.png";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
