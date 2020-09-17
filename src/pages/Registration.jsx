@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { createUseStyles } from "react-jss";
 import useForm from "../components/forms/useForm";
 import { useMutation } from "@apollo/react-hooks";
 import { register as registerMutation } from "../gql/Mutations";
-import { withFirebase } from "../components/Firebase";
 import { NormalButton } from "../components/Buttons";
+import { withFirebase } from "../components/Firebase";
 import { withRouter } from "react-router";
 import { compose } from "recompose";
 import { BoxedInput } from "../components/Inputs";
+import SnackBar from "../components/SnackBars";
 
 const Registration = ({ history, firebase }) => {
   const stateSchema = {
@@ -50,36 +51,51 @@ const Registration = ({ history, firebase }) => {
     },
   };
 
-  function onSubmitForm(state) {
+  const [mounted, setMounted] = useState(false);
+  const [success, setSuccess] = useState("");
+  const [message, setMessage] = useState("initialState");
+
+  function onSignInWithGoogle() {
+    firebase.doSignInWithPopUp().then((result) => {
+      console.log(result);
+      history.push("/account");
+    });
+  }
+
+  const onSubmitForm = (state) => {
     const email = state.email.value;
     const password = state.password.value;
     // const firstname = state.firstname.value;
     // const lastname = state.lastname.value;
     // const username = `${firstname}${lastname}`;
 
-    firebase.doCreateUserWithEmailAndPassword(email, password);
-    // .catch((err) => {
-    //   const error = err.toString().split(":")[2];
-    //   setMounted(true);
-    //   setSuccess("error");
-    //   setMessage(error);
-    //   setTimeout(() => setMounted(false), 3000);
-    // });
-    // register({ variables: { email, password, firstname, lastname, username } })
-    //   .then((result) => {
-    // setMounted(true);
-    // setSuccess("success");
-    // setMessage("Verify Your Email");
-    // setTimeout(() => setMounted(false), 3000);
-    //   })
-    //   .catch((err) => {
-    // const error = err.toString().split(":")[2];
-    // setMounted(true);
-    // setSuccess("error");
-    // setMessage(error);
-    // setTimeout(() => setMounted(false), 3000);
-    //   });
-  }
+    console.log("here");
+    firebase
+      .doCreateUserWithEmailAndPassword(email, password)
+      .then((authData) => {
+        console.log(authData);
+        setMounted(true);
+        setSuccess("success");
+        setMessage("Verify Your Email");
+        setTimeout(() => setMounted(false), 3000);
+        // register({
+        //   variables: { email, password, firstname, lastname, username },
+        // }).catch((err) => {
+        //   const error = err.toString().split(":")[2];
+        //   setMounted(true);
+        //   setSuccess("error");
+        //   setMessage(error);
+        //   setTimeout(() => setMounted(false), 5000);
+        // });
+      })
+      .catch((err) => {
+        console.log(err);
+        setMounted(true);
+        setSuccess("error");
+        setMessage(err.message);
+        setTimeout(() => setMounted(false), 5000);
+      });
+  };
 
   //eslint-disable-next-line
   const [register, { loading, data, error }] = useMutation(registerMutation, {
@@ -96,6 +112,7 @@ const Registration = ({ history, firebase }) => {
   const classes = useStyles();
   return (
     <div>
+      <SnackBar mounted={mounted} status={success} text={message} />
       <NormalButton
         text="< Back To Alfheim"
         color="f3f3f3"
@@ -111,9 +128,9 @@ const Registration = ({ history, firebase }) => {
         onClick={() => history.push("/")}
       />
       <div className={classes.container}>
-        <article className={classes.formContainer}>
+        <form className={classes.formContainer} onSubmit={handleOnSubmit}>
           <h1 style={{ fontSize: "24px", fontWeight: 800 }}>Create Account</h1>
-          <p style={{ fontWeight: 500, color: "rgba(0,0,0,0.5)" }}>
+          <p style={{ fontWeight: 400, color: "rgba(0,0,0,0.5)" }}>
             Already Have an Account?{" "}
             <text
               onClick={() => history.push("/login")}
@@ -125,6 +142,10 @@ const Registration = ({ history, firebase }) => {
           <NormalButton
             text="Sign up with Google"
             style={{ fontSize: "1rem", fontWeight: 700, height: "45px" }}
+            onClick={() => {
+              onSignInWithGoogle();
+            }}
+            // type="submit"
           />
           <text style={{ opacity: 0.5, fontWeight: 500 }}>or</text>
           <div
@@ -172,8 +193,9 @@ const Registration = ({ history, firebase }) => {
             text="Sign up with email"
             style={{ fontSize: "1rem", fontWeight: 700, height: "45px" }}
             disabled={disable}
+            type="submit"
           />
-        </article>
+        </form>
       </div>
     </div>
   );

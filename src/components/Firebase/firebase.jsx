@@ -19,19 +19,30 @@ class Firebase {
 
   // Auth Api
   doCreateUserWithEmailAndPassword = (email, password) => {
-    this.auth.createUserWithEmailAndPassword(email, password);
+    return this.auth.createUserWithEmailAndPassword(email, password);
   };
 
   doSignInWithEmailAndPassword = (email, password) => {
-    this.auth.signInWithEmailAndPassword(email, password);
+    return this.auth.signInWithEmailAndPassword(email, password);
   };
 
-  doSignOut = () => this.auth.signOut();
+  doSignInWithPopUp = () => {
+    const provider = new app.auth.GoogleAuthProvider();
 
-  doPasswordReset = (email) => this.auth.sendPasswordResetEmail(email);
+    return this.auth.signInWithPopup(provider);
+  };
 
-  doPasswordUpdate = (password) =>
-    this.auth.currentUser.updatePassword(password);
+  doSignOut = () => {
+    return this.auth.signOut();
+  };
+
+  doPasswordReset = (email) => {
+    return this.auth.sendPasswordResetEmail(email);
+  };
+
+  doPasswordUpdate = (password) => {
+    return this.auth.currentUser.updatePassword(password);
+  };
 }
 
 export default Firebase;

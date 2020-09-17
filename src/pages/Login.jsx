@@ -12,8 +12,19 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { login as loginQuery } from "../gql/Queries";
 import { useState } from "react";
+import { withFirebase } from "../components/Firebase";
+import { withRouter } from "react-router";
+import { compose } from "recompose";
 
-const Login = ({ history, authorizeUser, auth, mounted, status, message }) => {
+const Login = ({
+  history,
+  authorizeUser,
+  auth,
+  mounted,
+  status,
+  message,
+  firebase,
+}) => {
   const classes = useStyles();
 
   const [login, { loading, error, data }] = useLazyQuery(loginQuery, {
@@ -64,6 +75,10 @@ const Login = ({ history, authorizeUser, auth, mounted, status, message }) => {
     },
   };
 
+  const onSignInWithGoogle = () => {
+    firebase.doSignInWithPopUp().then((result) => console.log(result));
+  };
+
   function onSubmitForm(state) {
     const email = state.email.value;
     const password = state.password.value;
@@ -97,11 +112,11 @@ const Login = ({ history, authorizeUser, auth, mounted, status, message }) => {
         onClick={() => history.push("/")}
       />
       <div className={classes.container}>
-        <article className={classes.formContainer}>
+        <form className={classes.formContainer} onSubmit={handleOnSubmit}>
           <h1 style={{ fontSize: "24px", fontWeight: 800 }}>
             Welcome To Alfheim
           </h1>
-          <p style={{ fontWeight: 500, color: "rgba(0,0,0,0.5)" }}>
+          <p style={{ fontWeight: 400, color: "rgba(0,0,0,0.5)" }}>
             Don't Have an Account?{" "}
             <text
               onClick={() => history.push("/register")}
@@ -113,6 +128,7 @@ const Login = ({ history, authorizeUser, auth, mounted, status, message }) => {
           <NormalButton
             text="Continue with Google"
             style={{ fontSize: "1rem", fontWeight: 700, height: "45px" }}
+            onClick={() => onSignInWithGoogle()}
           />
           {emailLogin ? (
             <div style={{ display: "grid", rowGap: "1rem" }}>
@@ -140,8 +156,9 @@ const Login = ({ history, authorizeUser, auth, mounted, status, message }) => {
             <NormalButton
               text="Sign in"
               style={{ fontSize: "1rem", fontWeight: 700, height: "45px" }}
-              onClick={() => setEmailLogin(!emailLogin)}
+              // onClick={() => setEmailLogin(!emailLogin)}
               disabled={disable}
+              type="submit"
             />
           ) : (
             <TextButton
@@ -150,7 +167,7 @@ const Login = ({ history, authorizeUser, auth, mounted, status, message }) => {
               onClick={() => setEmailLogin(true)}
             />
           )}
-        </article>
+        </form>
       </div>
     </div>
   );
@@ -177,7 +194,9 @@ const mapDispatchToProps = (dispatch) => ({
   authorizeUser: bindActionCreators(authorizeUser, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+const ComposedLogin = compose(withRouter, withFirebase)(Login);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ComposedLogin);
 
 const useStyles = createUseStyles({
   container: {
