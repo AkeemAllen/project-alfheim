@@ -12,13 +12,7 @@ const Landing = ({ auth, firstname, history }) => {
     <div className={classes.container}>
       <nav className={classes.navigation}>
         <h1 className={classes.navigationHeader}>Alfheim</h1>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            columnGap: "1rem",
-          }}
-        >
+        <div className={classes.authBtns}>
           <TextButton
             text="Sign In"
             onClick={() => history.push("/login")}
@@ -33,12 +27,7 @@ const Landing = ({ auth, firstname, history }) => {
       </nav>
       <div className={classes.contentContainer}>
         <section className={classes.descSection}>
-          <h1
-            style={{
-              fontWeight: "900",
-              fontSize: "48px",
-            }}
-          >
+          <h1 className={classes.heroSectionHeader}>
             Search For Rooms Without The Hassel
           </h1>
           <text style={{ lineHeight: "2rem" }}>
@@ -47,12 +36,20 @@ const Landing = ({ auth, firstname, history }) => {
             Students/Rentors are able to go through a large selection of rooms
             from the comfort of their homes.
           </text>
-          <NormalButton
-            text="View Gallary"
-            color="51cb20"
-            darkerColor="3e941c"
-            onClick={() => history.push("/gallary")}
-          />
+          <div className={classes.gallaryBtn}>
+            <NormalButton
+              text="View Gallary"
+              color="51cb20"
+              darkerColor="3e941c"
+              onClick={() => history.push("/gallary")}
+            />
+          </div>
+          <h2 className={classes.mobileMessage}>
+            Please Use Desktop For Best Experience!!
+          </h2>
+          <h2 className={classes.mobileMessage}>
+            Mobile App will come in due time
+          </h2>
         </section>
       </div>
     </div>
@@ -77,8 +74,18 @@ const useStyles = createUseStyles({
   container: {},
   navigation: {
     display: "grid",
-    gridTemplateColumns: "1fr 300px",
-    margin: "2rem",
+    "@media (min-width: 1024px)": {
+      gridTemplateColumns: "1fr 300px",
+      margin: "2rem",
+    },
+  },
+  authBtns: {
+    display: "none",
+    "@media (min-width: 1024px)": {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      columnGap: "1rem",
+    },
   },
   navigationHeader: {
     fontFamily: "Lobster",
@@ -86,10 +93,10 @@ const useStyles = createUseStyles({
   },
   contentContainer: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    // marginLeft: "3rem",
-    // marginRight: "3rem",
-    // backgroundColor: "#f1f2fa",
+    gridTemplateColumns: "1fr",
+    "@media (min-width: 1024px)": {
+      gridTemplateColumns: "1fr 1fr",
+    },
   },
   descSection: {
     display: "grid",
@@ -100,5 +107,29 @@ const useStyles = createUseStyles({
     height: "50rem",
     maxWidth: "30rem",
     transform: "translateY(-100px)",
+    fontSize: "0.8rem",
+    "@media (min-width: 1024px)": {
+      fontSize: "1rem",
+    },
+  },
+  heroSectionHeader: {
+    "@media (min-width: 1024px)": {
+      fontWeight: "900",
+      fontSize: "48px",
+    },
+  },
+  gallaryBtn: {
+    display: "none",
+    "@media (min-width: 1024px)": {
+      display: "grid",
+      fontWeight: "900",
+      fontSize: "48px",
+    },
+  },
+  mobileMessage: {
+    display: "grid",
+    "@media (min-width: 1024px)": {
+      display: "none",
+    },
   },
 });
