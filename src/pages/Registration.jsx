@@ -9,8 +9,13 @@ import { withRouter } from "react-router";
 import { compose } from "recompose";
 import { BoxedInput } from "../components/Inputs";
 import SnackBar from "../components/SnackBars";
+import { authorizeUser, authUserEmail } from "../redux/actions/authActions";
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
 
-const Registration = ({ history, firebase }) => {
+const Registration = ({ history, firebase, authorizeUser, authUserEmail }) => {
+  //#region
   const stateSchema = {
     email: { value: "", error: "" },
     password: { value: "", error: "" },
@@ -50,14 +55,24 @@ const Registration = ({ history, firebase }) => {
       },
     },
   };
+  //#endregion
 
   const [mounted, setMounted] = useState(false);
   const [success, setSuccess] = useState("");
-  const [message, setMessage] = useState("initialState");
+  const [message, setMessage] = useState("");
 
   function onSignInWithGoogle() {
-    firebase.doSignInWithPopUp().then((result) => {
-      console.log(result);
+    firebase.doSignInWithPopUp().then((authData) => {
+      const user = authData.user;
+      console.log(authData);
+      register({ variables: { uuid: user.uid } })
+        .then((res) => {
+          console.log(res);
+          authorizeUser({ ...authData, userId: res.data.addUser.id });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       history.push("/account");
     });
   }
@@ -65,11 +80,10 @@ const Registration = ({ history, firebase }) => {
   const onSubmitForm = (state) => {
     const email = state.email.value;
     const password = state.password.value;
-    // const firstname = state.firstname.value;
-    // const lastname = state.lastname.value;
-    // const username = `${firstname}${lastname}`;
+    const firstname = state.firstname.value;
+    const lastname = state.lastname.value;
+    const username = `${firstname}${lastname}`;
 
-    console.log("here");
     firebase
       .doCreateUserWithEmailAndPassword(email, password)
       .then((authData) => {
@@ -78,15 +92,7 @@ const Registration = ({ history, firebase }) => {
         setSuccess("success");
         setMessage("Verify Your Email");
         setTimeout(() => setMounted(false), 3000);
-        // register({
-        //   variables: { email, password, firstname, lastname, username },
-        // }).catch((err) => {
-        //   const error = err.toString().split(":")[2];
-        //   setMounted(true);
-        //   setSuccess("error");
-        //   setMessage(error);
-        //   setTimeout(() => setMounted(false), 5000);
-        // });
+        authUserEmail({ firstname, lastname, username, ...authData });
       })
       .catch((err) => {
         console.log(err);
@@ -95,6 +101,7 @@ const Registration = ({ history, firebase }) => {
         setMessage(err.message);
         setTimeout(() => setMounted(false), 5000);
       });
+    firebase.onAuthStateChanged();
   };
 
   //eslint-disable-next-line
@@ -145,7 +152,6 @@ const Registration = ({ history, firebase }) => {
             onClick={() => {
               onSignInWithGoogle();
             }}
-            // type="submit"
           />
           <text style={{ opacity: 0.5, fontWeight: 500 }}>or</text>
           <div
@@ -201,9 +207,19 @@ const Registration = ({ history, firebase }) => {
   );
 };
 
+Registration.propTypes = {
+  authorizeUser: PropTypes.func.isRequired,
+  authUserEmail: PropTypes.func.isRequired,
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  authUserEmail: bindActionCreators(authUserEmail, dispatch),
+  authorizeUser: bindActionCreators(authorizeUser, dispatch),
+});
+
 const ComposedRegistration = compose(withFirebase, withRouter)(Registration);
 
-export default ComposedRegistration;
+export default connect(null, mapDispatchToProps)(ComposedRegistration);
 
 const useStyles = createUseStyles({
   container: {

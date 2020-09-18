@@ -26,6 +26,12 @@ class Firebase {
     return this.auth.signInWithEmailAndPassword(email, password);
   };
 
+  onAuthStateChanged = () => {
+    return this.auth.onAuthStateChanged((user) => {
+      user.sendEmailVerification();
+    });
+  };
+
   doSignInWithPopUp = () => {
     const provider = new app.auth.GoogleAuthProvider();
 

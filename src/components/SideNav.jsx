@@ -10,8 +10,19 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import useOnClickOutside from "../components/useOnClickOutside";
 import { useRef } from "react";
+import { withFirebase } from "../components/Firebase";
+import { withRouter } from "react-router";
+import { compose } from "recompose";
 
-const SideNav = ({ current, setView, logOut, auth, firstname, lastname }) => {
+const SideNav = ({
+  current,
+  setView,
+  logOut,
+  auth,
+  firstname,
+  lastname,
+  firebase,
+}) => {
   const classes = useStyles();
   const [settingsOptionsOpen, setSettingsOptionsOpen] = useState(false);
   const [redirectToHome, setRedirectToHome] = useState(false);
@@ -33,6 +44,11 @@ const SideNav = ({ current, setView, logOut, auth, firstname, lastname }) => {
   if (redirectToHome === true) {
     return <Redirect to="/" />;
   }
+
+  const signOut = () => {
+    firebase.doSignOut();
+    logOut();
+  };
 
   return (
     <div className={classes.container}>
@@ -100,7 +116,7 @@ const SideNav = ({ current, setView, logOut, auth, firstname, lastname }) => {
             <TextButton
               text="Logout"
               onClick={() => {
-                logOut();
+                signOut();
                 setSettingsOptionsOpen(false);
               }}
             />
@@ -128,7 +144,9 @@ const mapDispatchToProps = (dispatch) => ({
   logOut: bindActionCreators(logOut, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SideNav);
+const ComposedSideNav = compose(withFirebase, withRouter)(SideNav);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ComposedSideNav);
 
 const useStyles = createUseStyles({
   container: {

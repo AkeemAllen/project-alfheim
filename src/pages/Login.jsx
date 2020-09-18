@@ -3,7 +3,6 @@ import SnackBar from "../components/SnackBars";
 import { createUseStyles } from "react-jss";
 import { BoxedInput } from "../components/Inputs";
 import { NormalButton, TextButton } from "../components/Buttons";
-import { Link, Redirect } from "react-router-dom";
 import useForm from "../components/forms/useForm";
 import { useLazyQuery } from "react-apollo";
 import { authorizeUser } from "../redux/actions/authActions";
@@ -19,7 +18,6 @@ import { compose } from "recompose";
 const Login = ({
   history,
   authorizeUser,
-  auth,
   mounted,
   status,
   message,
@@ -27,6 +25,7 @@ const Login = ({
 }) => {
   const classes = useStyles();
 
+  //eslint-disable-next-line
   const [login, { loading, error, data }] = useLazyQuery(loginQuery, {
     errorPolicy: "all",
   });
@@ -76,7 +75,11 @@ const Login = ({
   };
 
   const onSignInWithGoogle = () => {
-    firebase.doSignInWithPopUp().then((result) => console.log(result));
+    firebase.doSignInWithPopUp().then((authData) => {
+      console.log(authData);
+      authorizeUser({ authData });
+      history.push("/account");
+    });
   };
 
   function onSubmitForm(state) {
@@ -91,12 +94,9 @@ const Login = ({
     onSubmitForm
   );
 
-  if (auth) {
-    return <Redirect to="/account" />;
-  }
-
   return (
     <div>
+      <SnackBar mounted={mounted} status={status} text={message} />
       <NormalButton
         text="< Back To Alfheim"
         color="f3f3f3"

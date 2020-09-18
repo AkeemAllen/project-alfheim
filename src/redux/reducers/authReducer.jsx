@@ -9,33 +9,30 @@ import {
 
 const initialState = {
   auth: false,
-  loginError: null,
-  registrationError: null,
   newUser: null,
   userId: null,
-  username: localStorage.getItem("username"),
-  firstname: localStorage.getItem("firstname"),
-  lastname: localStorage.getItem("lastname"),
-  email: localStorage.getItem("email"),
-  contact: localStorage.getItem("contact"),
+  username: "",
+  firstname: "",
+  lastname: "",
+  email: "",
+  contact: "",
+  emailVerified: false,
+  uuid: null,
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
     case AUTH_USER: {
-      let isVerified = false;
-      if (action.payload.isVerified) {
-        isVerified = true;
-      }
       return {
         ...state,
-        auth: isVerified,
+        auth: action.payload.emailVerified,
         userId: action.payload.userId,
         email: action.payload.email,
         username: action.payload.username,
         firstname: action.payload.firstname,
         lastname: action.payload.lastname,
-        contact: action.payload.contact,
+        emailVerified: action.payload.emailVerified,
+        uuid: action.payload.uuid,
       };
     }
     case AUTH_USER_FAILURE: {

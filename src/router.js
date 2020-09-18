@@ -4,6 +4,7 @@ import OwnerAccount from "./pages/OwnerAccount";
 import Test from "./pages/TestPage";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
+import EmailVerified from "./helpers/emailVerified";
 
 export default [
   {
@@ -31,5 +32,9 @@ export default [
   {
     path: "/components",
     component: Test,
+  },
+  {
+    path: "/verified",
+    component: EmailVerified,
   },
 ];
