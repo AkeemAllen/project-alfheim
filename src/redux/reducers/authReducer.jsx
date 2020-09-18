@@ -8,6 +8,7 @@ import {
 } from "../actions/types";
 
 const initialState = {
+  isLoggedIn: localStorage.getItem("isLoggedIn"),
   newUser: localStorage.getItem("isNewUser"),
   userId: localStorage.getItem("userId"),
   username: localStorage.getItem("username"),
@@ -31,6 +32,7 @@ export default function (state = initialState, action) {
         lastname: action.payload.lastname,
         emailVerified: action.payload.emailVerified,
         uuid: action.payload.uuid,
+        isLoggedIn: action.payload.isLoggedIn,
       };
     }
     case AUTH_USER_FAILURE: {
@@ -57,8 +59,7 @@ export default function (state = initialState, action) {
     }
     case LOG_OUT: {
       return {
-        ...state,
-        userId: null,
+        state: initialState,
       };
     }
     default:

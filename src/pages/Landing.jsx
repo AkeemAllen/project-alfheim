@@ -6,24 +6,33 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { compose } from "recompose";
 
-const Landing = ({ auth, firstname, history }) => {
+const Landing = ({ isLoggedIn, email, history }) => {
   const classes = useStyles();
   return (
     <div className={classes.container}>
       <nav className={classes.navigation}>
         <h1 className={classes.navigationHeader}>Alfheim</h1>
-        <div className={classes.authBtns}>
+        {isLoggedIn === "true" ? (
           <TextButton
-            text="Sign In"
-            onClick={() => history.push("/login")}
+            text="Go To Account"
+            onClick={() => history.push("/account")}
             style={{ fontSize: "1rem", fontWeight: 700 }}
           />
-          <NormalButton
-            text="Sign Up"
-            onClick={() => history.push("/register")}
-            style={{ fontSize: "1rem", fontWeight: 700 }}
-          />
-        </div>
+        ) : null}
+        {isLoggedIn !== "true" ? (
+          <div className={classes.authBtns}>
+            <TextButton
+              text="Sign In"
+              onClick={() => history.push("/login")}
+              style={{ fontSize: "1rem", fontWeight: 700 }}
+            />
+            <NormalButton
+              text="Sign Up"
+              onClick={() => history.push("/register")}
+              style={{ fontSize: "1rem", fontWeight: 700 }}
+            />
+          </div>
+        ) : null}
       </nav>
       <div className={classes.contentContainer}>
         <section className={classes.descSection}>
@@ -59,11 +68,15 @@ const Landing = ({ auth, firstname, history }) => {
 Landing.propTypes = {
   auth: PropTypes.bool.isRequired,
   firstname: PropTypes.string.isRequired,
+  isLoggedIn: PropTypes.string,
+  email: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth.auth,
   firstname: state.auth.firstname,
+  isLoggedIn: state.auth.isLoggedIn,
+  email: state.auth.email,
 });
 
 const ComposedLanding = compose(withRouter)(Landing);

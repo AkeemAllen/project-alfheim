@@ -14,6 +14,7 @@ export const authorizeUser = (data) => (dispatch) => {
   const email = data.user.email;
   const username = additionalInfo.name;
   const userId = data.userId;
+  const isLoggedIn = "true";
 
   localStorage.setItem("token", token);
   localStorage.setItem("firstname", firstname);
@@ -25,6 +26,7 @@ export const authorizeUser = (data) => (dispatch) => {
   localStorage.setItem("isNewUser", isNewUser);
   localStorage.setItem("userId", userId);
   localStorage.setItem("uuid", uuid);
+  localStorage.setItem("isLoggedIn", isLoggedIn);
 
   return dispatch({
     type: AUTH_USER,
@@ -39,6 +41,7 @@ export const authorizeUser = (data) => (dispatch) => {
       email,
       uuid,
       userId,
+      isLoggedIn,
     },
   });
 };
