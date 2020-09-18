@@ -25,6 +25,7 @@ export const createRoom = gql`
     $street: String!
     $town_city: String!
     $parish: String!
+    $uuid: String!
   ) {
     createRoom(
       input: {
@@ -35,6 +36,7 @@ export const createRoom = gql`
         town_city: $town_city
         parish: $parish
         personalID: $personalID
+        uuid: $uuid
       }
     ) {
       id

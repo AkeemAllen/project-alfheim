@@ -23,7 +23,7 @@ const Dashboard = ({ addOwnerRoomsToState, rooms }) => {
   const classes = useStyles();
 
   const { loading, data } = useQuery(getSingleOwnerRooms, {
-    variables: { owner: localStorage.getItem("userId") },
+    variables: { uuid: localStorage.getItem("uuid") },
   });
 
   const isMounted = useRef(false);

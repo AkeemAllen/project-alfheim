@@ -26,6 +26,7 @@ const AddRoomModal = ({
   const [parish, setParish] = useState("");
   const [town_city, setTown] = useState("");
   const [personalID, setPersonalID] = useState("");
+  const uuid = localStorage.getItem("uuid");
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -39,6 +40,7 @@ const AddRoomModal = ({
           parish,
           town_city,
           personalID,
+          uuid,
         },
       }).then((result) => {
         setMounted(true);

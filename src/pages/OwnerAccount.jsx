@@ -7,15 +7,18 @@ import Analytics from "./AccountPages/Analytics";
 import SideNav from "../components/SideNav";
 import { createUseStyles } from "react-jss";
 import Payments from "./AccountPages/Payments";
-import { Redirect } from "react-router-dom";
+import { withRouter } from "react-router";
 
-const Account = ({ auth }) => {
+const Account = ({ auth, history }) => {
   const classes = useStyles();
   const [current, setCurrent] = useState("dashboard");
 
-  if (!auth && localStorage.getItem("token") === undefined) {
-    return <Redirect to="/login" />;
+  const token = localStorage.getItem("token");
+
+  if (token === undefined || token === null) {
+    history.push("/");
   }
+
   return (
     <div className={classes.container}>
       <div
@@ -45,7 +48,7 @@ const mapStateToProps = (state) => ({
   auth: state.auth.auth,
 });
 
-export default connect(mapStateToProps, [])(Account);
+export default connect(mapStateToProps, [])(withRouter(Account));
 
 const useStyles = createUseStyles({
   container: {

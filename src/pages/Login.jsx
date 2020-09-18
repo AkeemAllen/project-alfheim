@@ -75,11 +75,15 @@ const Login = ({
   };
 
   const onSignInWithGoogle = () => {
-    firebase.doSignInWithPopUp().then((authData) => {
-      console.log(authData);
-      authorizeUser({ authData });
-      history.push("/account");
-    });
+    firebase
+      .doSignInWithPopUp()
+      .then((authData) => {
+        console.log(authData);
+        authorizeUser(authData);
+      })
+      .then(() => {
+        history.push("/account");
+      });
   };
 
   function onSubmitForm(state) {

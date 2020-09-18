@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
 export const getSingleOwnerRooms = gql`
-  query myRooms($owner: ID!) {
-    getRoomByOwner(ownerId: $owner) {
+  query myRooms($uuid: String!) {
+    getRoomByOwner(ownerId: $uuid) {
       street
       parish
       id

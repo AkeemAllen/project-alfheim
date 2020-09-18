@@ -25,8 +25,9 @@ export const authorizeUser = (data) => (dispatch) => {
   localStorage.setItem("isNewUser", isNewUser);
   localStorage.setItem("userId", userId);
   localStorage.setItem("uuid", uuid);
+  localStorage.setItem("auth", true);
 
-  dispatch({
+  return dispatch({
     type: AUTH_USER,
     payload: {
       token,

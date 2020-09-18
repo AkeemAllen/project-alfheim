@@ -14,15 +14,7 @@ import { withFirebase } from "../components/Firebase";
 import { withRouter } from "react-router";
 import { compose } from "recompose";
 
-const SideNav = ({
-  current,
-  setView,
-  logOut,
-  auth,
-  firstname,
-  lastname,
-  firebase,
-}) => {
+const SideNav = ({ current, setView, logOut, firebase, history }) => {
   const classes = useStyles();
   const [settingsOptionsOpen, setSettingsOptionsOpen] = useState(false);
   const [redirectToHome, setRedirectToHome] = useState(false);
@@ -37,10 +29,6 @@ const SideNav = ({
 
   useOnClickOutside(ref, () => setSettingsOptionsOpen(false));
 
-  if (!auth && localStorage.getItem("token") === undefined) {
-    return <Redirect to="/login" />;
-  }
-
   if (redirectToHome === true) {
     return <Redirect to="/" />;
   }
@@ -48,6 +36,7 @@ const SideNav = ({
   const signOut = () => {
     firebase.doSignOut();
     logOut();
+    history.push("/");
   };
 
   return (
@@ -93,7 +82,8 @@ const SideNav = ({
           }}
         >
           <div className={classes.profile}>
-            {firstname} {lastname}
+            {localStorage.getItem("firstname")}{" "}
+            {localStorage.getItem("lastname")}
             <img
               src={settingsIcon}
               alt="avatar"

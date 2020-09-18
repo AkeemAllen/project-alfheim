@@ -8,16 +8,16 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  auth: false,
-  newUser: null,
-  userId: null,
-  username: "",
-  firstname: "",
-  lastname: "",
-  email: "",
+  auth: localStorage.getItem("auth"),
+  newUser: localStorage.getItem("isNewUser"),
+  userId: localStorage.getItem("userId"),
+  username: localStorage.getItem("username"),
+  firstname: localStorage.getItem("firstname"),
+  lastname: localStorage.getItem("lastname"),
+  email: localStorage.getItem("email"),
   contact: "",
-  emailVerified: false,
-  uuid: null,
+  emailVerified: localStorage.getItem("emailVerified"),
+  uuid: localStorage.getItem("uuid"),
 };
 
 export default function (state = initialState, action) {
@@ -60,7 +60,7 @@ export default function (state = initialState, action) {
     case LOG_OUT: {
       return {
         ...state,
-        auth: false,
+        auth: "false",
         userId: null,
       };
     }

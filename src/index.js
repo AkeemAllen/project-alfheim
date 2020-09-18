@@ -34,7 +34,6 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const errorLink = onError(({ response, graphQLErrors, networkError }) => {
-  console.log(response);
   if (graphQLErrors)
     //eslint-disable-next-line
     graphQLErrors.map(({ message, locations, path }) => {
