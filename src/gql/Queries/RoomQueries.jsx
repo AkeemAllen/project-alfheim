@@ -35,11 +35,8 @@ export const getAllRooms = gql`
       isVisible
       isAvailable
       owner {
-        email
-        username
-        firstname
-        lastname
-        contact
+        id
+        uuid
       }
     }
   }

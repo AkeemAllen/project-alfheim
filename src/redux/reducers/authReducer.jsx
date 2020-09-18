@@ -8,7 +8,6 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  auth: localStorage.getItem("auth"),
   newUser: localStorage.getItem("isNewUser"),
   userId: localStorage.getItem("userId"),
   username: localStorage.getItem("username"),
@@ -25,7 +24,6 @@ export default function (state = initialState, action) {
     case AUTH_USER: {
       return {
         ...state,
-        auth: action.payload.emailVerified,
         userId: action.payload.userId,
         email: action.payload.email,
         username: action.payload.username,
@@ -60,7 +58,6 @@ export default function (state = initialState, action) {
     case LOG_OUT: {
       return {
         ...state,
-        auth: "false",
         userId: null,
       };
     }
