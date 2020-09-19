@@ -13,6 +13,7 @@ import { authorizeUser, authUserEmail } from "../redux/actions/authActions";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import Loading from "../components/Loading";
 
 const Registration = ({ history, firebase, authorizeUser, authUserEmail }) => {
   //#region
@@ -60,21 +61,29 @@ const Registration = ({ history, firebase, authorizeUser, authUserEmail }) => {
   const [mounted, setMounted] = useState(false);
   const [success, setSuccess] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   function onSignInWithGoogle() {
-    firebase.doSignInWithPopUp().then((authData) => {
-      const user = authData.user;
-      console.log(authData);
-      register({ variables: { uuid: user.uid } })
-        .then((res) => {
-          console.log(res);
-          authorizeUser({ ...authData, userId: res.data.addUser.id });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      history.push("/account");
-    });
+    firebase
+      .doSignInWithPopUp()
+      .then((authData) => {
+        setLoading(true);
+        const user = authData.user;
+        console.log(authData);
+        register({ variables: { uuid: user.uid } })
+          .then((res) => {
+            authorizeUser({ ...authData, userId: res.data.addUser.id });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      })
+      .then(() => {
+        setTimeout(() => {
+          setLoading(false);
+          history.push("/account");
+        }, 4000);
+      });
   }
 
   const onSubmitForm = (state) => {
@@ -105,7 +114,7 @@ const Registration = ({ history, firebase, authorizeUser, authUserEmail }) => {
   };
 
   //eslint-disable-next-line
-  const [register, { loading, data, error }] = useMutation(registerMutation, {
+  const [register, { data, error }] = useMutation(registerMutation, {
     errorPolicy: "all",
   });
 
@@ -139,12 +148,12 @@ const Registration = ({ history, firebase, authorizeUser, authUserEmail }) => {
           <h1 style={{ fontSize: "24px", fontWeight: 800 }}>Create Account</h1>
           <p style={{ fontWeight: 400, color: "rgba(0,0,0,0.5)" }}>
             Already Have an Account?{" "}
-            <text
+            <i
               onClick={() => history.push("/login")}
               className={classes.signInText}
             >
               Sign In
-            </text>
+            </i>
           </p>
           <NormalButton
             text="Sign up with Google"
@@ -153,7 +162,7 @@ const Registration = ({ history, firebase, authorizeUser, authUserEmail }) => {
               onSignInWithGoogle();
             }}
           />
-          <text style={{ opacity: 0.5, fontWeight: 500 }}>or</text>
+          <i style={{ opacity: 0.5, fontWeight: 500 }}>or</i>
           <div
             style={{
               display: "grid",
@@ -201,6 +210,7 @@ const Registration = ({ history, firebase, authorizeUser, authUserEmail }) => {
             disabled={disable}
             type="submit"
           />
+          {loading ? <Loading /> : null}
         </form>
       </div>
     </div>

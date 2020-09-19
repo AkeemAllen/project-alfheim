@@ -14,6 +14,7 @@ import { useState } from "react";
 import { withFirebase } from "../components/Firebase";
 import { withRouter } from "react-router";
 import { compose } from "recompose";
+import Loading from "../components/Loading";
 
 const Login = ({
   history,
@@ -26,13 +27,14 @@ const Login = ({
   const classes = useStyles();
 
   //eslint-disable-next-line
-  const [login, { loading, error, data }] = useLazyQuery(loginQuery, {
+  const [login, { error, data }] = useLazyQuery(loginQuery, {
     errorPolicy: "all",
   });
 
   const isMounted = useRef(false);
 
   const [emailLogin, setEmailLogin] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(
     () => {
@@ -78,11 +80,15 @@ const Login = ({
     firebase
       .doSignInWithPopUp()
       .then((authData) => {
+        setLoading(true);
         console.log(authData);
         authorizeUser(authData);
       })
       .then(() => {
-        history.push("/account");
+        setTimeout(() => {
+          setLoading(false);
+          history.push("/account");
+        }, 4000);
       });
   };
 
@@ -122,12 +128,12 @@ const Login = ({
           </h1>
           <p style={{ fontWeight: 400, color: "rgba(0,0,0,0.5)" }}>
             Don't Have an Account?{" "}
-            <text
+            <i
               onClick={() => history.push("/register")}
               className={classes.signInText}
             >
               Sign up
-            </text>
+            </i>
           </p>
           <NormalButton
             text="Continue with Google"
@@ -136,7 +142,7 @@ const Login = ({
           />
           {emailLogin ? (
             <div style={{ display: "grid", rowGap: "1rem" }}>
-              <text style={{ opacity: 0.5, fontWeight: 500 }}>or</text>
+              <i style={{ opacity: 0.5, fontWeight: 500 }}>or</i>
               <BoxedInput
                 label="email"
                 style={{ width: "350px" }}
@@ -171,6 +177,7 @@ const Login = ({
               onClick={() => setEmailLogin(true)}
             />
           )}
+          {loading ? <Loading /> : null}
         </form>
       </div>
     </div>
@@ -179,15 +186,13 @@ const Login = ({
 
 Login.propTypes = {
   authorizeUser: PropTypes.func.isRequired,
-  auth: PropTypes.bool.isRequired,
   loginError: PropTypes.string,
-  mounted: PropTypes.string,
+  mounted: PropTypes.bool,
   status: PropTypes.string,
   message: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth.auth,
   loginError: state.auth.loginError,
   mounted: state.snackBar.mounted,
   status: state.snackBar.status,

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import Dashboard from "./AccountPages/Dashboard";
 import Settings from "./AccountPages/Settings";
 import Analytics from "./AccountPages/Analytics";
@@ -9,7 +9,7 @@ import { createUseStyles } from "react-jss";
 import Payments from "./AccountPages/Payments";
 import { withRouter } from "react-router";
 
-const Account = ({ auth, history }) => {
+const Account = ({ history }) => {
   const classes = useStyles();
   const [current, setCurrent] = useState("dashboard");
 
@@ -40,13 +40,7 @@ const Account = ({ auth, history }) => {
   );
 };
 
-Account.propTypes = {
-  auth: PropTypes.bool.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  auth: state.auth.auth,
-});
+const mapStateToProps = (state) => ({});
 
 export default connect(mapStateToProps, [])(withRouter(Account));
 

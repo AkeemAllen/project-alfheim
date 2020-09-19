@@ -119,13 +119,11 @@ const SideNav = ({ current, setView, logOut, firebase, history }) => {
 
 SideNav.propTypes = {
   logOut: PropTypes.func.isRequired,
-  auth: PropTypes.bool.isRequired,
   firstname: PropTypes.string.isRequired,
   lastname: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth.auth,
   firstname: state.auth.firstname,
   lastname: state.auth.lastname,
 });

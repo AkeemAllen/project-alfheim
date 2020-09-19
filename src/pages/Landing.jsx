@@ -39,12 +39,12 @@ const Landing = ({ isLoggedIn, email, history }) => {
           <h1 className={classes.heroSectionHeader}>
             Search For Rooms Without The Hassel
           </h1>
-          <text style={{ lineHeight: "2rem" }}>
+          <p style={{ lineHeight: "2rem" }}>
             On this platform Landlords are able to create accounts and show off
             their rooms to prospective buyers. On the other hand
             Students/Rentors are able to go through a large selection of rooms
             from the comfort of their homes.
-          </text>
+          </p>
           <div className={classes.gallaryBtn}>
             <NormalButton
               text="View Gallary"
@@ -66,14 +66,12 @@ const Landing = ({ isLoggedIn, email, history }) => {
 };
 
 Landing.propTypes = {
-  auth: PropTypes.bool.isRequired,
-  firstname: PropTypes.string.isRequired,
+  firstname: PropTypes.string,
   isLoggedIn: PropTypes.string,
   email: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth.auth,
   firstname: state.auth.firstname,
   isLoggedIn: state.auth.isLoggedIn,
   email: state.auth.email,
