@@ -59,7 +59,7 @@ export default function (state = initialState, action) {
     }
     case LOG_OUT: {
       return {
-        state: initialState,
+        state: {},
       };
     }
     default:

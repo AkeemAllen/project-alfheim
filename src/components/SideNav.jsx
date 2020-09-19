@@ -89,6 +89,7 @@ const SideNav = ({ current, setView, logOut, firebase, history }) => {
               alt="avatar"
               width="30px"
               onClick={() => setSettingsOptionsOpen(true)}
+              style={{ filter: "invert()" }}
             />
           </div>
           <animated.div
@@ -139,13 +140,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(ComposedSideNav);
 const useStyles = createUseStyles({
   container: {
     display: "flex",
-    height: "98%",
+    height: "100%",
     width: "250px",
-    // backgroundColor: "#f1f2fa",
-    backgroundColor: "var(--main-color)",
-    boxShadow: "0 0 10px rgba(0,0,0,0.5)",
-    marginLeft: "1rem",
-    borderRadius: "10px",
+    backgroundColor: "#f1f2fa",
+    // backgroundColor: "var(--main-color)",
     alignSelf: "center",
   },
   icon: {
@@ -168,12 +166,12 @@ const useStyles = createUseStyles({
   hightlighted: {
     display: "flex",
     alignItems: "center",
-    color: "white",
+    color: "black",
     // color: "rgba(0,0,0,0.75)",
     padding: "0.5rem 2.5rem 0.5rem 0.5rem",
     border: "none",
-    backgroundColor: "#4D5FA9",
-    // backgroundColor: "#CBCCD4",
+    // backgroundColor: "#4D5FA9",
+    backgroundColor: "#CBCCD4",
     borderRadius: "5px",
     fontSize: "1rem",
     cursor: "pointer",
@@ -186,7 +184,7 @@ const useStyles = createUseStyles({
     display: "flex",
     alignItems: "center",
     // color: "rgba(0,0,0,0.75)",
-    color: "white",
+    color: "black",
     padding: "0.5rem 2.5rem 0.5rem 0.5rem",
     border: "none",
     backgroundColor: "transparent",
@@ -205,12 +203,12 @@ const useStyles = createUseStyles({
     alignItems: "center",
     width: "100%",
     height: "50px",
-    // backgroundColor: "#CBCCD4",
-    backgroundColor: "#4D5FA9",
+    backgroundColor: "#CBCCD4",
+    // backgroundColor: "#4D5FA9",
     borderRadius: "5px",
     // padding: "5px",
-    // color: "black",
-    color: "white",
+    color: "black",
+    // color: "white",
     fontWeight: 600,
   },
   avatar: {
