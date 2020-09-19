@@ -81,7 +81,6 @@ const Login = ({
       .doSignInWithPopUp()
       .then((authData) => {
         setLoading(true);
-        console.log(authData);
         authorizeUser(authData);
       })
       .then(() => {
