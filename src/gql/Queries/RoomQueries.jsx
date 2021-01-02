@@ -37,6 +37,10 @@ export const getAllRooms = gql`
       owner {
         id
         uuid
+        phoneNumber
+        firstName
+        lastName
+        email
       }
     }
   }

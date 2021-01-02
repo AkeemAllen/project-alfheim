@@ -68,9 +68,22 @@ const Registration = ({ history, firebase, authorizeUser, authUserEmail }) => {
       .doSignInWithPopUp()
       .then((authData) => {
         setLoading(true);
-        const user = authData.user;
         console.log(authData);
-        register({ variables: { uuid: user.uid } })
+        const user = authData.user;
+        const firstName = user.displayName.split(" ")[0];
+        const lastName = user.displayName.split(" ")[1];
+        const phone =
+          user.phoneNumber === null ? "No number provided" : user.phoneNumber;
+
+        register({
+          variables: {
+            uuid: user.uid,
+            email: user.email,
+            firstname: firstName,
+            lastName: lastName,
+            phoneNumber: phone,
+          },
+        })
           .then((res) => {
             authorizeUser({ ...authData, userId: res.data.addUser.id });
           })

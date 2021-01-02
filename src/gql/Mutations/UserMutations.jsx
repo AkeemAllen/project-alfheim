@@ -27,10 +27,28 @@ export const updateUserInfo = gql`
 `;
 
 export const register = gql`
-  mutation addUser($uuid: String!) {
-    addUser(input: { uuid: $uuid }) {
+  mutation addUser(
+    $uuid: String!
+    $firstName: String!
+    $lastName: String!
+    $email: String!
+    $phoneNumber: String!
+  ) {
+    addUser(
+      input: {
+        uuid: $uuid
+        firstName: $firstName
+        lastName: $lastName
+        email: $email
+        phoneNumber: $phoneNumber
+      }
+    ) {
       id
       uuid
+      firstName
+      lastName
+      email
+      phoneNumber
     }
   }
 `;
