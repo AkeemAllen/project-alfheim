@@ -1,5 +1,5 @@
-import LandingPage from "./pages/Landing";
-import Gallary from "./pages/Gallary";
+import LandingPage from "./pages/Landing/Landing";
+import Gallary from "./pages/Gallary/Gallary";
 import OwnerAccount from "./pages/OwnerAccount";
 import Test from "./pages/TestPage";
 import Login from "./pages/Login";

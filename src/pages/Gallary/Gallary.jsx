@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import Card from "../components/GallaryCard";
+import Card from "../../components/GallaryCard";
 import { Link } from "react-router-dom";
-import { LineInput } from "../components/Inputs";
+import { LineInput } from "../../components/Inputs";
 
 import { useQuery } from "@apollo/react-hooks";
 import { createUseStyles } from "react-jss";
-import { NormalButton } from "../components/Buttons";
-import Loading from "../components/Loading";
-import { getAllRooms } from "../gql/Queries";
+import { NormalButton } from "../../components/Buttons";
+import Loading from "../../components/Loading";
+import { getAllRooms } from "../../gql/Queries";
 
 const Gallary = () => {
   const { data, loading, error } = useQuery(getAllRooms);

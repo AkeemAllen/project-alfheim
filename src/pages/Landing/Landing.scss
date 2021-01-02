@@ -1,0 +1,41 @@
+.landing-container {
+  margin: 0;
+  padding: 0;
+  background-color: var(--background-color);
+  color: var(--main-color);
+  .landing-navigation {
+    display: grid;
+    justify-content: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: var(--lighter-main-color);
+    h1 {
+      font-family: "Montserrat";
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin: 0;
+    }
+  }
+  .landing-content {
+    display: grid;
+    margin-top: 7rem;
+    row-gap: 1.2rem;
+    text-align: center;
+    padding: 1rem;
+    justify-items: center;
+    h2 {
+      margin: 0;
+      font-size: 1.6rem;
+    }
+    .landing-media {
+      display: grid;
+      justify-self: center;
+      margin: auto;
+      margin-top: 2rem;
+      width: 15rem;
+    }
+    .landing-btn {
+      margin-top: 3rem;
+    }
+  }
+}

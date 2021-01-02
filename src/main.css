@@ -2,23 +2,26 @@
   --prev-primary-color: #140f2d;
   --main-color: #263d9c;
   --darker-main-color: #1b2a68;
+  --lighter-main-color: #7d8bc4;
   /* --primary-color: #1b2a68; */
   --secondary-color: #54defd;
   --accent-color: #00bd9d;
   --accent-color-darker: #004c3f;
   --accent-color-lighter: #ccf2eb;
   --error-color: #ff0055;
-  --primary-font: "Inter";
-  --secondary-font: "Poppins";
+  --primary-font: "Montserrat";
+  --secondary-font: "Montserrat";
   --styled-font: "Lobster";
   --main-green: #51cb20;
   --darker-green: #3e941c;
   --transparent-white: rgba(0, 0, 0, 0.5);
+  --background-color: #f1f2fa;
 }
 
-* {
+body {
   margin: 0;
   padding: 0;
   font-family: var(--primary-font);
   color: var(--primary-color);
+  background-color: var(--background-color);
 }

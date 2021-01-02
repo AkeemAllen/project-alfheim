@@ -1,18 +1,20 @@
 import React from "react";
 import { createUseStyles } from "react-jss";
-import { NormalButton, TextButton } from "../components/Buttons";
+import { NormalButton, TextButton } from "../../components/Buttons";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { compose } from "recompose";
+import AtHome from "../../assets/stock photos/undraw_at_home_octe.svg";
+import "./Landing.scss";
 
 const Landing = ({ isLoggedIn, email, history }) => {
   const classes = useStyles();
   return (
-    <div className={classes.container}>
-      <nav className={classes.navigation}>
-        <h1 className={classes.navigationHeader}>Alfheim</h1>
-        {isLoggedIn === "true" ? (
+    <div className="landing-container">
+      <nav className="landing-navigation">
+        <h1>JamaicanLiving</h1>
+        {/* {isLoggedIn === "true" ? (
           <TextButton
             text="Go To Account"
             onClick={() => history.push("/account")}
@@ -32,34 +34,17 @@ const Landing = ({ isLoggedIn, email, history }) => {
               style={{ fontSize: "1rem", fontWeight: 700 }}
             />
           </div>
-        ) : null}
+        ) : null} */}
       </nav>
-      <div className={classes.contentContainer}>
-        <section className={classes.descSection}>
-          <h1 className={classes.heroSectionHeader}>
-            Search For Rooms Without The Hassel
-          </h1>
-          <p style={{ lineHeight: "2rem" }}>
-            On this platform Landlords are able to create accounts and show off
-            their rooms to prospective buyers. On the other hand
-            Students/Rentors are able to go through a large selection of rooms
-            from the comfort of their homes.
-          </p>
-          <div className={classes.gallaryBtn}>
-            <NormalButton
-              text="View Gallary"
-              color="51cb20"
-              darkerColor="3e941c"
-              onClick={() => history.push("/gallary")}
-            />
-          </div>
-          <h2 className={classes.mobileMessage}>
-            Please Use Desktop For Best Experience!!
-          </h2>
-          <h2 className={classes.mobileMessage}>
-            Mobile App will come in due time
-          </h2>
-        </section>
+      <div className="landing-content">
+        <h2 className="landing-header">No Place Like Ja</h2>
+        <img src={AtHome} alt="home" className="landing-media" />
+        <div className="landing-btn">
+          <NormalButton
+            text="View Gallary"
+            onClick={() => history.push("/gallary")}
+          />
+        </div>
       </div>
     </div>
   );
@@ -90,14 +75,14 @@ const useStyles = createUseStyles({
       margin: "2rem",
     },
   },
-  authBtns: {
-    display: "none",
-    "@media (min-width: 1024px)": {
-      display: "grid",
-      gridTemplateColumns: "1fr 1fr",
-      columnGap: "1rem",
-    },
-  },
+  // authBtns: {
+  //   display: "none",
+  //   "@media (min-width: 1024px)": {
+  //     display: "grid",
+  //     gridTemplateColumns: "1fr 1fr",
+  //     columnGap: "1rem",
+  //   },
+  // },
   navigationHeader: {
     fontFamily: "Lobster",
     fontSize: "36px",
@@ -130,17 +115,8 @@ const useStyles = createUseStyles({
     },
   },
   gallaryBtn: {
-    display: "none",
-    "@media (min-width: 1024px)": {
-      display: "grid",
-      fontWeight: "900",
-      fontSize: "48px",
-    },
-  },
-  mobileMessage: {
     display: "grid",
-    "@media (min-width: 1024px)": {
-      display: "none",
-    },
+    fontWeight: "900",
+    fontSize: "48px",
   },
 });
