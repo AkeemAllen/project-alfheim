@@ -9,7 +9,6 @@ import AtHome from "../../assets/stock photos/undraw_at_home_octe.svg";
 import "./Landing.scss";
 
 const Landing = ({ isLoggedIn, email, history }) => {
-  const classes = useStyles();
   return (
     <div className="landing-container">
       <nav className="landing-navigation">
@@ -38,6 +37,10 @@ const Landing = ({ isLoggedIn, email, history }) => {
       </nav>
       <div className="landing-content">
         <h2 className="landing-header">No Place Like Ja</h2>
+        <p>
+          This site serves to aggregate and present real estate options in and
+          around the Kingston Metropolitan area.
+        </p>
         <img src={AtHome} alt="home" className="landing-media" />
         <div className="landing-btn">
           <NormalButton
@@ -66,57 +69,21 @@ const ComposedLanding = compose(withRouter)(Landing);
 
 export default connect(mapStateToProps, [])(ComposedLanding);
 
-const useStyles = createUseStyles({
-  container: {},
-  navigation: {
-    display: "grid",
-    "@media (min-width: 1024px)": {
-      gridTemplateColumns: "1fr 300px",
-      margin: "2rem",
-    },
-  },
-  // authBtns: {
-  //   display: "none",
-  //   "@media (min-width: 1024px)": {
-  //     display: "grid",
-  //     gridTemplateColumns: "1fr 1fr",
-  //     columnGap: "1rem",
-  //   },
-  // },
-  navigationHeader: {
-    fontFamily: "Lobster",
-    fontSize: "36px",
-  },
-  contentContainer: {
-    display: "grid",
-    gridTemplateColumns: "1fr",
-    "@media (min-width: 1024px)": {
-      gridTemplateColumns: "1fr 1fr",
-    },
-  },
-  descSection: {
-    display: "grid",
-    gridTemplateRows: "min-content min-content",
-    rowGap: "1rem",
-    alignContent: "center",
-    justifySelf: "center",
-    height: "50rem",
-    maxWidth: "30rem",
-    transform: "translateY(-100px)",
-    fontSize: "0.8rem",
-    "@media (min-width: 1024px)": {
-      fontSize: "1rem",
-    },
-  },
-  heroSectionHeader: {
-    "@media (min-width: 1024px)": {
-      fontWeight: "900",
-      fontSize: "48px",
-    },
-  },
-  gallaryBtn: {
-    display: "grid",
-    fontWeight: "900",
-    fontSize: "48px",
-  },
-});
+// const useStyles = createUseStyles({
+//   container: {},
+//   navigation: {
+//     display: "grid",
+//     "@media (min-width: 1024px)": {
+//       gridTemplateColumns: "1fr 300px",
+//       margin: "2rem",
+//     },
+//   },
+//   authBtns: {
+//     display: "none",
+//     "@media (min-width: 1024px)": {
+//       display: "grid",
+//       gridTemplateColumns: "1fr 1fr",
+//       columnGap: "1rem",
+//     },
+//   },
+// });

@@ -27,6 +27,17 @@
       margin: 0;
       font-size: 1.6rem;
     }
+    p {
+      line-height: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      p {
+        padding-left: 5rem;
+        padding-right: 5rem;
+      }
+    }
+
     .landing-media {
       display: grid;
       justify-self: center;

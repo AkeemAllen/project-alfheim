@@ -1,0 +1,22 @@
+.gallary-container {
+  color: var(--main-color);
+  .gallary-nav {
+    display: grid;
+    justify-content: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: var(--lighter-main-color);
+    h1 {
+      font-family: "Montserrat";
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin: 0;
+    }
+  }
+  .showcase {
+    display: grid;
+    margin-top: 2rem;
+    row-gap: 2rem;
+    padding: 1rem;
+  }
+}

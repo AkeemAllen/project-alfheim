@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Card from "../../components/GallaryCard";
+import Card from "../../components/GallaryCard/GallaryCard";
 import { Link } from "react-router-dom";
 import { LineInput } from "../../components/Inputs";
 
@@ -8,6 +8,7 @@ import { createUseStyles } from "react-jss";
 import { NormalButton } from "../../components/Buttons";
 import Loading from "../../components/Loading";
 import { getAllRooms } from "../../gql/Queries";
+import "./Gallary.scss";
 
 const Gallary = () => {
   const { data, loading, error } = useQuery(getAllRooms);
@@ -20,8 +21,23 @@ const Gallary = () => {
   if (error) return <p>ERROR</p>;
 
   return (
-    <div className={classes.container}>
-      <div className={classes.filter_wrapper}>
+    <div className="gallary-container">
+      <nav className="gallary-nav">
+        <h1>JamaicanLiving</h1>
+      </nav>
+      <div className="showcase">
+        <Card
+          occupancy="Double"
+          price="20,000"
+          gender="M"
+          street="4 Riverview Avenue"
+          amenities={[]}
+          rules={[]}
+          ownerInfo={{}}
+          image={undefined}
+        />
+      </div>
+      {/* <div className={classes.filter_wrapper}>
         <div className={classes.filter}>
           <label className={classes.label}>Occupancy</label>
           <LineInput
@@ -48,7 +64,7 @@ const Gallary = () => {
             }}
           />
         </div>
-      </div>
+      </div> */}
       {loading && !data ? (
         <div
           style={{
@@ -92,13 +108,11 @@ const Gallary = () => {
             })}
         </div>
       ) : (
-        <h2 className={classes.showcase_empty}>
-          Unable To Find Room Matching Criteria
-        </h2>
+        <h2 className={classes.showcase_empty}>No rooms found</h2>
       )}
-      <Link to="/" style={{ position: "absolute", top: 10, left: 10 }}>
+      {/* <Link to="/" style={{ position: "absolute", top: 10, left: 10 }}>
         <NormalButton text="<--Back" />
-      </Link>
+      </Link> */}
     </div>
   );
 };
