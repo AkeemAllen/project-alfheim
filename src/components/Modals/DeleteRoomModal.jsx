@@ -1,5 +1,5 @@
 import React from "react";
-import Modal from "../Modal";
+import Modal from "../Modal/Modal";
 import { NormalButton } from "../Buttons";
 import { deleteRoom } from "../../redux/actions/roomActions";
 import PropTypes from "prop-types";

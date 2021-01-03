@@ -11,9 +11,7 @@ import "./Landing.scss";
 const Landing = ({ isLoggedIn, email, history }) => {
   return (
     <div className="landing-container">
-      <nav className="landing-navigation">
-        <h1>JamaicanLiving</h1>
-        {/* {isLoggedIn === "true" ? (
+      {/* {isLoggedIn === "true" ? (
           <TextButton
             text="Go To Account"
             onClick={() => history.push("/account")}
@@ -34,7 +32,6 @@ const Landing = ({ isLoggedIn, email, history }) => {
             />
           </div>
         ) : null} */}
-      </nav>
       <div className="landing-content">
         <h2 className="landing-header">No Place Like Ja</h2>
         <p>

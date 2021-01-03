@@ -5,6 +5,7 @@ import Test from "./pages/TestPage";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
 import EmailVerified from "./helpers/emailVerified";
+import HomeDetails from "./pages/HomeDetails/HomeDetails";
 
 export default [
   {
@@ -32,6 +33,11 @@ export default [
   {
     path: "/components",
     component: Test,
+  },
+  {
+    path: "/home-details/:homeId",
+    exact: true,
+    component: HomeDetails,
   },
   {
     path: "/verified",

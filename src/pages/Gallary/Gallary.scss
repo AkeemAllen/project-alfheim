@@ -18,5 +18,23 @@
     margin-top: 2rem;
     row-gap: 2rem;
     padding: 1rem;
+
+    @media (min-width: 768px) {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 2rem;
+      padding: 1.5rem;
+    }
+    @media (min-width: 1024px) {
+      grid-template-columns: 1fr 1fr 1fr;
+      column-gap: 2rem;
+      padding: 1.5rem;
+    }
+  }
+  .showcase-empty {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    font-weight: 800;
+    color: rgba(0, 0, 0, 0.5);
   }
 }

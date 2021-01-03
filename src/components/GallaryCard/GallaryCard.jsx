@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { useSpring, animated } from "react-spring";
 import { createUseStyles } from "react-jss";
 import { NormalButton } from "../Buttons";
-import DetailModal from "../Modals/GallaryRoomDetailModal";
+import { useHistory } from "react-router-dom";
+import DetailModal from "../Modals/GallaryRoomDetailModal/GallaryRoomDetailModal";
 import "./GallaryCard.scss";
+import useWindowDimensions from "../../helpers/windowDimensions";
 
 const GallaryCard = ({
   occupancy,
@@ -14,13 +16,15 @@ const GallaryCard = ({
   rules,
   ownerInfo,
   image,
+  description,
 }) => {
   const [hover, setHover] = useState(false);
   const [selected, setSelected] = useState(false);
   const [open, setOpen] = useState(false);
+  const { width } = useWindowDimensions();
 
   const { opacity, transform, zIndex } = useSpring({
-    opacity: hover ? 1 : 0,
+    opacity: width <= 1024 ? 1 : hover ? 1 : 0,
     transform: `scale(${open ? 1.1 : 1})`,
     zIndex: selected ? 1 : -1,
   });
@@ -30,12 +34,12 @@ const GallaryCard = ({
     setOpen(true);
   };
 
-  const classes = useStyles();
-
   let imageViewUri;
   process.env.NODE_ENV !== "production"
     ? (imageViewUri = "http://localhost:8081/image")
     : (imageViewUri = `${process.env.REACT_APP_BASE_URI}/image`);
+
+  const history = useHistory();
 
   return (
     <div>
@@ -96,11 +100,3 @@ const GallaryCard = ({
 };
 
 export default GallaryCard;
-
-const useStyles = createUseStyles({
-  modal_wrapper: {
-    display: "grid",
-    // gridTemplateRows: "1fr 4fr",
-    rowGap: "2rem",
-  },
-});

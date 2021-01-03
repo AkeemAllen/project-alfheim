@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Modal from "../Modal";
+import Modal from "../Modal/Modal";
 import { NormalButton } from "../Buttons";
 import { BoxedInput } from "../Inputs";
 import { uploadImage } from "../../redux/actions/roomActions";

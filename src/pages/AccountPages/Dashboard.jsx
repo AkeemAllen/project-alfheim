@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { createUseStyles } from "react-jss";
 // import Room from "../../components/Room";
 import { NormalButton } from "../../components/Buttons";
-import Modal from "../../components/Modal";
+import Modal from "../../components/Modal/Modal";
 import AddRoomForm from "../../components/forms/AddRoomForm";
 import { useQuery } from "react-apollo";
 import Loading from "../../components/Loading";

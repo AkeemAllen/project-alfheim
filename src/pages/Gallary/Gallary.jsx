@@ -18,13 +18,12 @@ const Gallary = () => {
   const [gender, setGender] = useState("");
   const [price, setPrice] = useState("0");
 
-  if (error) return <p>ERROR</p>;
+  if (error) {
+    console.log("cool");
+  }
 
   return (
     <div className="gallary-container">
-      <nav className="gallary-nav">
-        <h1>JamaicanLiving</h1>
-      </nav>
       <div className="showcase">
         <Card
           occupancy="Double"
@@ -35,6 +34,29 @@ const Gallary = () => {
           rules={[]}
           ownerInfo={{}}
           image={undefined}
+          description="A good home"
+        />
+        <Card
+          occupancy="Double"
+          price="20,000"
+          gender="M"
+          street="4 Riverview Avenue"
+          amenities={[]}
+          rules={[]}
+          ownerInfo={{}}
+          image={undefined}
+          description="A good home"
+        />
+        <Card
+          occupancy="Double"
+          price="20,000"
+          gender="M"
+          street="4 Riverview Avenue"
+          amenities={[]}
+          rules={[]}
+          ownerInfo={{}}
+          image={undefined}
+          description="A good home"
         />
       </div>
       {/* <div className={classes.filter_wrapper}>
@@ -65,7 +87,7 @@ const Gallary = () => {
           />
         </div>
       </div> */}
-      {loading && !data ? (
+      {/* {loading && !data ? (
         <div
           style={{
             width: "100vw",
@@ -108,8 +130,8 @@ const Gallary = () => {
             })}
         </div>
       ) : (
-        <h2 className={classes.showcase_empty}>No rooms found</h2>
-      )}
+        <h2 className="showcase-empty">No rooms found</h2>
+      )} */}
       {/* <Link to="/" style={{ position: "absolute", top: 10, left: 10 }}>
         <NormalButton text="<--Back" />
       </Link> */}
@@ -151,21 +173,6 @@ const useStyles = createUseStyles({
   },
   label: {
     fontWeight: 600,
-    color: "rgba(0,0,0,0.5)",
-  },
-  showcase: {
-    display: "grid",
-    gridTemplateColumns: "min-content min-content min-content",
-    rowGap: "3rem",
-    padding: "1rem",
-    justifyContent: "center",
-    columnGap: "3rem",
-  },
-  showcase_empty: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    fontWeight: 800,
     color: "rgba(0,0,0,0.5)",
   },
 });

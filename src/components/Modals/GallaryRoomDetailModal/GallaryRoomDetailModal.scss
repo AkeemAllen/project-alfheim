@@ -1,0 +1,32 @@
+.gallary-room-detail-modal-wrapper {
+  display: grid;
+  row-gap: 2rem;
+  width: 100%;
+
+  .gallary-room-detail-modal-top {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    img {
+      justify-self: flex-end;
+      align-self: center;
+      width: 1.7rem;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  @media (min-width: 1024px) {
+    width: 800px;
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
+  p {
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 1.3rem;
+  }
+  .description {
+    line-height: 2rem;
+  }
+}

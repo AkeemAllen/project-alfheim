@@ -1,6 +1,7 @@
 import React from "react";
 import "./main.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import NavBar from "./components/NavBar/NavBar";
 import routes from "./router";
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -27,6 +28,7 @@ class App extends React.Component {
   render() {
     return (
       <Router basename="">
+        <NavBar />
         <Switch>
           {routes.map((route, index) => {
             return !route.requiresAuth ? (
