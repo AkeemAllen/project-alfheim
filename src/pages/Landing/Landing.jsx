@@ -36,7 +36,7 @@ const Landing = ({ isLoggedIn, email, history }) => {
         <h2 className="landing-header">No Place Like Ja</h2>
         <p>
           This site serves to aggregate and present real estate options in and
-          around the Kingston Metropolitan area.
+          around the Kingston Metropolitan area and Jamaican on a whole.
         </p>
         <img src={AtHome} alt="home" className="landing-media" />
         <div className="landing-btn">

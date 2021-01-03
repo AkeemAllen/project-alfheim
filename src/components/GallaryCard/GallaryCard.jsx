@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useSpring, animated } from "react-spring";
-import { createUseStyles } from "react-jss";
 import { NormalButton } from "../Buttons";
-import { useHistory } from "react-router-dom";
 import DetailModal from "../Modals/GallaryRoomDetailModal/GallaryRoomDetailModal";
 import "./GallaryCard.scss";
 import useWindowDimensions from "../../helpers/windowDimensions";
@@ -38,8 +36,6 @@ const GallaryCard = ({
   process.env.NODE_ENV !== "production"
     ? (imageViewUri = "http://localhost:8081/image")
     : (imageViewUri = `${process.env.REACT_APP_BASE_URI}/image`);
-
-  const history = useHistory();
 
   return (
     <div>

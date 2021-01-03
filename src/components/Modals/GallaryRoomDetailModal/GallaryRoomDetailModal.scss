@@ -19,12 +19,16 @@
     width: 800px;
   }
   h3 {
-    font-size: 1.5rem;
+    @media (min-width: 1024px) {
+      font-size: 1.5rem;
+    }
   }
   p {
     font-weight: 500;
     color: rgba(0, 0, 0, 0.5);
-    font-size: 1.3rem;
+    @media (min-width: 1024px) {
+      font-size: 1.3rem;
+    }
   }
   .description {
     line-height: 2rem;
