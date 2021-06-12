@@ -1,14 +1,8 @@
 import React, { useState } from "react";
 import { createUseStyles } from "react-jss";
 import { NormalButton } from "../Buttons";
-import {
-  addRule,
-  addAmenity,
-  updateRoom,
-  deleteSingleRule,
-  deleteSingleAmenity,
-} from "../../gql/Mutations";
-import { useMutation } from "react-apollo";
+// import { updateRoom } from "../../gql/Mutations";
+// import { useMutation } from "react-apollo";
 import removeIcon from "../../assets/icons/Remove Icon.png";
 import occupancyIcon from "../../assets/icons/Occupancy Icon.png";
 import dollarIcon from "../../assets/icons/Dollar Icon.png";
@@ -74,75 +68,75 @@ const RoomDetails = ({
     { title: "Parish", value: data.parish, id: "parish" },
   ];
 
-  const handleUpdate = () => {
-    if (field === "rules") {
-      newRule();
-    } else if (field === "amenities") {
-      newAmenity();
-    } else {
-      update();
-    }
+  // const handleUpdate = () => {
+  //   if (field === "rules") {
+  //     newRule();
+  //   } else if (field === "amenities") {
+  //     newAmenity();
+  //   } else {
+  //     update();
+  //   }
 
-    if (field === "isAvailable") {
-      reduxUpdateRoom(field, !data.isAvailable, index);
-    } else if (field === "isVisible") {
-      reduxUpdateRoom(field, !data.isVisible, index);
-    } else {
-      reduxUpdateRoom(field, fieldValue, index);
-    }
+  //   if (field === "isAvailable") {
+  //     reduxUpdateRoom(field, !data.isAvailable, index);
+  //   } else if (field === "isVisible") {
+  //     reduxUpdateRoom(field, !data.isVisible, index);
+  //   } else {
+  //     reduxUpdateRoom(field, fieldValue, index);
+  //   }
 
-    setModalOpen(false);
-  };
+  //   setModalOpen(false);
+  // };
 
-  const handleRemoval = (field, value) => {
-    setFieldValue(value);
-    field === "rules"
-      ? setTimeout(() => deleteRule(), 1000) && reduxDelRule(data.id, value)
-      : setTimeout(() => deleteAmenity(), 1000) &&
-        reduxDelAmenity(data.id, value);
-  };
+  // const handleRemoval = (field, value) => {
+  //   setFieldValue(value);
+  //   field === "rules"
+  //     ? setTimeout(() => deleteRule(), 1000) && reduxDelRule(data.id, value)
+  //     : setTimeout(() => deleteAmenity(), 1000) &&
+  //       reduxDelAmenity(data.id, value);
+  // };
 
-  const [update] = useMutation(updateRoom, {
-    variables: {
-      occupancy: field === "occupancy" ? fieldValue : undefined,
-      gender: field === "gender" ? fieldValue : undefined,
-      price: field === "price" ? parseInt(fieldValue, 10) : undefined,
-      street: field === "street" ? fieldValue : undefined,
-      parish: field === "parish" ? fieldValue : undefined,
-      town_city: field === "town_city" ? fieldValue : undefined,
-      isAvailable: field === "isAvailable" ? !data.isAvailable : undefined,
-      isVisible: field === "isVisible" ? !data.isVisible : undefined,
-      id: data.id,
-    },
-  });
+  // const [update] = useMutation(updateRoom, {
+  //   variables: {
+  //     occupancy: field === "occupancy" ? fieldValue : undefined,
+  //     gender: field === "gender" ? fieldValue : undefined,
+  //     price: field === "price" ? parseInt(fieldValue, 10) : undefined,
+  //     street: field === "street" ? fieldValue : undefined,
+  //     parish: field === "parish" ? fieldValue : undefined,
+  //     town_city: field === "town_city" ? fieldValue : undefined,
+  //     isAvailable: field === "isAvailable" ? !data.isAvailable : undefined,
+  //     isVisible: field === "isVisible" ? !data.isVisible : undefined,
+  //     id: data.id,
+  //   },
+  // });
 
-  const [deleteRule] = useMutation(deleteSingleRule, {
-    variables: {
-      id: data.id,
-      ruleToDelete: fieldValue,
-    },
-  });
+  // const [deleteRule] = useMutation(deleteSingleRule, {
+  //   variables: {
+  //     id: data.id,
+  //     ruleToDelete: fieldValue,
+  //   },
+  // });
 
-  const [deleteAmenity] = useMutation(deleteSingleAmenity, {
-    variables: {
-      id: data.id,
-      amenityToDelete: fieldValue,
-    },
-  });
+  // const [deleteAmenity] = useMutation(deleteSingleAmenity, {
+  //   variables: {
+  //     id: data.id,
+  //     amenityToDelete: fieldValue,
+  //   },
+  // });
 
-  const [newRule] = useMutation(addRule, {
-    variables: {
-      id: data.id,
-      rule: fieldValue,
-    },
-  });
+  // const [newRule] = useMutation(addRule, {
+  //   variables: {
+  //     id: data.id,
+  //     rule: fieldValue,
+  //   },
+  // });
 
-  const [newAmenity] = useMutation(addAmenity, {
-    variables: {
-      id: data.id,
-      amenity: fieldValue,
-    },
-  });
+  // const [newAmenity] = useMutation(addAmenity, {
+  //   variables: {
+  //     id: data.id,
+  //     amenity: fieldValue,
+  //   },
+  // });
 
   return (
     <div className={classes.container}>
@@ -244,7 +238,7 @@ const RoomDetails = ({
                   src={removeIcon}
                   alt="remove"
                   width="20"
-                  onClick={() => handleRemoval("rules", rule)}
+                  // onClick={() => handleRemoval("rules", rule)}
                 />
               </div>
             );
@@ -263,7 +257,7 @@ const RoomDetails = ({
                   src={removeIcon}
                   alt="remove"
                   width="20"
-                  onClick={() => handleRemoval("amenities", amenity)}
+                  // onClick={() => handleRemoval("amenities", amenity)}
                 />
               </div>
             );
@@ -288,7 +282,7 @@ const RoomDetails = ({
         field={field}
         setFieldValue={setFieldValue}
         fieldValue={fieldValue}
-        handleUpdate={handleUpdate}
+        // handleUpdate={handleUpdate}
         data={data}
       />
       <DeleteRoomModal

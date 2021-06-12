@@ -28,7 +28,7 @@ export const updateUserInfo = gql`
 
 export const register = gql`
   mutation addUser($uuid: String!) {
-    addUser(input: { uuid: $uuid }) {
+    addUser(input: { uuid: $uuid, email: "", name: "", phoneNumber: "" }) {
       id
       uuid
     }

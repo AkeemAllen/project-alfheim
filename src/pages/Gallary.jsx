@@ -13,31 +13,18 @@ const Gallary = () => {
   const { data, loading, error } = useQuery(getAllRooms);
   const classes = useStyles();
 
-  const [occupancy, setOccupancy] = useState("");
-  const [gender, setGender] = useState("");
+  // const [occupancy, setOccupancy] = useState("");
+  // const [gender, setGender] = useState("");
   const [price, setPrice] = useState("0");
 
-  if (error) return <p>ERROR</p>;
+  if (error) {
+    console.log(error);
+    return <p>ERROR</p>;
+  }
 
   return (
     <div className={classes.container}>
       <div className={classes.filter_wrapper}>
-        <div className={classes.filter}>
-          <label className={classes.label}>Occupancy</label>
-          <LineInput
-            type="text"
-            label="Single, Double, Any"
-            onChange={(e) => setOccupancy(e.target.value)}
-          />
-        </div>
-        <div className={classes.filter}>
-          <label className={classes.label}>Gender</label>
-          <LineInput
-            type="text"
-            label="Male, Female, Any"
-            onChange={(e) => setGender(e.target.value)}
-          />
-        </div>
         <div className={classes.filter}>
           <label className={classes.label}>Price Limit</label>
           <LineInput
@@ -63,19 +50,12 @@ const Gallary = () => {
       ) : data.allRooms.length > 0 ? (
         <div className={classes.showcase}>
           {data.allRooms
-            .filter((room) =>
-              room.occupancy.toUpperCase().includes(occupancy.toUpperCase())
-            )
-            .filter((room) =>
-              room.gender.toUpperCase().includes(gender.toUpperCase())
-            )
             .filter((room) => {
               if ((parseInt(price, 10) === 0) | isNaN(parseInt(price, 10))) {
                 return room;
               }
               return parseInt(room.price, 10) <= parseInt(price, 10);
             })
-            .filter((room) => room.isVisible !== false)
             .map((room) => {
               return (
                 <Card

@@ -7,16 +7,10 @@ export const getSingleOwnerRooms = gql`
       parish
       id
       town_city
-      occupancy
-      gender
       price
       isAvailable
-      isVisible
-      amenities
-      rules
       personalID
       image
-      isVisible
     }
   }
 `;
@@ -25,14 +19,9 @@ export const getAllRooms = gql`
   query allRooms {
     allRooms {
       price
-      occupancy
-      gender
       personalID
       street
-      amenities
-      rules
       image
-      isVisible
       isAvailable
       owner {
         email
